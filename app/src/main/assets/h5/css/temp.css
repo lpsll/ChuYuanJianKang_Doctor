@@ -1,0 +1,184 @@
+.mui-bar{
+	background-color: #498EDB !important;
+	border:  0px solid #498EDB !important;
+	box-shadow: inherit;
+}
+.mui-action-back{
+	color: #ffffff;
+}
+.mui-title{
+	color: #FFFFFF;
+	font-size: 18px;
+	
+}
+.PicBg{
+	position: relative;
+}
+.inpBox{
+	
+	
+}
+
+.HpreInp{
+	width: 70% !important;
+	border: 0 !important;
+	margin-bottom: 0px !important;
+	border: 0px solid white !important;
+	float: right;
+	margin-right: 15px;
+	font-size: 14px;
+	
+	
+}
+.lab{
+	float: left;
+	margin-top: 10px;
+}
+.HpreBox{
+	position: relative;
+	font-size: 14px;
+	background-color: white;
+	width: 90%;	
+	padding-left: 10px;
+	margin-left: 5%;
+	border-radius: 5px;
+	margin-bottom: 15px;
+	float: left;
+	
+}
+
+.HistData{
+	padding: 10px !important;
+}
+
+.HistBtnIcon{
+	font-size: 18px;
+	float: right;
+	color: #C4C5C5; 
+}
+
+.DataImg{
+	position: absolute;
+	z-index: 9;
+	background-color: #498EDB;
+	width: 90%;
+	margin-left: 5%;
+	height: 150px; 
+	margin-top: 10px;
+
+}
+
+.SelectList{
+	width: 100%;
+	display: none;
+}
+.sText{
+	margin-left: 3px;
+}
+.select{
+	float: right;
+	margin-right: 3px;
+	margin-top: -3px;
+}
+.selectBox{
+	margin-top: 5px;
+	font-size: 14px;
+	padding-top:5px ;
+	padding-bottom: 5px;
+	color: #C4C5C5; 
+}
+
+.mui-radio input[type=radio]:before {
+font-size: 22px !important;
+}
+input[type=radio]:checked:before {
+color: #498EDB !important;
+}
+
+.selectCard{
+	background-color: white;
+	width: 100%;
+	height: 40px;
+}
+.selectLine{
+	float: left;
+	margin-top: 9px;
+	color: #CCCCCC;
+	font-size: 14px;
+}
+.act{
+	color: #498EDB !important; 
+}
+.selectDiv{
+	float: left;
+	font-size: 14px;
+	color: #3e3a39;
+	width: 19%;
+	height: 100%;
+	text-align: center;
+	line-height: 40px;
+}
+.DrawBox{
+	position: relative;
+	width: 100%;
+	background-color: white;
+	margin-top: 8px;
+	height: 305px;
+	padding-top: 40px;
+}
+.tiZhengDraw{
+
+	background-color: pink;
+	width: 80%;
+	height: 180px;
+	margin-left: 10%;
+	
+}
+.tiZhengInfo{
+	position: relative;
+	width: 80%;
+	height: 38px;
+	margin-left:10%;
+	margin-top: 15px;
+}
+.tizhengInfoText{
+	float: left;
+	line-height: 16px;
+
+}
+.tzLeft{
+	margin-left: 5px;
+}
+.tzRight{
+	margin-left: 30px;
+}
+
+.tzInfoDate{
+	font-size: 13px;
+	color: #3E3A39;
+}
+.tzInfoTemp{
+	font-size: 10px;
+	color: #989898;
+}
+.tzInfoState{
+	font-size: 10px;
+	color: #D10A0A;
+}
+.backBtn{
+	overflow: hidden;
+	position: absolute;
+	width: 50px;
+	padding-left: 10px;
+	margin-left: -10px;
+	/*width: 100px;*/
+	
+}
+
+
+
+
+
+
+
+

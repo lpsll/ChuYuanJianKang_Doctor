@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<title>体征信息</title>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/temp.css"/>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/highcharts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/doctor/tiZhengInfo.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">体征信息</h1>
+		</header>
+		<div class="mui-content">
+			<!--<div class="DataImg">
+				<div id="DataImgDraw">
+					aa 
+				</div>
+			</div>-->
+			
+			<div class="selectCard">
+				<div class="selectDiv act" id="tiWenBtn" onclick="changeBox(1)">
+					体温
+				</div>
+				<span class="selectLine">|</span>
+				<div class="selectDiv" id="maiBoBtn" onclick="changeBox(2)">
+					脉搏
+				</div>
+				<span class="selectLine">|</span>
+				<div class="selectDiv" id="huXiBtn" onclick="changeBox(3)">
+					呼吸
+				</div>
+				<span class="selectLine">|</span>
+				<div class="selectDiv" id="xueYaBtn" onclick="changeBox(4)">
+					血压
+				</div>
+				<span class="selectLine">|</span>
+				<div class="selectDiv" id="xueTangBtn" onclick="changeBox(5)">
+					血糖
+				</div>
+			</div>
+			
+			<div class="DrawBox" id="tiWenDiv">
+				<div class="tiZhengDraw">
+					体温
+				</div>
+				<div class="tiZhengInfo">
+					<div class="tizhengInfoText tzLeft">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div>
+					</div>
+					<div class="tizhengInfoText tzRight">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div></div>
+				</div>
+			</div>
+			<div class="DrawBox" id="maiBoDiv" style="display: none;">
+				<div class="tiZhengDraw">
+					脉搏
+				</div>
+				<div class="tiZhengInfo">
+					<div class="tizhengInfoText tzLeft">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div>
+					</div>
+					<div class="tizhengInfoText tzRight">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div></div>
+				</div>
+			</div>
+			
+			<div class="DrawBox" id="huXiDiv" style="display: none;">
+				<div class="tiZhengDraw">
+					呼吸
+				</div>
+				<div class="tiZhengInfo">
+					<div class="tizhengInfoText tzLeft">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div>
+					</div>
+					<div class="tizhengInfoText tzRight">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div></div>
+				</div>
+			</div>
+			<div class="DrawBox" id="xueYaDiv" style="display: none;">
+				<div class="tiZhengDraw">
+					血压
+				</div>
+				<div class="tiZhengInfo">
+					<div class="tizhengInfoText tzLeft">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div>
+					</div>
+					<div class="tizhengInfoText tzRight">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div></div>
+				</div>
+			</div>
+			<div class="DrawBox" id="xueTangDiv" style="display: none;">
+				<div class="tiZhengDraw">
+					血氧
+				</div>
+				<div class="tiZhengInfo">
+					<div class="tizhengInfoText tzLeft">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div>
+					</div>
+					<div class="tizhengInfoText tzRight">
+						<div  class="tzInfoDate"><span>2016-01-18 12:23</span></div>
+						<div class="tzInfoTemp"><span>体温：40.5度</span></div>
+						<div class="tzInfoState"><span>体温异常</span></div></div>
+				</div>
+			</div>
+		    
+		    
+		   
+		    
+		    
+		    
+		</div>
+		
+	</body>
+</html>

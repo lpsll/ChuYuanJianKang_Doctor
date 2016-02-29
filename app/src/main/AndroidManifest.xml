@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.htlc.cykf"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:name="com.htlc.cykf.app.App"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.htlc.cykf.app.activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.htlc.cykf.app.activity.LoginActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.RegisterActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.PerfectInfoActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.DischargeSummaryActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.DischargeSummaryActivity2"/>
+
+        <activity android:name="com.htlc.cykf.app.activity.MainActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.PersonActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.ChangeUsernameActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.PayActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.SettingActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.MessageCenterActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.RecommendationActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.WebActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.MeasureActivity"/>
+        <activity android:name="com.htlc.cykf.app.activity.DrugsActivity"/>
+
+        <meta-data android:name="design_width" android:value="750">
+        </meta-data>
+        <meta-data android:name="design_height" android:value="1334">
+        </meta-data>
+
+
+        <!--rong cloud-->
+        <activity
+            android:name="com.htlc.cykf.app.activity.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.htlc.cyjk"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+
+    </application>
+
+</manifest>
