@@ -15,11 +15,19 @@ import com.htlc.cykf.app.util.CommonUtil;
 import com.htlc.cykf.app.util.Constant;
 import com.htlc.cykf.app.util.JsonUtil;
 import com.htlc.cykf.app.util.LogUtil;
+import com.htlc.cykf.model.AuthorityBean;
+import com.htlc.cykf.model.BindNumberBean;
 import com.htlc.cykf.model.ContactBean;
+import com.htlc.cykf.model.ContactGroupBean;
+import com.htlc.cykf.model.DepartmentBean;
+import com.htlc.cykf.model.DischargeSummaryBean;
+import com.htlc.cykf.model.DoctorBean;
 import com.htlc.cykf.model.DrugBean;
-import com.htlc.cykf.model.InformationBean;
-import com.htlc.cykf.model.MedicalHistoryItemBean;
+import com.htlc.cykf.model.IllnessBean;
 import com.htlc.cykf.model.MessageBean;
+import com.htlc.cykf.model.PatientBean;
+import com.htlc.cykf.model.PriceBean;
+import com.htlc.cykf.model.TotalMoneyBean;
 import com.htlc.cykf.model.UserBean;
 import com.squareup.okhttp.Request;
 
@@ -37,7 +45,7 @@ import java.util.regex.Pattern;
 
 public class AppActionImpl implements AppAction {
 
-    private final static int LOGIN_OS = 1; // 表示Android
+
     private final static int PAGE_SIZE = 20; // 默认每页20条
 
     private Context context;
@@ -69,6 +77,7 @@ public class AppActionImpl implements AppAction {
         api.sendSmsCode(username, new ResultCallback<ApiResponse<Void>>() {
             @Override
             public void onError(Request request, Exception e) {
+                e.printStackTrace();
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -117,6 +126,7 @@ public class AppActionImpl implements AppAction {
         api.register(username, password, code, new ResultCallback<ApiResponse<Void>>() {
             @Override
             public void onError(Request request, Exception e) {
+                e.printStackTrace();
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -151,13 +161,14 @@ public class AppActionImpl implements AppAction {
         api.login(username, password, new ResultCallback<ApiResponse<UserBean>>() {
             @Override
             public void onError(Request request, Exception e) {
+                e.printStackTrace();
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
             @Override
             public void onResponse(ApiResponse<UserBean> response) {
                 if ("1".equals(response.code)) {
-                    LogUtil.e(AppActionImpl.this,"注册状态："+response.data.flag);
+                    LogUtil.e(AppActionImpl.this, "注册状态：" + response.data.flag);
                     listener.onSuccess(response.data);
                     App.app.setUserBean(response.data);
                 } else {
@@ -200,6 +211,7 @@ public class AppActionImpl implements AppAction {
         api.forget(username, password, code, new ResultCallback<ApiResponse<Void>>() {
             @Override
             public void onError(Request request, Exception e) {
+                e.printStackTrace();
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -215,26 +227,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void bindDoctor(String userId, String recommend, final ActionCallbackListener<Void> listener) {
-        api.bindDoctor(userId, recommend, new ResultCallback<ApiResponse<Void>>() {
-            @Override
-            public void onError(Request request, Exception e) {
-                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
-            }
-
-            @Override
-            public void onResponse(ApiResponse<Void> response) {
-                if ("1".equals(response.code)) {
-                    listener.onSuccess(null);
-                } else {
-                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void postPersonInfo(String userId, String phone, String name, String sex, String age, String profession, String address, File photo, final ActionCallbackListener<Void> listener) {
+    public void postPersonInfo(String userId, String phone, String name, String sex, String age, String department, String hospital, String special, String experience, File photo, File certification, File level, File honor, final ActionCallbackListener<Void> listener) {
         LogUtil.e(this,name+"");
         if (TextUtils.isEmpty(name)) {
             if (listener != null) {
@@ -248,22 +241,31 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
-        if (TextUtils.isEmpty(profession)) {
+        if (TextUtils.isEmpty(department)) {
             if (listener != null) {
-                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入职业");
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入科室");
             }
             return;
         }
-        if (TextUtils.isEmpty(address)) {
+        if (TextUtils.isEmpty(hospital)) {
             if (listener != null) {
-                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入地区");
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入医院");
             }
             return;
         }
-        api.postPersonInfo(userId, phone, name, sex, age, profession, address, photo, new ResultCallback<ApiResponse<Void>>() {
+        if (certification == null) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请选择执业医师资格证");
+            }
+            return;
+        }
+        api.postPersonInfo(userId, phone, name, sex, age,
+                department, hospital, special, experience,
+                photo, certification, level, honor, new ResultCallback<ApiResponse<Void>>() {
             @Override
             public void onError(Request request, Exception e) {
-                LogUtil.e(AppActionImpl.this, e.getMessage());
+                e.printStackTrace();
+                
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -279,12 +281,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void dischargeSummary(String userId, String startTime, String endTime, String totalTime,
-                                 String inDiagnose, String outDiagnose, String effect, String specialItem,
-                                 String inStatus, String atStatus, String outStatus, String outAdvice, final ActionCallbackListener<Void> listener) {
-        api.dischargeSummary(userId, startTime, endTime, totalTime, inDiagnose, outDiagnose, effect, specialItem, inStatus, atStatus, outStatus, outAdvice, new ResultCallback<ApiResponse<Void>>() {
+    public void changePersonInfo(String phone, String name, String sex, String age, String department, String hospital, String special, String experience, File photo, File certification, File level, File honor, final ActionCallbackListener<Void> listener) {
+        api.postPersonInfo("", phone, name, sex, age, department, hospital, special, experience, photo, certification, level, honor, new ResultCallback<ApiResponse<Void>>() {
             @Override
             public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -300,30 +302,48 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void medicineHistory(String userId, final ActionCallbackListener<ArrayList<MedicalHistoryItemBean>> listener) {
-        api.medicineHistory(userId, new ResultCallback<ApiResponse<MedicalHistoryItemBean>>() {
+    public void changeUsername(String phone, final ActionCallbackListener<Void> listener) {
+        // 参数检查
+        if (TextUtils.isEmpty(phone)) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "手机号为空");
+            }
+            return;
+        }
+        Pattern pattern = Pattern.compile("1\\d{10}");
+        Matcher matcher = pattern.matcher(phone);
+        if (!matcher.matches()) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
+            }
+            return;
+        }
+        api.postPersonInfo("", phone, "", "", "", "", "", "", "", null, null, null, null, new ResultCallback<ApiResponse<Void>>() {
             @Override
             public void onError(Request request, Exception e) {
+                e.printStackTrace();
+
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
             @Override
-            public void onResponse(ApiResponse<MedicalHistoryItemBean> response) {
+            public void onResponse(ApiResponse<Void> response) {
                 if ("1".equals(response.code)) {
-                    listener.onSuccess(response.dataArray);
+                    listener.onSuccess(null);
                 } else {
                     listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
                 }
             }
         });
     }
+
 
     @Override
     public void drugsList(String drugName, final ActionCallbackListener<ArrayList<DrugBean>> listener) {
         api.drugsList(drugName, new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
-                LogUtil.e(AppActionImpl.this, e.getMessage());
+                e.printStackTrace();
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -366,98 +386,11 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void postDrugs(String userId, String date, String drugsJson, final ActionCallbackListener<Void> listener) {
-        api.postDrugs(userId, date, drugsJson, new ResultCallback<ApiResponse<Void>>() {
-            @Override
-            public void onError(Request request, Exception e) {
-                LogUtil.e(AppActionImpl.this,e.getMessage());
-                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
-            }
-
-            @Override
-            public void onResponse(ApiResponse<Void> response) {
-                if ("1".equals(response.code)) {
-                    listener.onSuccess(null);
-                } else {
-                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void contactList(String userId, final ActionCallbackListener<ArrayList<ContactBean>> listener) {
-        api.contactList(userId, new ResultCallback<String>() {
-            @Override
-            public void onError(Request request, Exception e) {
-                LogUtil.e(AppActionImpl.this, e.getMessage());
-                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
-            }
-
-            @Override
-            public void onResponse(String response) {
-                LogUtil.e(AppActionImpl.this, response);
-                try {
-                    JSONObject responseObj = new JSONObject(response);
-                    String code = responseObj.getString("code");
-                    if (listener != null) {
-                        if (code.equals(Constant.REQUEST_ERROR)) {
-                            String msg = responseObj.getString("msg");
-                            listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
-                        } else if (code.equals(Constant.REQUEST_SUCCESS)) {
-                            ArrayList<ContactBean> list = new ArrayList<>();
-                            String data = responseObj.getString("data");
-                            JSONObject jsonObject = new JSONObject(data);
-                            Iterator<String> iterator = jsonObject.keys();
-                            while (iterator.hasNext()) {
-                                String key = iterator.next();
-                                String value = jsonObject.getString(key);
-                                List<ContactBean> temp = (List<ContactBean>) JsonUtil.parseJsonToList(value, new TypeToken<List<ContactBean>>() {
-                                }.getType());
-                                for (int i = 0; i < temp.size(); i++) {
-                                    temp.get(i).group = key;
-                                }
-                                list.addAll(temp);
-                            }
-                            Collections.sort(list);
-                            listener.onSuccess(list);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
-                }
-
-            }
-        });
-    }
-
-    @Override
-    public void informationList(String username, int page, final ActionCallbackListener<ArrayList<InformationBean>> listener) {
-        api.informationList(username, page + "", new ResultCallback<ApiResponse<InformationBean>>() {
-            @Override
-            public void onError(Request request, Exception e) {
-                LogUtil.e(AppActionImpl.this,e.getMessage());
-                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
-            }
-
-            @Override
-            public void onResponse(ApiResponse<InformationBean> response) {
-                if ("1".equals(response.code)) {
-                    listener.onSuccess(response.dataArray);
-                } else {
-                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
-                }
-            }
-        });
-    }
-
-    @Override
     public void messageList(String userId, int page, final ActionCallbackListener<ArrayList<MessageBean>> listener) {
         api.messageList(userId, page+"", new ResultCallback<ApiResponse<MessageBean>>() {
             @Override
             public void onError(Request request, Exception e) {
-                LogUtil.e(AppActionImpl.this,e.getMessage());
+                e.printStackTrace();
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -477,12 +410,457 @@ public class AppActionImpl implements AppAction {
         api.myCenter(userId, new ResultCallback<ApiResponse<UserBean>>() {
             @Override
             public void onError(Request request, Exception e) {
-                LogUtil.e(AppActionImpl.this, e.getMessage());
+                e.printStackTrace();
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
             @Override
             public void onResponse(ApiResponse<UserBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void departmentList(final ActionCallbackListener<ArrayList<DepartmentBean>> listener) {
+        api.departmentList(new ResultCallback<ApiResponse<DepartmentBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<DepartmentBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.dataArray);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void illnessList(final ActionCallbackListener<ArrayList<IllnessBean>> listener) {
+        api.illnessList(new ResultCallback<ApiResponse<IllnessBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<IllnessBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.dataArray);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void personInfo(final ActionCallbackListener<DoctorBean> listener) {
+        api.personInfo(new ResultCallback<ApiResponse<DoctorBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<DoctorBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void generateBindNumber(String department, String illness, String phone, final ActionCallbackListener<BindNumberBean> listener) {
+        if(TextUtils.isEmpty(illness)){
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请选择疾病");
+            }
+            return;
+        }
+        if(TextUtils.isEmpty(phone)){
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入患者手机号");
+            }
+            return;
+        }
+        Pattern pattern = Pattern.compile("1\\d{10}");
+        Matcher matcher = pattern.matcher(phone);
+        if (!matcher.matches()) {
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
+            }
+            return;
+        }
+        api.generateBindNumber(department, illness, phone, new ResultCallback<ApiResponse<BindNumberBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<BindNumberBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void sendBindNumber(String phone, final ActionCallbackListener<Void> listener) {
+        api.sendBindNumber(phone, new ResultCallback<ApiResponse<Void>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<Void> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void myPatients(int page, final ActionCallbackListener<ArrayList<PatientBean>> listener) {
+        api.myPatients(page+"", new ResultCallback<ApiResponse<PatientBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<PatientBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.dataArray);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getAuthorityStatus(final ActionCallbackListener<AuthorityBean> listener) {
+        api.getAuthorityStatus(new ResultCallback<ApiResponse<AuthorityBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<AuthorityBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setAuthorityStatus(String authority, final ActionCallbackListener<Void> listener) {
+        api.setAuthorityStatus(authority, new ResultCallback<ApiResponse<Void>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<Void> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getPriceList(final ActionCallbackListener<ArrayList<PriceBean>> listener) {
+        api.getPriceList(new ResultCallback<ApiResponse<PriceBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<PriceBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.dataArray);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setPriceList(String one, String three, String six, String twelve, final ActionCallbackListener<Void> listener) {
+        api.setPriceList(one, three, six, twelve, new ResultCallback<ApiResponse<Void>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<Void> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getTotalMoney(final ActionCallbackListener<TotalMoneyBean> listener) {
+        api.getTotalMoney(new ResultCallback<ApiResponse<TotalMoneyBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<TotalMoneyBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void withdraw(final ActionCallbackListener<Void> listener) {
+        api.withdraw(new ResultCallback<ApiResponse<Void>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<Void> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void contactListByType(String type, final ActionCallbackListener<ArrayList<ContactBean>> listener) {
+        api.contactListByType(type, new ResultCallback<ApiResponse<ContactBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<ContactBean> response) {
+                Collections.sort(response.dataArray);
+                listener.onSuccess(response.dataArray);
+            }
+        });
+    }
+
+    @Override
+    public void contactList(final ActionCallbackListener<ArrayList<ContactBean>> listener) {
+        api.contactList(new ResultCallback<ApiResponse<ContactBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                LogUtil.e(this,request.body().toString());
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<ContactBean> response) {
+                listener.onSuccess(response.dataArray);
+            }
+        });
+    }
+
+    @Override
+    public void groupOption(String patientId, String flag, String groupId, final ActionCallbackListener<Void> listener) {
+        api.groupOption(patientId, flag, groupId, new ResultCallback<ApiResponse<Void>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<Void> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void groupExperienceOption(String patientId, String flag, final ActionCallbackListener<Void> listener) {
+        api.groupExperienceOption(patientId, flag, new ResultCallback<ApiResponse<Void>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<Void> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void addGroup(String groupName, final ActionCallbackListener<Void> listener) {
+        if(TextUtils.isEmpty(groupName)){
+            if (listener != null) {
+                listener.onFailure(ErrorEvent.PARAM_NULL, "请输入分组名");
+            }
+            return;
+        }
+        api.addGroup(groupName, new ResultCallback<ApiResponse<Void>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<Void> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void queryGroup(final ActionCallbackListener<ArrayList<ContactGroupBean>> listener) {
+        api.queryGroup(new ResultCallback<ApiResponse<ContactGroupBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<ContactGroupBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.dataArray);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void deleteGroup(String groupId, final ActionCallbackListener<Void> listener) {
+        api.deleteGroup(groupId, new ResultCallback<ApiResponse<Void>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<Void> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void conversationDetail(String patientId, final ActionCallbackListener<DischargeSummaryBean> listener) {
+        api.conversationDetail(patientId, new ResultCallback<ApiResponse<DischargeSummaryBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<DischargeSummaryBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getUserById(String userId, final ActionCallbackListener<ContactBean> listener) {
+        api.getContactById(userId, new ResultCallback<ApiResponse<ContactBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<ContactBean> response) {
                 if ("1".equals(response.code)) {
                     listener.onSuccess(response.data);
                 } else {

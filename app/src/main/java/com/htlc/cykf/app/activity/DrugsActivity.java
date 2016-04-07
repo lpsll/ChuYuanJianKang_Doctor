@@ -36,7 +36,7 @@ public class DrugsActivity extends BaseActivity implements AdapterView.OnItemCli
     private TextView mTextDialog;
     private EditText mEditSearch;
     private SideBar mSideBar;
-
+    private boolean canClick = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +92,6 @@ public class DrugsActivity extends BaseActivity implements AdapterView.OnItemCli
     }
 
     private void search(String search) {
-        LogUtil.e(this,"search:"+search);
         if(TextUtils.isEmpty(search)){
             if(drugs.size()>0){
                 mList.clear();
@@ -100,20 +99,39 @@ public class DrugsActivity extends BaseActivity implements AdapterView.OnItemCli
                 mAdapter.notifyDataSetChanged();
             }
         }else {
-            appAction.drugsList(search, new ActionCallbackListener<ArrayList<DrugBean>>() {
-                @Override
-                public void onSuccess(ArrayList<DrugBean> data) {
-                    mList.clear();
-                    mList.addAll(data);
-                    mAdapter.notifyDataSetChanged();
+            mList.clear();
+            for(int i=0;i<drugs.size();i++){
+                DrugBean bean = (DrugBean) drugs.get(i);
+                if(bean.medicine.contains(search)){
+                    mList.add(bean);
                 }
-
-                @Override
-                public void onFailure(String errorEvent, String message) {
-                    ToastUtil.showToast(DrugsActivity.this, message);
-                }
-            });
+            }
+            mAdapter.notifyDataSetChanged();
         }
+
+//        LogUtil.e(this,"search:"+search);
+//        if(TextUtils.isEmpty(search)){
+//            if(drugs.size()>0){
+//                mList.clear();
+//                mList.addAll(drugs);
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        }else {
+//            appAction.drugsList(search, new ActionCallbackListener<ArrayList<DrugBean>>() {
+//                @Override
+//                public void onSuccess(ArrayList<DrugBean> data) {
+//                    mList.clear();
+//                    mList.addAll(data);
+//                    mAdapter.notifyDataSetChanged();
+//                }
+//
+//                @Override
+//                public void onFailure(String errorEvent, String message) {
+//                    if(handleNetworkOnFailure(errorEvent, message)) return;
+//                    ToastUtil.showToast(DrugsActivity.this, message);
+//                }
+//            });
+//        }
     }
 
     private void initData() {
@@ -129,6 +147,7 @@ public class DrugsActivity extends BaseActivity implements AdapterView.OnItemCli
 
             @Override
             public void onFailure(String errorEvent, String message) {
+                if(handleNetworkOnFailure(errorEvent, message)) return;
                 ToastUtil.showToast(DrugsActivity.this, message);
             }
         });
@@ -136,8 +155,11 @@ public class DrugsActivity extends BaseActivity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        DrugBean bean = (DrugBean) mList.get(position);
-        EventBus.getDefault().post(bean);
-        finish();
+        if(canClick){
+            canClick = !canClick;
+            DrugBean bean = (DrugBean) mList.get(position);
+            EventBus.getDefault().post(bean);
+            finish();
+        }
     }
 }

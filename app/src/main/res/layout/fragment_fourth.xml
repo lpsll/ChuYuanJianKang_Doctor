@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:background="@mipmap/fragment_fourth_bg"
                 android:layout_height="300px">
-                <com.htlc.cyjk.app.widget.CircleImageView
+                <com.htlc.cykf.app.widget.CircleImageView
                     android:id="@+id/imageHead"
                     android:layout_width="158px"
                     android:layout_height="158px"
@@ -46,7 +46,7 @@
 
             </com.zhy.autolayout.AutoRelativeLayout>
 
-            <com.htlc.cyjk.app.widget.ScrollListView
+            <com.htlc.cykf.app.widget.ScrollListView
                 style="@style/ListView"/>
             <!--********************************-->
         </com.zhy.autolayout.AutoLinearLayout>

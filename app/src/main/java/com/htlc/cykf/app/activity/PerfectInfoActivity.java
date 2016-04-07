@@ -2,36 +2,36 @@ package com.htlc.cykf.app.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
-import com.bigkoo.pickerview.listener.OnItemSelectedListener;
 import com.htlc.cykf.R;
-import com.htlc.cykf.app.bean.CityBean;
-import com.htlc.cykf.app.db.ProvinceDao;
-import com.htlc.cykf.app.util.CommonUtil;
+import com.htlc.cykf.app.App;
 import com.htlc.cykf.app.util.LogUtil;
+import com.htlc.cykf.app.util.PictureUtil;
 import com.htlc.cykf.app.util.ToastUtil;
 import com.htlc.cykf.app.widget.PickPhotoDialog;
 import com.htlc.cykf.core.ActionCallbackListener;
+import com.htlc.cykf.model.DepartmentBean;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,31 +42,32 @@ import java.util.Date;
 public class PerfectInfoActivity extends BaseActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private View mImageBack;
 
-    private ImageView mImageHead;
+    private ImageView mImageHead, mImageCertification, mImageLevel, mImageHonor;
     private RadioGroup mRadioGroup;
-    private TextView mTextAddress, mTextButtonFinish, mTextHintJob;
-    private LinearLayout mLinearJob;
-    private RelativeLayout mRelativeJob;
-    private RelativeLayout mRelativeDischargeSummary;
-    private EditText mEditUsername, mEditAge, mEditName;
+    private TextView mTextButtonFinish,mTextDepartment;
+    private EditText mEditUsername, mEditAge, mEditName, mEditHospital, mEditSpeciality, mEditExperience;
     private PickPhotoDialog mPickPhotoDialog;
 
     private OptionsPickerView mPickViePwOptions;
-    private ArrayList<CityBean> provinces = new ArrayList<CityBean>();
-    private ArrayList<CityBean> citys = new ArrayList<CityBean>();
-    private ArrayList<CityBean> countys = new ArrayList<CityBean>();
-    private ArrayList<String> jobs = new ArrayList<String>();
+    private ArrayList<DepartmentBean> mDepartments = new ArrayList<>();
 
     private boolean isFemale;
-    private File mImageFile;
-    private String mAddress;
-    private String mJob;
+    private File mImageHeadFile;
+    private ImageView currentImageView;
+    private File mImageCertificationFile;
+    private File mImageLevelFile;
+    private File mImageHonorFile;
+    private String mDepartmentId;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LogUtil.e(this, "onCreate start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfect_info);
         setupView();
+        LogUtil.e(this, "onCreate finish");
     }
 
     private void setupView() {
@@ -81,24 +82,44 @@ public class PerfectInfoActivity extends BaseActivity implements View.OnClickLis
         mEditUsername = (EditText) findViewById(R.id.editUsername);
         mEditUsername.setText(application.getUserBean().username);
         mEditAge = (EditText) findViewById(R.id.editAge);
-        mTextHintJob = (TextView) findViewById(R.id.textHintJob);
+        mEditHospital = (EditText) findViewById(R.id.editHospital);
+        mEditSpeciality = (EditText) findViewById(R.id.editSpeciality);
+        mEditExperience = (EditText) findViewById(R.id.editExperience);
 
         mImageHead = (ImageView) findViewById(R.id.imageHead);
+        mImageCertification = (ImageView) findViewById(R.id.imageCertification);
+        mImageLevel = (ImageView) findViewById(R.id.imageLevel);
+        mImageHonor = (ImageView) findViewById(R.id.imageHonor);
         mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-        mLinearJob = (LinearLayout) findViewById(R.id.linearJob);
-        mRelativeJob = (RelativeLayout) findViewById(R.id.relativeJob);
-        mTextAddress = (TextView) findViewById(R.id.textAddress);
-        mRelativeDischargeSummary = (RelativeLayout) findViewById(R.id.relativeDischargeSummary);
+        mTextDepartment = (TextView) findViewById(R.id.textDepartment);
         mTextButtonFinish = (TextView) findViewById(R.id.textButtonFinish);
 
 
         mImageHead.setOnClickListener(this);
+        mImageCertification.setOnClickListener(this);
+        mImageLevel.setOnClickListener(this);
+        mImageHonor.setOnClickListener(this);
         mRadioGroup.setOnCheckedChangeListener(this);
-        mLinearJob.setOnClickListener(this);
-        mRelativeJob.setOnClickListener(this);
-        mTextAddress.setOnClickListener(this);
-        mRelativeDischargeSummary.setOnClickListener(this);
+        mTextDepartment.setOnClickListener(this);
         mTextButtonFinish.setOnClickListener(this);
+
+        getDepartmentList();
+    }
+
+    private void getDepartmentList() {
+        appAction.departmentList(new ActionCallbackListener<ArrayList<DepartmentBean>>() {
+            @Override
+            public void onSuccess(ArrayList<DepartmentBean> data) {
+                mDepartments.clear();
+                mDepartments.addAll(data);
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                if(handleNetworkOnFailure(errorEvent, message)) return;
+                LogUtil.e(PerfectInfoActivity.this,message);
+            }
+        });
     }
 
     @Override
@@ -106,22 +127,27 @@ public class PerfectInfoActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.imageHead:
                 LogUtil.e(this, "imageHead");
+                currentImageView = mImageHead;
                 showPickPhotoDialog();
                 break;
-            case R.id.linearJob:
-                LogUtil.e(this, "linearJob");
+            case R.id.imageCertification:
+                LogUtil.e(this, "imageCertification");
+                currentImageView = mImageCertification;
+                showPickPhotoDialog();
                 break;
-            case R.id.relativeJob:
-                LogUtil.e(this, "relativeJob");
-                selectJob();
+            case R.id.imageLevel:
+                LogUtil.e(this, "imageLevel");
+                currentImageView = mImageLevel;
+                showPickPhotoDialog();
                 break;
-            case R.id.textAddress:
-                LogUtil.e(this, "textAddress");
-                selectAddress();
+            case R.id.imageHonor:
+                LogUtil.e(this, "imageHonor");
+                currentImageView = mImageHonor;
+                showPickPhotoDialog();
                 break;
-            case R.id.relativeDischargeSummary:
-                LogUtil.e(this, "relativeDischargeSummary");
-                goDischargeSummary();
+            case R.id.textDepartment:
+                LogUtil.e(this, "textDepartment");
+                selectDepartment();
                 break;
             case R.id.textButtonFinish:
                 LogUtil.e(this, "textButtonFinish");
@@ -129,104 +155,6 @@ public class PerfectInfoActivity extends BaseActivity implements View.OnClickLis
                 break;
         }
     }
-
-    private void goDischargeSummary() {
-        String name = mEditUsername.getText().toString().trim();
-        String age = mEditAge.getText().toString().trim();
-        Intent intent = new Intent(this, DischargeSummaryActivity.class);
-        intent.putExtra(DischargeSummaryActivity.Name,name);
-        intent.putExtra(DischargeSummaryActivity.Age,age);
-        intent.putExtra(DischargeSummaryActivity.Job,mJob);
-        intent.putExtra(DischargeSummaryActivity.Sex,isFemale);
-        startActivity(intent);
-    }
-
-    private void selectJob() {
-        //选项选择器
-        mPickViePwOptions = new OptionsPickerView(this);
-        jobs.clear();
-        String[] jobArray = CommonUtil.getResourceStringArray(R.array.activity_perfect_info_jobs);
-        for (int i=0;i<jobArray.length;i++){
-            jobs.add(jobArray[i]);
-        }
-        //三级不联动效果  false
-        mPickViePwOptions.setPicker(jobs);
-        mPickViePwOptions.setCyclic(false);
-        //设置默认选中的三级项目
-        //监听确定选择按钮
-        mPickViePwOptions.setSelectOptions(0);
-        mPickViePwOptions.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3) {
-                mJob = jobs.get(options1);
-                mTextHintJob.setText(mJob);
-            }
-        });
-        mPickViePwOptions.show();
-    }
-
-    private void selectAddress() {
-        //选项选择器
-        mPickViePwOptions = new OptionsPickerView(this);
-        provinces.clear();
-        citys.clear();
-        countys.clear();
-        provinces.addAll(new ProvinceDao().getProvinces());
-        citys.addAll(new ProvinceDao().getCities(provinces.get(0).area_code));
-        countys.addAll(new ProvinceDao().getCounties(citys.get(0).area_code));
-
-        //三级不联动效果  false
-        mPickViePwOptions.setPicker(provinces, citys, countys, false);
-        mPickViePwOptions.getWheelOptions().getWv_option1().setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                ArrayList<CityBean> temp = new ProvinceDao().getCities(provinces.get(index).area_code);
-                ArrayWheelAdapter adapter = new ArrayWheelAdapter(temp);
-                citys.clear();
-                citys.addAll(temp);
-                mPickViePwOptions.getWheelOptions().getWv_option2().setAdapter(adapter);
-
-                if (citys.size() == 0) {
-                    mPickViePwOptions.getWheelOptions().getWv_option3().setAdapter(new ArrayWheelAdapter(new ArrayList<CityBean>()));
-                    return;
-                }
-                ArrayList<CityBean> temp1 = new ProvinceDao().getCounties(citys.get(0).area_code);
-                ArrayWheelAdapter adapter1 = new ArrayWheelAdapter(temp1);
-                countys.clear();
-                countys.addAll(temp1);
-                mPickViePwOptions.getWheelOptions().getWv_option3().setAdapter(adapter1);
-
-            }
-        });
-        mPickViePwOptions.getWheelOptions().getWv_option2().setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                ArrayList<CityBean> temp = new ProvinceDao().getCounties(citys.get(index).area_code);
-                ArrayWheelAdapter adapter = new ArrayWheelAdapter(temp);
-                countys.clear();
-                countys.addAll(temp);
-                mPickViePwOptions.getWheelOptions().getWv_option3().setAdapter(adapter);
-            }
-        });
-        //设置选择的三级单位
-//        pwOptions.setLabels("省", "市", "区");
-//        mPickViePwOptions.setTitle("选择城市");
-        mPickViePwOptions.setCyclic(false, false, false);
-        //设置默认选中的三级项目
-        //监听确定选择按钮
-        mPickViePwOptions.setSelectOptions(0, 0, 0);
-        mPickViePwOptions.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                //返回的分别是三个级别的选中位置
-                mAddress = provinces.get(options1).area_name + citys.get(option2).area_name + countys.get(options3).area_name;
-                mTextAddress.setText(mAddress);
-            }
-        });
-        mPickViePwOptions.show();
-    }
-
 
     /**
      * 提交数据
@@ -236,19 +164,84 @@ public class PerfectInfoActivity extends BaseActivity implements View.OnClickLis
         String age = mEditAge.getText().toString().trim();
         String userId = application.getUserBean().userid;
         String username = application.getUserBean().username;
-        String address = mTextAddress.getText().toString().trim();
-        String job = mTextHintJob.getText().toString().trim();
-        appAction.postPersonInfo(userId, username, name, isFemale ? "1" : "0", age, job, address, mImageFile, new ActionCallbackListener<Void>() {
-            @Override
-            public void onSuccess(Void data) {
-                startActivity(new Intent(PerfectInfoActivity.this,MainActivity.class));
-            }
+        String hospital = mEditHospital.getText().toString().trim();
+        String speciality = mEditSpeciality.getText().toString().trim();
+        String experience = mEditExperience.getText().toString().trim();
+        showProgressHUD();
+        LogUtil.e(this,"是女？"+isFemale);
+        appAction.postPersonInfo(userId, username, name, isFemale ? "1" : "0", age,
+                mDepartmentId, hospital, speciality, experience,
+                mImageHeadFile, mImageCertificationFile, mImageLevelFile, mImageHonorFile,
+                new ActionCallbackListener<Void>() {
+                    @Override
+                    public void onSuccess(Void data) {
+                        dismissProgressHUD();
+                        LogUtil.e(PerfectInfoActivity.this, "提交成功！");
+                        showMessageDialog();
+                    }
 
+                    @Override
+                    public void onFailure(String errorEvent, String message) {
+                        dismissProgressHUD();
+                        if(handleNetworkOnFailure(errorEvent, message)) return;
+                        ToastUtil.showToast(App.app, message);
+
+                    }
+                });
+    }
+
+    private void showMessageDialog() {
+        View view =  View.inflate(this,R.layout.dialog_message,null);
+        TextView textMessage = (TextView) view.findViewById(R.id.textMessage);
+        textMessage.setText("提交成功\n等待审核");
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(String errorEvent, String message) {
-                ToastUtil.showToast(PerfectInfoActivity.this,message);
+            public void onClick(View v) {
+                LoginActivity.start(PerfectInfoActivity.this,null);
+                finish();
             }
         });
+        showTipsDialog(view, 300, 150, false);
+    }
+
+    private void selectDepartment(){
+        if(mDepartments.size()<1){
+            appAction.departmentList(new ActionCallbackListener<ArrayList<DepartmentBean>>() {
+                @Override
+                public void onSuccess(ArrayList<DepartmentBean> data) {
+                    mDepartments.clear();
+                    mDepartments.addAll(data);
+                    selectDepartment();
+                }
+
+                @Override
+                public void onFailure(String errorEvent, String message) {
+                    if(handleNetworkOnFailure(errorEvent, message)) return;
+                    LogUtil.e(PerfectInfoActivity.this,message);
+                }
+            });
+        }
+        //选项选择器
+        mPickViePwOptions = new OptionsPickerView(this);
+        //三级不联动效果  false
+        mPickViePwOptions.setPicker(mDepartments);
+        mPickViePwOptions.setCyclic(false);
+        //设置默认选中的三级项目
+        //监听确定选择按钮
+        mPickViePwOptions.setSelectOptions(0);
+        mPickViePwOptions.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3) {
+                mTextDepartment.setText(mDepartments.get(options1).subject);
+                mDepartmentId = mDepartments.get(options1).id;
+            }
+        });
+        mPickViePwOptions.show();
+    }
+
+    private void goMain() {
+        MainActivity.start(this,null);
+        finish();
     }
 
     /**
@@ -328,8 +321,17 @@ public class PerfectInfoActivity extends BaseActivity implements View.OnClickLis
                 MediaStore.ACTION_IMAGE_CAPTURE);
         // 下面这句指定调用相机拍照后的照片存储的路径
         String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        mImageFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + filename + ".jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageFile));
+        File imageFile = new File(PictureUtil.getAlbumDir(), "IMG_" + filename + ".jpg");
+        if(currentImageView==mImageCertification){
+            mImageCertificationFile = imageFile;
+        }else if(currentImageView ==mImageLevel){
+            mImageLevelFile = imageFile;
+        }else if(currentImageView == mImageHonor){
+            mImageHonorFile = imageFile;
+        }else if (currentImageView == mImageHead){
+            mImageHeadFile = imageFile;
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
         startActivityForResult(intent, 2);
 
     }
@@ -362,12 +364,25 @@ public class PerfectInfoActivity extends BaseActivity implements View.OnClickLis
             // 如果是直接从相册获取
             case 1:
                 if (Activity.RESULT_OK != resultCode) return;
-                startPhotoZoom(data.getData());
+                if(currentImageView == mImageHead){
+                    startPhotoZoom(data.getData());
+                }else {
+                   String imagePath = getRealImagePath(data);
+                    saveSmallImage(imagePath);
+                }
                 break;
             // 如果是调用相机拍照时
             case 2:
                 if (Activity.RESULT_OK != resultCode) return;
-                startPhotoZoom(Uri.fromFile(mImageFile));
+                if(currentImageView == mImageHead){
+                    startPhotoZoom(Uri.fromFile(mImageHeadFile));
+                }else if(currentImageView == mImageCertification){
+                    saveSmallImage(mImageCertificationFile.getAbsolutePath());
+                }else if(currentImageView == mImageLevel){
+                    saveSmallImage(mImageLevelFile.getAbsolutePath());
+                }else if(currentImageView == mImageHonor){
+                    saveSmallImage(mImageHonorFile.getAbsolutePath());
+                }
                 break;
             // 取得裁剪后的图片
             case 3:
@@ -384,6 +399,45 @@ public class PerfectInfoActivity extends BaseActivity implements View.OnClickLis
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void saveSmallImage(String imagePath) {
+        if (imagePath != null) {
+            try {
+                File f = new File(imagePath);
+                Bitmap bm = PictureUtil.getSmallBitmap(imagePath, 1024);
+                File imageFile = new File(PictureUtil.getAlbumDir(), "small_" + f.getName());
+                if(currentImageView==mImageCertification){
+                    mImageCertificationFile = imageFile;
+                    mImageCertification.setImageBitmap(bm);
+                }else if(currentImageView ==mImageLevel){
+                    mImageLevelFile = imageFile;
+                    mImageLevel.setImageBitmap(bm);
+                }else if(currentImageView == mImageHonor){
+                    mImageHonorFile = imageFile;
+                    mImageHonor.setImageBitmap(bm);
+                }
+                FileOutputStream fos = new FileOutputStream(imageFile);
+                bm.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.e("PerfectInfoActivity", "error", e);
+            }
+        }
+    }
+
+    private String getRealImagePath(Intent data) {
+        Uri selectedImage = data.getData();
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return picturePath;
     }
 
     /**
@@ -413,8 +467,8 @@ public class PerfectInfoActivity extends BaseActivity implements View.OnClickLis
 
         // 下面这句指定调用相机拍照后的照片存储的路径
         String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        mImageFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + filename + ".jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageFile));
+        mImageHeadFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + filename + ".jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageHeadFile));
 
         startActivityForResult(intent, 3);
     }

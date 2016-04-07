@@ -4,6 +4,8 @@ package com.htlc.cykf.app.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -29,10 +31,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private int time = Constant.VERIFICATION_TIME;//获取验证码成功后，倒计时60s
     private CheckBox mCheckBox, mCheckBoxEye;
 
-    @Override
-    protected boolean isRegisterRongIMConnectionListener() {
-        return false;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +41,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void setupView() {
+        findViewById(R.id.imageBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mTextTitle = (TextView) findViewById(R.id.textTitle);
         mTextButtonRegister = (TextView) findViewById(R.id.textButtonRegister);
         mTextButtonGetVerification = (TextView) findViewById(R.id.textButtonGetVerification);
@@ -71,8 +75,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 LogUtil.e(RegisterActivity.this,isChecked+"===isChecked");
                 if(isChecked){
                     mEditPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
                 }else {
                     mEditPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                CharSequence text = mEditPassword.getText();
+                if (text instanceof Spannable) {
+                    Spannable spanText = (Spannable) text;
+                    Selection.setSelection(spanText, text.length());
                 }
             }
         });

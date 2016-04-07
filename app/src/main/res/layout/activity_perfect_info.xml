@@ -25,7 +25,7 @@
         <com.zhy.autolayout.AutoLinearLayout
             style="@style/ScrollViewRoot">
             <!--********************************-->
-            <com.htlc.cyjk.app.widget.CircleImageView
+            <com.htlc.cykf.app.widget.CircleImageView
                 android:id="@+id/imageHead"
                 android:layout_width="150px"
                 android:layout_height="150px"
@@ -44,8 +44,8 @@
                 android:id="@+id/editUsername"
                 style="@style/EditInput"
                 android:layout_marginTop="30px"
-                android:hint="@string/common_username_hint"
                 android:enabled="false"
+                android:hint="@string/common_username_hint"
                 android:inputType="number"/>
             <!--年龄-->
             <EditText
@@ -64,7 +64,7 @@
                     style="@style/EditInput"
                     android:layout_marginTop="30px"
                     android:hint="@string/activity_perfect_gender_hint"
-                    android:inputType="number"/>
+                    />
 
                 <RadioGroup
                     android:id="@+id/radioGroup"
@@ -106,89 +106,155 @@
                         android:textSize="26px"/>
                 </RadioGroup>
             </com.zhy.autolayout.AutoRelativeLayout>
-            <!--职业-->
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/relativeJob">
-
-                <TextView
-                    android:id="@+id/textHintJob"
-                    style="@style/EditInput"
-                    android:textColor="@color/text_black"
-                    android:layout_marginTop="30px"
-                    android:hint="@string/activity_perfect_job_hint"
-                    />
-
-                <com.zhy.autolayout.AutoLinearLayout
-                    android:id="@+id/linearJob"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/textHintJob"
-                    android:layout_alignRight="@+id/textHintJob"
-                    android:layout_alignTop="@+id/textHintJob"
-                    android:gravity="center_vertical"
-                    android:visibility="gone"
-                    android:orientation="horizontal"
-                    android:paddingLeft="20px"
-                    android:paddingRight="20px">
-
-                    <TextView
-                        android:id="@+id/textJob"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="20px"
-                        android:paddingLeft="30px"
-                        android:paddingRight="30px"
-                        android:paddingTop="20px"
-                        android:text="请选择"
-                        android:textColor="@color/text_gray_dark"
-                        android:textSize="26px"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/arrow_down"/>
-
-                </com.zhy.autolayout.AutoLinearLayout>
-            </com.zhy.autolayout.AutoRelativeLayout>
-            <!--地址-->
+            <!--科室-->
             <TextView
-                android:id="@+id/textAddress"
-                android:textColor="@color/text_black"
+                android:id="@+id/textDepartment"
                 style="@style/EditInput"
                 android:layout_marginTop="30px"
-                android:hint="@string/activity_perfect_address_hint"
+                android:hint="@string/activity_perfect_department_hint"
+                android:textColor="@color/text_black"
                 />
-            <!--小结-->
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:id="@+id/relativeDischargeSummary"
+            <!--医院-->
+            <EditText
+                android:id="@+id/editHospital"
+                style="@style/EditInput"
+                android:layout_marginTop="30px"
+                android:hint="@string/activity_perfect_hospital_hint"
+                />
+            <!--擅长领域-->
+            <EditText
+                android:id="@+id/editSpeciality"
+                style="@style/EditInput"
+                android:layout_marginTop="30px"
+                android:hint="@string/activity_perfect_speciality_hint"
+                />
+            <!--从事经验-->
+            <EditText
+                android:id="@+id/editExperience"
+                style="@style/EditInput"
+                android:layout_marginTop="30px"
+                android:hint="@string/activity_perfect_experience_hint"
+                />
+<!--证书-->
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_marginTop="30px"
+                android:background="@drawable/edit_rectangle_shape"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:orientation="vertical"
+                android:paddingBottom="23px"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:paddingTop="23px">
 
                 <TextView
-                    android:id="@+id/textDischargeSummaryHint"
-                    style="@style/EditInput"
-                    android:textColor="@color/text_gray_dark"
-                    android:layout_marginTop="30px"
-                    android:text="@string/activity_perfect_discharge_summary_hint"
-                    />
-
-                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/textDischargeSummaryHint"
-                    android:layout_alignRight="@+id/textDischargeSummaryHint"
-                    android:layout_alignTop="@+id/textDischargeSummaryHint"
-                    android:layout_marginLeft="20px"
-                    android:layout_marginRight="20px"
-                    android:src="@mipmap/arrow_right"/>
-            </com.zhy.autolayout.AutoRelativeLayout>
+                    android:hint="@string/activity_perfect_credential_hint"
+                    android:textColor="@color/text_gray"
+                    android:textSize="26px"/>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30px"
+                    android:orientation="horizontal">
+                    <!--资格-->
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="0px"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageCertification"
+                            android:layout_width="150px"
+                            android:layout_height="145px"
+                            android:background="@mipmap/icon_credential"/>
+
+                        <TextView
+                            android:layout_marginTop="10px"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22px"
+                            android:textColor="@color/text_black"
+                            android:text="@string/activity_perfect_career_hint"/>
+                        <TextView
+                            android:layout_marginTop="10px"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22px"
+                            android:textColor="@color/text_gray"
+                            android:text="@string/activity_perfect_required_hint"/>
+                    </com.zhy.autolayout.AutoLinearLayout>
+                    <!--职称-->
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="0px"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageLevel"
+                            android:layout_width="150px"
+                            android:layout_height="145px"
+                            android:background="@mipmap/icon_credential"/>
+
+                        <TextView
+                            android:layout_marginTop="10px"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22px"
+                            android:textColor="@color/text_black"
+                            android:text="@string/activity_perfect_level_hint"/>
+                        <TextView
+                            android:layout_marginTop="10px"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22px"
+                            android:textColor="@color/text_gray"
+                            android:text="@string/activity_perfect_optional_hint"/>
+                    </com.zhy.autolayout.AutoLinearLayout>
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="0px"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageHonor"
+                            android:layout_width="150px"
+                            android:layout_height="145px"
+                            android:background="@mipmap/icon_credential"/>
+
+                        <TextView
+                            android:layout_marginTop="10px"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22px"
+                            android:textColor="@color/text_black"
+                            android:text="@string/activity_perfect_honor_hint"/>
+                        <TextView
+                            android:layout_marginTop="10px"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="22px"
+                            android:textColor="@color/text_gray"
+                            android:text="@string/activity_perfect_optional_hint"/>
+                    </com.zhy.autolayout.AutoLinearLayout>
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
 
             <TextView
-                android:layout_marginTop="60px"
                 android:id="@+id/textButtonFinish"
                 style="@style/TextButton"
+                android:layout_marginTop="60px"
                 android:text="@string/common_finish"/>
         </com.zhy.autolayout.AutoLinearLayout>
     </ScrollView>

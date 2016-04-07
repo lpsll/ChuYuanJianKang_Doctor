@@ -17,9 +17,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.htlc.cykf.R;
 import com.htlc.cykf.app.activity.MessageCenterActivity;
-import com.htlc.cykf.app.activity.PayActivity;
+import com.htlc.cykf.app.activity.MyAccountActivity;
+import com.htlc.cykf.app.activity.MyPatientActivity;
 import com.htlc.cykf.app.activity.PersonActivity;
-import com.htlc.cykf.app.activity.RecommendationActivity;
 import com.htlc.cykf.app.activity.SettingActivity;
 import com.htlc.cykf.app.adapter.FourthAdapter;
 import com.htlc.cykf.app.bean.FourthAdapterBean;
@@ -49,8 +49,13 @@ public class FourthFragment extends HomeFragment implements AdapterView.OnItemCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fourth,null);
         setupView(view);
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        myCenter();
     }
 
     private void setupView(View view) {
@@ -98,6 +103,7 @@ public class FourthFragment extends HomeFragment implements AdapterView.OnItemCl
             mList.add(bean);
         }
         mAdapter.notifyDataSetChanged();
+
     }
 
 
@@ -107,12 +113,13 @@ public class FourthFragment extends HomeFragment implements AdapterView.OnItemCl
             @Override
             public void onSuccess(UserBean data) {
                 baseActivity.application.setUserBean(data);
+                LogUtil.e(FourthFragment.this,data.toString());
                 refreshHeadAndName();
             }
 
             @Override
             public void onFailure(String errorEvent, String message) {
-
+                if(handleNetworkOnFailure(errorEvent, message)) return;
             }
         });
     }
@@ -127,7 +134,8 @@ public class FourthFragment extends HomeFragment implements AdapterView.OnItemCl
                 startActivity(intent0);
                 break;
             case 1:
-                Intent intent1 = new Intent(getActivity(), PayActivity.class);
+                LogUtil.e(this,"我的账户");
+                Intent intent1= new Intent(getActivity(), MyAccountActivity.class);
                 startActivity(intent1);
                 break;
             case 2:
@@ -139,7 +147,7 @@ public class FourthFragment extends HomeFragment implements AdapterView.OnItemCl
                 startActivity(intent3);
                 break;
             case 4:
-                Intent intent4 = new Intent(getActivity(), RecommendationActivity.class);
+                Intent intent4 = new Intent(getActivity(), MyPatientActivity.class);
                 startActivity(intent4);
                 break;
         }

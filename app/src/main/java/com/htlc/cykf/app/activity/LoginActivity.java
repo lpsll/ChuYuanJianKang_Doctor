@@ -2,6 +2,7 @@
 package com.htlc.cykf.app.activity;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.htlc.cykf.R;
 import com.htlc.cykf.app.App;
+import com.htlc.cykf.app.util.AppManager;
 import com.htlc.cykf.app.util.LogUtil;
 import com.htlc.cykf.app.util.ToastUtil;
 import com.htlc.cykf.core.ActionCallbackListener;
@@ -24,13 +26,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private TextView mTextButtonLogin, mTextButtonRegister, mTextButtonForget;
     private EditText mEditUsername,mEditPassword;
-    @Override
-    protected boolean isRegisterRongIMConnectionListener() {
-        return false;
+
+    public static void start(Context context, Intent extras) {
+        Intent intent = new Intent();
+        intent.setClass(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppManager.getAppManager().finishAllActivity();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupView();
@@ -67,6 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login() {
         final String username = mEditUsername.getText().toString().trim();
         final String password = mEditPassword.getText().toString().trim();
+        showProgressHUD();
         appAction.login(username, password, new ActionCallbackListener<UserBean>() {
             @Override
             public void onSuccess(UserBean data) {
@@ -74,18 +84,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 data.password = password;
                 application.setUserBean(data);
                 connect(data.token);
-//                goMainOrGuide();
             }
 
             @Override
             public void onFailure(String errorEvent, String message) {
                 ToastUtil.showToast(LoginActivity.this, message);
+                dismissProgressHUD();
             }
         });
     }
 
     private void goRegister(boolean isRegister) {
-        Intent intent = null;
+        Intent intent ;
         if(isRegister){
             intent = new Intent(this, RegisterActivity.class);
         }else {
@@ -96,23 +106,52 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void goMainOrGuide() {
-        Intent intent = null;
         String flag = application.getUserBean().flag;
         switch (flag){
-            case "0":
-            case "3":
-                intent = new Intent(LoginActivity.this, MainActivity.class);
-                break;
             case "1":
-                intent = new Intent(LoginActivity.this, RecommendationActivity.class);
-                intent.putExtra(RecommendationActivity.IsLoginBind,true);
+                LogUtil.e(this,"审核中");
+                showMessageDialog("审核中");
                 break;
             case "2":
-                intent = new Intent(LoginActivity.this, PerfectInfoActivity.class);
+                LogUtil.e(this, "信息审核为通过");
+                showMessageDialog("信息审核未通过\n请重新提交");
                 break;
+            case "3":
+                LogUtil.e(this, "信息未完善");
+                showMessageDialog("信息未完善\n去完善");
+                break;
+            case "0":
             default:
-                intent = new Intent(LoginActivity.this, MainActivity.class);
+                MainActivity.start(this,null);
+                finish();
         }
+
+    }
+    private void showMessageDialog(String message) {
+        View view =  View.inflate(this,R.layout.dialog_message,null);
+        TextView textMessage = (TextView) view.findViewById(R.id.textMessage);
+        textMessage.setText(message);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String flag = application.getUserBean().flag;
+                switch (flag){
+                    case "1":
+                        dismissTipsDialog();
+                        break;
+                    case "2":
+                        goPerfectInfo();
+                        break;
+                    case "3":
+                        goPerfectInfo();
+                        break;
+                }
+            }
+        });
+        showTipsDialog(view, 300, 150, true);
+    }
+    private void goPerfectInfo(){
+        Intent intent = new Intent(LoginActivity.this, PerfectInfoActivity.class);
         startActivity(intent);
         finish();
     }
@@ -146,8 +185,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onSuccess(String userid) {
                     Log.d("LoginActivity", "--onSuccess" + userid);
-                    App.app.setIsOnline(true);
                     goMainOrGuide();
+                    dismissProgressHUD();
                 }
 
                 /**
@@ -157,7 +196,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
                     LogUtil.e("RongIM TOKEN connect", "error:" + errorCode);
-                    Log.d("LoginActivity", "--onError" + errorCode);
+                    dismissProgressHUD();
                 }
             });
         }

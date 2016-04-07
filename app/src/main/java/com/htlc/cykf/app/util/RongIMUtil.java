@@ -11,16 +11,7 @@ import io.rong.imlib.RongIMClient;
  * Created by sks on 2016/2/19.
  */
 public class RongIMUtil {
-    private static RongIMConnectStatusListener listener = null;
 
-    public static void setListener(RongIMConnectStatusListener listener) {
-        RongIMUtil.listener = listener;
-    }
-
-
-    public interface RongIMConnectStatusListener{
-        void onError();
-    }
     /**
      * 建立与融云服务器的连接
      *
@@ -41,9 +32,6 @@ public class RongIMUtil {
                 @Override
                 public void onTokenIncorrect() {
                     Log.d("RongIM TOKEN connect", "--onTokenIncorrect");
-                    if(listener!=null){
-                        listener.onError();
-                    }
                 }
 
                 /**
@@ -53,7 +41,6 @@ public class RongIMUtil {
                 @Override
                 public void onSuccess(String userid) {
                     LogUtil.e("RongIM TOKEN connect", "--onSuccess" + userid);
-                    App.app.setIsOnline(true);
                 }
 
                 /**
@@ -63,9 +50,6 @@ public class RongIMUtil {
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
                     LogUtil.e("RongIM TOKEN connect","error:"+errorCode);
-                    if(listener!=null){
-                        listener.onError();
-                    }
                 }
             });
         }

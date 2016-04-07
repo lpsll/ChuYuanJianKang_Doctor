@@ -87,6 +87,7 @@ public class MessageCenterActivity extends BaseActivity implements AdapterView.O
 
             @Override
             public void onFailure(String errorEvent, String message) {
+                if(handleNetworkOnFailure(errorEvent, message)) return;
                 mScrollView.onRefreshComplete();
             }
         });
@@ -106,6 +107,7 @@ public class MessageCenterActivity extends BaseActivity implements AdapterView.O
 
             @Override
             public void onFailure(String errorEvent, String message) {
+                if(handleNetworkOnFailure(errorEvent, message)) return;
                 mScrollView.onRefreshComplete();
             }
         });
@@ -114,9 +116,10 @@ public class MessageCenterActivity extends BaseActivity implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String userId = application.getUserBean().userid;
+        String token = application.getUserBean().token;
         MessageBean bean = (MessageBean) mList.get(position);
         Intent intent = new Intent(this,WebActivity.class);
-        intent.putExtra(WebActivity.Url, Api.MessageDetail+"?userid="+userId+"&msgid="+bean.id+"&flag="+bean.flag);
+        intent.putExtra(WebActivity.Url, Api.MessageDetail+"?userid="+userId+"&msgid="+bean.id+"&flag="+bean.flag+"&token="+token);
         intent.putExtra(WebActivity.Title, "消息详情");
         startActivity(intent);
     }

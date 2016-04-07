@@ -8,38 +8,48 @@
 
     <com.zhy.autolayout.AutoRelativeLayout
         style="@style/TitleBarRelative">
-        <TextView
-            android:id="@+id/textLeft"
-            style="@style/TitleBarRelativeLeftText"
-            android:text="删除"/>
 
-        <TextView
-            android:id="@+id/textTitle"
-            style="@style/TitleBarRelativeMiddleText"
-            android:text="@string/fragment_first_title"/>
-        <TextView
-            android:id="@+id/textRight"
-            style="@style/TitleBarRelativeRightText"
-            android:text="保存"/>
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/linearTitleContainer"
+            android:layout_width="300px"
+            android:layout_height="60px"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/fragment_contact_title_bg">
+            <TextView
+                android:id="@+id/textChart"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="28px"
+                android:textColor="@color/text_color_white_blue_selector"
+                android:text="@string/fragment_first_chat_list"/>
+            <TextView
+                android:id="@+id/textContact"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="28px"
+                android:enabled="false"
+                android:textColor="@color/text_color_white_blue_selector"
+                android:text="@string/fragment_first_contact"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+        <ImageView
+            android:id="@+id/imageRight"
+            android:padding="30px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/fragment_first_add"
+            />
     </com.zhy.autolayout.AutoRelativeLayout>
 
-    <com.zhy.autolayout.AutoLinearLayout
-        style="@style/ScrollViewRoot">
+    <com.zhy.autolayout.AutoFrameLayout
+        android:id="@+id/frameContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-        <!--********************************-->
-        <com.htlc.cyjk.app.widget.AutoPagerSlidingTabStrip
-            android:id="@+id/indicator"
-            android:layout_width="match_parent"
-            android:layout_height="80px">
-        </com.htlc.cyjk.app.widget.AutoPagerSlidingTabStrip>
-        <include layout="@layout/layout_divider_horizontal"/>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-        </android.support.v4.view.ViewPager>
-        <!--********************************-->
-    </com.zhy.autolayout.AutoLinearLayout>
 
 </com.zhy.autolayout.AutoLinearLayout>

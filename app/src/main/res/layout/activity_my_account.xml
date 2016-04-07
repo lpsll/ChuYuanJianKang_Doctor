@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.zhy.autolayout.AutoRelativeLayout
+        style="@style/TitleBarRelative">
+
+        <ImageView
+            style="@style/TitleBarRelativeLeftImage"/>
+
+        <TextView
+            style="@style/TitleBarRelativeMiddleText"
+            android:text="@string/activity_my_account"/>
+    </com.zhy.autolayout.AutoRelativeLayout>
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="400px"
+        android:background="@mipmap/fragment_fourth_bg"
+        android:gravity="center">
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+            <com.htlc.cykf.app.widget.CircleImageView
+                android:id="@+id/imageHead"
+                android:layout_width="158px"
+                android:layout_height="158px"
+                app:civ_border_color="@android:color/white"
+                app:civ_border_width="4px"
+                app:civ_border_overlay="true"
+                android:src="@mipmap/ic_launcher"/>
+            <TextView
+                android:id="@+id/textAccount"
+                android:layout_below="@+id/imageHead"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="32px"
+                android:text="账户余额: 300￥"/>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
+    <TextView
+        android:layout_marginTop="230px"
+        style="@style/TextButton"
+        android:text="@string/activity_my_account_withdraw"/>
+</com.zhy.autolayout.AutoLinearLayout>

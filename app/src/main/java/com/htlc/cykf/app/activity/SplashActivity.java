@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.htlc.cykf.R;
+import com.htlc.cykf.app.util.LogUtil;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by sks on 2016/2/15.
@@ -14,10 +17,7 @@ import com.htlc.cykf.R;
 public class SplashActivity extends BaseActivity {
 
     private ImageView mImageView;
-    @Override
-    protected boolean isRegisterRongIMConnectionListener() {
-        return false;
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        JPushInterface.onResume(this);
         ValueAnimator animator = ValueAnimator.ofFloat(0.4f, 1.0f);
         animator.setDuration(1000).start();
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -61,33 +62,43 @@ public class SplashActivity extends BaseActivity {
 
             }
         });
-
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
     }
 
     private void goNextActivity() {
-        Intent intent = null;
+        application.initLoginStatus();
         if (application.isLogin()) {
             String flag = application.getUserBean().flag;
+            LogUtil.e(this,"isLogin ;flag="+flag);
             switch (flag){
-                case "0":
-                case "3":
-                    intent = new Intent(SplashActivity.this, MainActivity.class);
-                    break;
                 case "1":
-                    intent = new Intent(SplashActivity.this, RecommendationActivity.class);
-                    intent.putExtra(RecommendationActivity.IsLoginBind,true);
+                    LogUtil.e(this,"审核中");
+                    LoginActivity.start(this,null);
+                    finish();
                     break;
                 case "2":
-                    intent = new Intent(SplashActivity.this, PerfectInfoActivity.class);
+                    LogUtil.e(this,"被驳回");
+                    LoginActivity.start(this, null);
+                    finish();
                     break;
+                case "3":
+                    LogUtil.e(this, "信息未完善");
+                    LoginActivity.start(this, null);
+                    finish();
+                    break;
+                case "0":
                 default:
-                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                    MainActivity.start(this,null);
+                    finish();
             }
 
         }else {
-            intent = new Intent(SplashActivity.this, LoginActivity.class);
+            LoginActivity.start(this,null);
+            finish();
         }
-        startActivity(intent);
-        finish();
     }
 }

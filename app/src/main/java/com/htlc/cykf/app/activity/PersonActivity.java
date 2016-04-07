@@ -2,30 +2,37 @@ package com.htlc.cykf.app.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
-import com.bigkoo.pickerview.listener.OnItemSelectedListener;
 import com.htlc.cykf.R;
-import com.htlc.cykf.app.bean.CityBean;
-import com.htlc.cykf.app.db.ProvinceDao;
+import com.htlc.cykf.app.App;
+import com.htlc.cykf.app.util.LogUtil;
+import com.htlc.cykf.app.util.PictureUtil;
+import com.htlc.cykf.app.util.ToastUtil;
 import com.htlc.cykf.app.widget.PickPhotoDialog;
+import com.htlc.cykf.core.ActionCallbackListener;
+import com.htlc.cykf.model.DoctorBean;
+import com.htlc.cykf.model.UserBean;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,22 +43,22 @@ import java.util.Date;
 public class PersonActivity extends BaseActivity implements View.OnClickListener {
     private TextView mTextLeft, mTextRight;
     private View mImageBack;
-    private ImageView mImageHead;
-    private EditText mEditGender, mEditDepartment, mEditDoctor, mEditUsername, mEditAddress;
+    private ImageView mImageHead, mImageCertification, mImageLevel, mImageHonor;
+    private EditText mEditGender, mEditDepartment, mEditHospital, mEditUsername, mEditSpeciality, mEditExperience;
     private EditText mEditName, mEditAge;
-    private LinearLayout mLinearDischargeSummary;
     private boolean isEditable = false;
 
     private PickPhotoDialog mPickPhotoDialog;
-    private File mImageFile;
-
     private OptionsPickerView mPickViePwOptions;
-    private ArrayList<CityBean> provinces = new ArrayList<CityBean>();
-    private ArrayList<CityBean> citys = new ArrayList<CityBean>();
-    private ArrayList<CityBean> countys = new ArrayList<CityBean>();
-    private String mAddress;
-
     private ArrayList<String> genders = new ArrayList<>();
+    private DoctorBean mPersonBean;
+
+    private File mImageHeadFile;
+    private ImageView currentImageView;
+    private File mImageCertificationFile;
+    private File mImageLevelFile;
+    private File mImageHonorFile;
+    private boolean isFemale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,30 +86,77 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
         mEditAge = (EditText) findViewById(R.id.editAge);
 
         mEditDepartment = (EditText) findViewById(R.id.editDepartment);
-        mEditDoctor = (EditText) findViewById(R.id.editDoctor);
+        mEditHospital = (EditText) findViewById(R.id.editHospital);
+        mEditSpeciality = (EditText) findViewById(R.id.editSpeciality);
+        mEditExperience = (EditText) findViewById(R.id.editExperience);
+        mImageCertification = (ImageView) findViewById(R.id.imageCertification);
+        mImageLevel = (ImageView) findViewById(R.id.imageLevel);
+        mImageHonor = (ImageView) findViewById(R.id.imageHonor);
 
+        mImageCertification.setOnClickListener(this);
+        mImageLevel.setOnClickListener(this);
+        mImageHonor.setOnClickListener(this);
         mEditGender = (EditText) findViewById(R.id.editGender);
         mEditGender.setOnClickListener(this);
         mEditUsername = (EditText) findViewById(R.id.editUsername);
         mEditUsername.setOnClickListener(this);
-        mEditAddress = (EditText) findViewById(R.id.editAddress);
-        mEditAddress.setOnClickListener(this);
-        mLinearDischargeSummary = (LinearLayout) findViewById(R.id.linearDischargeSummary);
-        mLinearDischargeSummary.setOnClickListener(this);
 
 
+        refreshView();
+        getPersonInfo();
+    }
+
+    private void refreshView() {
+        UserBean bean = application.getUserBean();
+        ImageLoader.getInstance().displayImage(bean.photo, mImageHead);
+        mEditName.setText(bean.name);
+        mEditUsername.setText(bean.username);
+        if (mPersonBean != null) {
+            mEditName.setText(mPersonBean.name);
+            if ("1".equals(mPersonBean.sex)) {
+                mEditGender.setText("女");
+            } else {
+                mEditGender.setText("男");
+            }
+            mEditAge.setText(mPersonBean.age);
+            mEditDepartment.setText(mPersonBean.department);
+            mEditHospital.setText(mPersonBean.hospital);
+            mEditSpeciality.setText(mPersonBean.field);
+            mEditExperience.setText(mPersonBean.seniority);
+            ImageLoader.getInstance().displayImage(mPersonBean.imgone, mImageCertification);
+            ImageLoader.getInstance().displayImage(mPersonBean.imgtwo, mImageLevel);
+            ImageLoader.getInstance().displayImage(mPersonBean.imgthree, mImageHonor);
+        }
     }
 
     @Override
     public void onClick(View v) {
+        LogUtil.e(this, v.getId() + ";");
         switch (v.getId()) {
             case R.id.textLeft:
-                postPersonInfo();
-                break;
-            case R.id.textRight:
                 changeEditStatus();
                 break;
+            case R.id.textRight:
+                if(isEditable){
+                    postPersonInfo();
+                }else {
+                    changeEditStatus();
+                }
+                break;
             case R.id.imageHead:
+                currentImageView = mImageHead;
+                showPickPhotoDialog();
+                break;
+            case R.id.imageCertification:
+//                currentImageView = mImageCertification;
+//                showPickPhotoDialog();
+                break;
+            case R.id.imageLevel:
+                currentImageView = mImageLevel;
+                showPickPhotoDialog();
+                break;
+            case R.id.imageHonor:
+                currentImageView = mImageHonor;
                 showPickPhotoDialog();
                 break;
             case R.id.editGender:
@@ -111,90 +165,14 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
             case R.id.editUsername:
                 goChangeUsername();
                 break;
-            case R.id.editAddress:
-                selectAddress();
-                break;
-            case R.id.linearDischargeSummary:
-                goDischargeSummary();
-                break;
         }
     }
-    private void goDischargeSummary() {
-        String name = mEditUsername.getText().toString().trim();
-        String age = mEditAge.getText().toString().trim();
-        Intent intent = new Intent(this, DischargeSummaryActivity2.class);
-        intent.putExtra(DischargeSummaryActivity2.Name,name);
-        intent.putExtra(DischargeSummaryActivity2.Age,age);
-        intent.putExtra(DischargeSummaryActivity2.Sex,true);
-        startActivity(intent);
-    }
+
     private void goChangeUsername() {
-        Intent intent = new Intent(this,ChangeUsernameActivity.class);
+        Intent intent = new Intent(this, ChangeUsernameActivity.class);
         startActivity(intent);
     }
 
-    private void selectAddress() {
-        if (!isEditable) return;
-        //选项选择器
-        mPickViePwOptions = new OptionsPickerView(this);
-        provinces.clear();
-        citys.clear();
-        countys.clear();
-        provinces.addAll(new ProvinceDao().getProvinces());
-        citys.addAll(new ProvinceDao().getCities(provinces.get(0).area_code));
-        countys.addAll(new ProvinceDao().getCounties(citys.get(0).area_code));
-
-        //三级不联动效果  false
-        mPickViePwOptions.setPicker(provinces, citys, countys, false);
-        mPickViePwOptions.getWheelOptions().getWv_option1().setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                ArrayList<CityBean> temp = new ProvinceDao().getCities(provinces.get(index).area_code);
-                ArrayWheelAdapter adapter = new ArrayWheelAdapter(temp);
-                citys.clear();
-                citys.addAll(temp);
-                mPickViePwOptions.getWheelOptions().getWv_option2().setAdapter(adapter);
-
-                if (citys.size() == 0) {
-                    mPickViePwOptions.getWheelOptions().getWv_option3().setAdapter(new ArrayWheelAdapter(new ArrayList<CityBean>()));
-                    return;
-                }
-                ArrayList<CityBean> temp1 = new ProvinceDao().getCounties(citys.get(0).area_code);
-                ArrayWheelAdapter adapter1 = new ArrayWheelAdapter(temp1);
-                countys.clear();
-                countys.addAll(temp1);
-                mPickViePwOptions.getWheelOptions().getWv_option3().setAdapter(adapter1);
-
-            }
-        });
-        mPickViePwOptions.getWheelOptions().getWv_option2().setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                ArrayList<CityBean> temp = new ProvinceDao().getCounties(citys.get(index).area_code);
-                ArrayWheelAdapter adapter = new ArrayWheelAdapter(temp);
-                countys.clear();
-                countys.addAll(temp);
-                mPickViePwOptions.getWheelOptions().getWv_option3().setAdapter(adapter);
-            }
-        });
-        //设置选择的三级单位
-//        pwOptions.setLabels("省", "市", "区");
-//        mPickViePwOptions.setTitle("选择城市");
-        mPickViePwOptions.setCyclic(false, false, false);
-        //设置默认选中的三级项目
-        //监听确定选择按钮
-        mPickViePwOptions.setSelectOptions(0, 0, 0);
-        mPickViePwOptions.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                //返回的分别是三个级别的选中位置
-                mAddress = provinces.get(options1).area_name + citys.get(option2).area_name + countys.get(options3).area_name;
-                mEditAddress.setText(mAddress);
-            }
-        });
-        mPickViePwOptions.show();
-    }
 
     private void selectGender() {
         if (!isEditable) return;
@@ -214,7 +192,13 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
         mPickViePwOptions.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3) {
-                mEditGender.setText(genders.get(options1));
+                String genderStr = genders.get(options1);
+                mEditGender.setText(genderStr);
+                if (genderStr.equals("男")) {
+                    isFemale = false;
+                } else {
+                    isFemale = true;
+                }
             }
         });
         mPickViePwOptions.show();
@@ -225,22 +209,39 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
         if (isEditable) {
             mEditName.setEnabled(false);
             mEditAge.setEnabled(false);
+            mEditExperience.setEnabled(false);
+            mEditSpeciality.setEnabled(false);
 
             mTextRight.setText("修改");
             mTextLeft.setVisibility(View.GONE);
             mImageBack.setVisibility(View.VISIBLE);
+
+            mImageCertificationFile = null;
+            mImageLevelFile = null;
+            mImageHonorFile = null;
+            refreshView();
         } else {
-            mEditName.setEnabled(true);
-            mEditName.setFocusable(true);
-            mEditName.setFocusableInTouchMode(true);
-            mEditName.requestFocus();
+            mEditSpeciality.setEnabled(true);
+            mEditSpeciality.setFocusable(true);
+            mEditSpeciality.setFocusableInTouchMode(true);
+            mEditSpeciality.requestFocus();
+
+            mEditExperience.setEnabled(true);
+            mEditExperience.setFocusable(true);
+            mEditExperience.setFocusableInTouchMode(true);
+            mEditExperience.requestFocus();
 
             mEditAge.setEnabled(true);
             mEditAge.setFocusable(true);
             mEditAge.setFocusableInTouchMode(true);
             mEditAge.requestFocus();
 
-            mTextRight.setText("取消");
+            mEditName.setEnabled(true);
+            mEditName.setFocusable(true);
+            mEditName.setFocusableInTouchMode(true);
+            mEditName.requestFocus();
+
+            mTextRight.setText("保存");
             mTextLeft.setVisibility(View.VISIBLE);
             mImageBack.setVisibility(View.GONE);
         }
@@ -248,8 +249,41 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void postPersonInfo() {
+        String name = mEditName.getText().toString().trim();
+        String age = mEditAge.getText().toString();
+        String special = mEditSpeciality.getText().toString().trim();
+        String experience = mEditExperience.getText().toString().trim();
 
+        appAction.changePersonInfo("", name, isFemale ? "1" : "0", age, "", "", special, experience, mImageHeadFile, mImageCertificationFile, mImageLevelFile, mImageHonorFile, new ActionCallbackListener<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+                getPersonInfo();
+                changeEditStatus();
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                if(handleNetworkOnFailure(errorEvent, message)) return;
+            }
+        });
     }
+
+    public void getPersonInfo() {
+        appAction.personInfo(new ActionCallbackListener<DoctorBean>() {
+            @Override
+            public void onSuccess(DoctorBean data) {
+                mPersonBean = data;
+                refreshView();
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                if(handleNetworkOnFailure(errorEvent, message)) return;
+                ToastUtil.showToast(App.app, message);
+            }
+        });
+    }
+
 
     /**
      * 选择图片对话框
@@ -311,8 +345,17 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
                 MediaStore.ACTION_IMAGE_CAPTURE);
         // 下面这句指定调用相机拍照后的照片存储的路径
         String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        mImageFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + filename + ".jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageFile));
+        File imageFile = new File(PictureUtil.getAlbumDir(), "IMG_" + filename + ".jpg");
+        if (currentImageView == mImageCertification) {
+            mImageCertificationFile = imageFile;
+        } else if (currentImageView == mImageLevel) {
+            mImageLevelFile = imageFile;
+        } else if (currentImageView == mImageHonor) {
+            mImageHonorFile = imageFile;
+        } else if (currentImageView == mImageHead) {
+            mImageHeadFile = imageFile;
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
         startActivityForResult(intent, 2);
 
     }
@@ -345,12 +388,25 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
             // 如果是直接从相册获取
             case 1:
                 if (Activity.RESULT_OK != resultCode) return;
-                startPhotoZoom(data.getData());
+                if (currentImageView == mImageHead) {
+                    startPhotoZoom(data.getData());
+                } else {
+                    String imagePath = getRealImagePath(data);
+                    saveSmallImage(imagePath);
+                }
                 break;
             // 如果是调用相机拍照时
             case 2:
                 if (Activity.RESULT_OK != resultCode) return;
-                startPhotoZoom(Uri.fromFile(mImageFile));
+                if (currentImageView == mImageHead) {
+                    startPhotoZoom(Uri.fromFile(mImageHeadFile));
+                } else if (currentImageView == mImageCertification) {
+                    saveSmallImage(mImageCertificationFile.getAbsolutePath());
+                } else if (currentImageView == mImageLevel) {
+                    saveSmallImage(mImageLevelFile.getAbsolutePath());
+                } else if (currentImageView == mImageHonor) {
+                    saveSmallImage(mImageHonorFile.getAbsolutePath());
+                }
                 break;
             // 取得裁剪后的图片
             case 3:
@@ -369,6 +425,45 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void saveSmallImage(String imagePath) {
+        if (imagePath != null) {
+            try {
+                File f = new File(imagePath);
+                Bitmap bm = PictureUtil.getSmallBitmap(imagePath, 1024);
+                File imageFile = new File(PictureUtil.getAlbumDir(), "small_" + f.getName());
+                if (currentImageView == mImageCertification) {
+                    mImageCertificationFile = imageFile;
+                    mImageCertification.setImageBitmap(bm);
+                } else if (currentImageView == mImageLevel) {
+                    mImageLevelFile = imageFile;
+                    mImageLevel.setImageBitmap(bm);
+                } else if (currentImageView == mImageHonor) {
+                    mImageHonorFile = imageFile;
+                    mImageHonor.setImageBitmap(bm);
+                }
+                FileOutputStream fos = new FileOutputStream(imageFile);
+                bm.compress(Bitmap.CompressFormat.JPEG, 90, fos);
+                Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.e("PerfectInfoActivity", "error", e);
+            }
+        }
+    }
+
+    private String getRealImagePath(Intent data) {
+        Uri selectedImage = data.getData();
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return picturePath;
+    }
+
     /**
      * 裁剪图片方法实现
      *
@@ -377,11 +472,11 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
 
 
     public void startPhotoZoom(Uri uri) {
-         /*
-         * 至于下面这个Intent的ACTION是怎么知道的，大家可以看下自己路径下的如下网页
-         * yourself_sdk_path/docs/reference/android/content/Intent.html
-         * 直接在里面Ctrl+F搜：CROP ，之前没仔细看过，其实安卓系统早已经有自带图片裁剪功能, 是直接调本地库的
-         */
+ /*
+ * 至于下面这个Intent的ACTION是怎么知道的，大家可以看下自己路径下的如下网页
+ * yourself_sdk_path/docs/reference/android/content/Intent.html
+ * 直接在里面Ctrl+F搜：CROP ，之前没仔细看过，其实安卓系统早已经有自带图片裁剪功能, 是直接调本地库的
+ */
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
@@ -396,8 +491,8 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
 
         // 下面这句指定调用相机拍照后的照片存储的路径
         String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        mImageFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + filename + ".jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageFile));
+        mImageHeadFile = new File(Environment.getExternalStorageDirectory(), "IMG_" + filename + ".jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageHeadFile));
 
         startActivityForResult(intent, 3);
     }

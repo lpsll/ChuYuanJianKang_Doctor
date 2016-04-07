@@ -1,11 +1,21 @@
 
 package com.htlc.cykf.core;
 
+import com.htlc.cykf.model.AuthorityBean;
+import com.htlc.cykf.model.BindNumberBean;
 import com.htlc.cykf.model.ContactBean;
+import com.htlc.cykf.model.ContactGroupBean;
+import com.htlc.cykf.model.DepartmentBean;
+import com.htlc.cykf.model.DischargeSummaryBean;
+import com.htlc.cykf.model.DoctorBean;
 import com.htlc.cykf.model.DrugBean;
+import com.htlc.cykf.model.IllnessBean;
 import com.htlc.cykf.model.InformationBean;
 import com.htlc.cykf.model.MedicalHistoryItemBean;
 import com.htlc.cykf.model.MessageBean;
+import com.htlc.cykf.model.PatientBean;
+import com.htlc.cykf.model.PriceBean;
+import com.htlc.cykf.model.TotalMoneyBean;
 import com.htlc.cykf.model.UserBean;
 
 import java.io.File;
@@ -47,12 +57,6 @@ public interface AppAction {
      */
     public void forget(String username, String code, String password, ActionCallbackListener<Void> listener);
 
-    /**
-     * @param userId
-     * @param recommend
-     * @param listener
-     */
-    void bindDoctor(String userId, String recommend, ActionCallbackListener<Void> listener);
 
     /**
      * @param userId
@@ -60,36 +64,33 @@ public interface AppAction {
      * @param name
      * @param sex
      * @param age
-     * @param profession
-     * @param address
      * @param photo
      * @param listener
      */
-    public void postPersonInfo(String userId, String phone, String name, String sex, String age, String profession, String address, File photo, ActionCallbackListener<Void> listener);
+    public void postPersonInfo(String userId, String phone, String name, String sex, String age,
+                               String department, String hospital, String special, String experience,
+                               File photo, File certification, File level, File honor, ActionCallbackListener<Void> listener);
 
     /**
-     * @param userId
-     * @param startTime
-     * @param endTime
-     * @param totalTime
-     * @param inDiagnose
-     * @param outDiagnose
-     * @param effect
-     * @param specialItem
-     * @param inStatus
-     * @param atStatus
-     * @param outStatus
-     * @param outAdvice
+     * @param phone
+     * @param name
+     * @param sex
+     * @param age
+     * @param department
+     * @param hospital
+     * @param special
+     * @param experience
+     * @param photo
+     * @param certification
+     * @param level
+     * @param honor
      * @param listener
      */
-    void dischargeSummary(String userId, String startTime, String endTime, String totalTime,
-                          String inDiagnose, String outDiagnose, String effect, String specialItem, String inStatus, String atStatus, String outStatus, String outAdvice, ActionCallbackListener<Void> listener);
+    void changePersonInfo(String phone, String name, String sex, String age,
+                          String department, String hospital, String special, String experience,
+                          File photo, File certification, File level, File honor, ActionCallbackListener<Void> listener);
 
-    /**
-     * @param userId
-     * @param listener
-     */
-    void medicineHistory(String userId, ActionCallbackListener<ArrayList<MedicalHistoryItemBean>> listener);
+    void changeUsername(String phone, ActionCallbackListener<Void> listener);
 
     /**
      * @param drugName
@@ -97,39 +98,139 @@ public interface AppAction {
      */
     void drugsList(String drugName, ActionCallbackListener<ArrayList<DrugBean>> listener);
 
-    /**
-     * @param userId
-     * @param date
-     * @param drugsJson
-     * @param listener
-     */
-    void postDrugs(String userId, String date, String drugsJson, ActionCallbackListener<Void> listener);
 
     /**
-     * @param userId
-     * @param listener
-     */
-    void contactList(String userId, ActionCallbackListener<ArrayList<ContactBean>> listener);
-
-    /**
-     * @param username
-     * @param page
-     * @param listener
-     */
-    void informationList(String username, int page, ActionCallbackListener<ArrayList<InformationBean>> listener);
-
-    /**
-     *
      * @param userId
      * @param page
      * @param listener
      */
-    void messageList(String userId, int page,ActionCallbackListener<ArrayList<MessageBean>> listener);
+    void messageList(String userId, int page, ActionCallbackListener<ArrayList<MessageBean>> listener);
 
     /**
-     *
      * @param userId
      * @param listener
      */
     void myCenter(String userId, ActionCallbackListener<UserBean> listener);
+
+    /**
+     * @param listener
+     */
+    void departmentList(ActionCallbackListener<ArrayList<DepartmentBean>> listener);
+
+    /**
+     * @param listener
+     */
+    void illnessList(ActionCallbackListener<ArrayList<IllnessBean>> listener);
+
+    /**
+     * @param listener
+     */
+    void personInfo(ActionCallbackListener<DoctorBean> listener);
+
+    /**
+     * @param departmentId
+     * @param illnessId
+     * @param phone
+     * @param listener
+     */
+    void generateBindNumber(String departmentId, String illnessId, String phone, ActionCallbackListener<BindNumberBean> listener);
+
+    /**
+     * @param phone
+     * @param listener
+     */
+    void sendBindNumber(String phone, ActionCallbackListener<Void> listener);
+
+    /**
+     * @param listener
+     */
+    void myPatients(int page, ActionCallbackListener<ArrayList<PatientBean>> listener);
+
+    /**
+     * @param listener
+     */
+    void getAuthorityStatus(ActionCallbackListener<AuthorityBean> listener);
+
+    /**
+     * @param authority 1,可以聊；2，不可以
+     * @param listener
+     */
+    void setAuthorityStatus(String authority, ActionCallbackListener<Void> listener);
+
+    /**
+     * @param listener
+     */
+    void getPriceList(ActionCallbackListener<ArrayList<PriceBean>> listener);
+
+    /**
+     * @param one
+     * @param three
+     * @param six
+     * @param twelve
+     * @param listener
+     */
+    void setPriceList(String one, String three, String six, String twelve, ActionCallbackListener<Void> listener);
+
+    /**
+     *
+     * @param listener
+     */
+    void getTotalMoney(ActionCallbackListener<TotalMoneyBean> listener);
+
+    /**
+     *
+     * @param listener
+     */
+    void withdraw(ActionCallbackListener<Void> listener);
+
+    /**
+     * @param type
+     * @param listener
+     */
+    void contactListByType(String type, ActionCallbackListener<ArrayList<ContactBean>> listener);
+
+    /**
+     * @param listener
+     */
+    void contactList(ActionCallbackListener<ArrayList<ContactBean>> listener);
+
+    /**
+     * @param patientId
+     * @param flag      0,移入；1，移出；
+     * @param groupId
+     * @param listener
+     */
+    void groupOption(String patientId, String flag, String groupId, ActionCallbackListener<Void> listener);
+
+    /**
+     * @param patientId
+     * @param flag      0,移出；3，移入
+     * @param listener
+     */
+    void groupExperienceOption(String patientId, String flag, ActionCallbackListener<Void> listener);
+
+    /**
+     * @param groupName
+     * @param listener
+     */
+    void addGroup(String groupName, ActionCallbackListener<Void> listener);
+
+    /**
+     * @param listener
+     */
+    void queryGroup(ActionCallbackListener<ArrayList<ContactGroupBean>> listener);
+
+    /**
+     * @param groupId
+     * @param listener
+     */
+    void deleteGroup(String groupId, ActionCallbackListener<Void> listener);
+
+    /**
+     * @param patientId
+     * @param listener
+     */
+    void conversationDetail(String patientId, ActionCallbackListener<DischargeSummaryBean> listener);
+
+    void getUserById(String userId, ActionCallbackListener<ContactBean> listener);
 }

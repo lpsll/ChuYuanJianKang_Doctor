@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<title>病情与药品统计</title>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/temp.css" />
+		<script src="../../js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/highcharts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/doctor/bingQingTJ.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div class="backBtn" onclick="AndroidBack()">
+			    <a style="color: white;" class=" mui-icon mui-icon-left-nav mui-pull-left" ></a>
+			</div>
+			<h1 class="mui-title">病情与药品统计</h1>
+		</header>
+		<div class="mui-content" style="padding-top:55px !important">
+			
+
+					<!--<div class="FixeDiv">-->
+						
+					
+					<span class="TimeName">时间段</span>
+					<div class="TimeInputBox">
+						<div class="TimeInputDiv" onclick="getAndroidDate(1)">
+							<span class="InLable">起：</span>
+							<span class="TimeValue" val="" id="startTime"></span>
+						</div>
+						<div class="TimeInputDiv" onclick="getAndroidDate(2)">
+							<span class="InLable">止：</span>
+							<span class="TimeValue" var="" id="endTime"></span>
+						</div>
+					</div>
+
+					<div class="MidInput">
+						<div class="SelectSex">
+							<span class="SpanFontWhite">请选择性别</span>
+						</div>
+
+						<ul class="flotCla">
+							<li class="mui-checkbox LiWid">
+								<input type="checkbox" checked="checked" name="man" id="man" value="0" />
+								<label for="nan">男</label>
+							</li>
+							<li class=" LiWid  mui-checkbox">
+								<input type="checkbox" checked="checked" class="SBtn" name="man" id="woman" value="1" />
+								<label for="nan">女</label>
+							</li>
+
+						</ul>
+					</div>
+                    <div class="MidInput">
+                    	<div class="SelectSex">
+			   				<input type="number" class="BQageInput" placeholder="请输入年龄" name="Hpre" id="Temp" value=""/>
+						</div>
+                    </div>
+                    <div class="MidInput">
+                    	<div class="SelectSex">
+			   				<div  onclick="getAndroidJiBing()" val="" class="BQageInput" style="padding-left: 15px; height: 33px;line-height: 33px;"  id="BQJiBing">请选择疾病</div>
+						</div>
+                    </div>
+                     <div class="MidInput">
+                    	<div class="SelectSex">
+			   				<div  onclick="getAndroidZhiYe()" val="" class="BQageInput" style="padding-left: 15px; height: 33px;line-height: 33px;"  id="BQZhiYe">请选择职业</div>
+						</div>
+                    </div>
+                     <div class="MidInput">
+                    	<div class="SelectSex">
+			   				<div  onclick="getAndroidDiQu()" val="" class="BQageInput" style="padding-left: 15px; height: 33px;line-height: 33px;"  id="BQDiQu">请选择地区</div>
+						</div>
+                    </div>
+                     <div class="MidDiv"><input type="button" onclick="getData()" id="MidBtn" value="确定" /></div>
+					<!--</div>-->
+					
+					
+					
+					<div class="BQInfoDraw" id="DrawBox">
+						<div class="BQDraw"  id="BQDrawInfo">
+							
+						</div>
+					</div>
+				
+				
+				</div>
+	</body>
+
+</html>

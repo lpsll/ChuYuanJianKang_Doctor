@@ -23,6 +23,7 @@
     <EditText
         android:id="@+id/editSearch"
         android:drawableLeft="@mipmap/icon_search"
+        android:drawablePadding="5px"
         android:layout_marginTop="10px"
         android:layout_marginBottom="10px"
         style="@style/EditInput"/>
@@ -42,7 +43,7 @@
             android:textColor="@android:color/white"
             android:textSize="60px"
             android:visibility="invisible"/>
-        <com.htlc.cyjk.app.widget.SideBar
+        <com.htlc.cykf.app.widget.SideBar
             android:id="@+id/sideBar"
             android:layout_width="30px"
             android:layout_height="match_parent"

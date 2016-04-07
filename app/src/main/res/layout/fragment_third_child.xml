@@ -30,7 +30,7 @@
                 android:background="@mipmap/edit_text_bg"
                 android:text="时间"
                 />
-            <com.htlc.cyjk.app.widget.ScrollListView
+            <com.htlc.cykf.app.widget.ScrollListView
                 style="@style/ListView"
                 android:divider="@null"
                 android:dividerHeight="0px"
@@ -40,7 +40,7 @@
                 style="@style/TextButton"
                 android:text="添加"
                 />
-            <com.htlc.cyjk.app.widget.ScrollListView
+            <com.htlc.cykf.app.widget.ScrollListView
                 android:id="@+id/listViewFoot"
                 android:layout_marginLeft="40px"
                 android:layout_marginRight="40px"

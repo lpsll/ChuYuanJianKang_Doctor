@@ -2,22 +2,24 @@ package com.htlc.cykf.app.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.htlc.cykf.R;
 import com.htlc.cykf.app.fragment.BaseFragment;
 import com.htlc.cykf.app.util.CommonUtil;
+import com.htlc.cykf.app.util.LogUtil;
 
 import java.util.ArrayList;
 
 /**
  * Created by sks on 2016/1/27.
  */
-public class FirstPagerAdaptor extends FragmentStatePagerAdapter {
+public class FirstPagerAdaptor extends FragmentPagerAdapter {
 
-    private ArrayList<Class<? extends BaseFragment>> mList;
-    public FirstPagerAdaptor(FragmentManager fm, ArrayList<Class<? extends BaseFragment>> list) {
+    private ArrayList<BaseFragment> mList;
+    public FirstPagerAdaptor(FragmentManager fm, ArrayList<BaseFragment> list) {
         super(fm);
         mList = list;
     }
@@ -29,15 +31,7 @@ public class FirstPagerAdaptor extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Class<? extends BaseFragment> fragment = mList.get(position);
-        try {
-            return fragment.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return mList.get(position);
     }
 
     @Override
@@ -47,6 +41,7 @@ public class FirstPagerAdaptor extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+        if(position>=3) return "";
         return CommonUtil.getResourceStringArray(R.array.fragment_first_children)[position];
     }
 }

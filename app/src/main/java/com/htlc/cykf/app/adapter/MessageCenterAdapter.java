@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.htlc.cykf.R;
+import com.htlc.cykf.model.MessageBean;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class MessageCenterAdapter extends BaseAdapter{
             convertView = View.inflate(mActivity, R.layout.adapter_message_center, null);
             holder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
             holder.textView = (TextView) convertView.findViewById(R.id.textView);
+            holder.textTime = (TextView) convertView.findViewById(R.id.textTime);
             convertView.setTag(holder);
             //对于listview，注意添加这一行，即可在item上使用高度
             AutoUtils.autoSize(convertView);
@@ -54,10 +56,18 @@ public class MessageCenterAdapter extends BaseAdapter{
             holder = (ViewHolder) convertView.getTag();
         }
         //具体数据处理
+        MessageBean bean = (MessageBean) mList.get(position);
+        holder.textView.setText(bean.introduce);
+        holder.textTime.setText(bean.date);
+        if("0".equals(bean.flag)){
+            holder.imageView.setVisibility(View.INVISIBLE);
+        }else {
+            holder.imageView.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
     class ViewHolder{
         ImageView imageView;
-        TextView textView;
+        TextView textView, textTime;
     }
 }

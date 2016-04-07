@@ -162,7 +162,8 @@ public class OkHttpClientManager
 
                 try
                 {
-                    final String string = response.body().string();
+                    final String stringTemp = response.body().string();
+                    String string = stringTemp.substring(stringTemp.indexOf("{"));
                     LogUtil.e("OkHttp",string);
                     if (resCallBack.mType == String.class)
                     {

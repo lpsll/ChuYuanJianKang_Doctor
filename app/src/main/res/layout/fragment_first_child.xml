@@ -13,7 +13,7 @@
         <com.zhy.autolayout.AutoLinearLayout
             style="@style/ScrollViewRoot">
             <!--********************************-->
-            <com.htlc.cyjk.app.widget.ScrollGridView
+            <com.htlc.cykf.app.widget.ScrollGridView
                 android:id="@+id/gridView"
                 android:paddingTop="30px"
                 android:paddingBottom="30px"

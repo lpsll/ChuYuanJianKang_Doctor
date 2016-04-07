@@ -1,6 +1,7 @@
 package com.htlc.cykf.app.adapter;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.htlc.cykf.R;
+import com.htlc.cykf.app.util.ImageLoaderCfg;
+import com.htlc.cykf.app.util.LogUtil;
 import com.htlc.cykf.model.ContactBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -17,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by sks on 2016/1/28.
  */
-public class SecondAdapter extends BaseAdapter{
+public class SecondAdapter extends BaseAdapter {
     private Activity mActivity;
     private ArrayList mList;
 
@@ -44,7 +47,7 @@ public class SecondAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        if(convertView == null){
+        if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(mActivity, R.layout.adapter_second_fragment, null);
             holder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
@@ -53,35 +56,38 @@ public class SecondAdapter extends BaseAdapter{
             convertView.setTag(holder);
             //对于listview，注意添加这一行，即可在item上使用高度
             AutoUtils.autoSize(convertView);
-        }else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
         //具体数据处理
         ContactBean bean = (ContactBean) mList.get(position);
 //        holder.imageView.setImageResource(bean.imageId);
-        holder.textType.setText(bean.group);
-        holder.textView.setText(bean.userName);
-        ImageLoader.getInstance().displayImage(bean.userPhoto,holder.imageView);
-        if(position == 0){
+        holder.textType.setText(bean.head);
+        LogUtil.e(this, "首字母：" + bean.head);
+        holder.textView.setText(bean.name);
+        ImageLoader.getInstance().displayImage(bean.photo, holder.imageView, ImageLoaderCfg.options);
+
+        if (position == 0) {
             holder.textType.setVisibility(View.VISIBLE);
-        }else {
-            String temp = ((ContactBean)mList.get(position-1)).group;
-            if(temp.equals(bean.group)){
+        } else {
+            String temp = ((ContactBean) mList.get(position - 1)).head;
+            if (temp.equals(bean.head)) {
                 holder.textType.setVisibility(View.GONE);
-            }else {
+            } else {
                 holder.textType.setVisibility(View.VISIBLE);
             }
         }
         return convertView;
     }
-    class ViewHolder{
+
+    class ViewHolder {
         ImageView imageView;
         TextView textView, textType;
     }
 
-    public int getFirstPositionOfType(String type){
+    public int getFirstPositionOfType(String type) {
         for (int i = 0; i < getCount(); i++) {
-            String tempType = ((ContactBean)mList.get(i)).group;
+            String tempType = ((ContactBean) mList.get(i)).head;
             if (tempType.equals(type)) {
                 return i;
             }

@@ -1,6 +1,7 @@
 package com.htlc.cykf.app.util;
 
 
+import com.htlc.cykf.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
@@ -12,11 +13,13 @@ public class ImageLoaderCfg {
 
 
 	public static DisplayImageOptions options = new DisplayImageOptions.Builder()
-//			.showImageOnLoading(R.drawable.service_item_default)
-//			.showImageForEmptyUri(R.drawable.service_item_default)
-//			.showImageOnFail(R.drawable.service_item_default).cacheInMemory(true)
-			.cacheOnDisk(true).considerExifParams(false)
-			.displayer(new SimpleBitmapDisplayer()).build();
+			.showImageOnLoading(R.mipmap.ic_launcher)
+			.showImageForEmptyUri(R.mipmap.ic_launcher)
+			.showImageOnFail(R.mipmap.ic_launcher)
+//			.cacheInMemory(true)
+//			.cacheOnDisk(true).considerExifParams(false)
+//			.displayer(new SimpleBitmapDisplayer())
+			.build();
 
 	public static DisplayImageOptions fade_options = new DisplayImageOptions.Builder()
 //	.showImageOnLoading(R.drawable.service_item_default)

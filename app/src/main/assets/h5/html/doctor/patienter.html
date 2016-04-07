@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<title>体征信息</title>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/temp.css"/>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/highcharts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../h5/js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/doctor/patienter.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		   <div class="backBtn" onclick="AndroidBack()">
+			    <a style="color: white;" class=" mui-icon mui-icon-left-nav mui-pull-left" ></a>
+			</div>
+		    <h1 class="mui-title">体征详情</h1>
+		</header>
+		<div class="mui-content">
+					
+			 
+			<div class="TabList">
+				<span class="TabName">姓名</span>
+				<span class="TabValue" id="PatName"></span>
+			</div>
+			<div class="TabList">
+				<span class="TabName">年龄</span>
+				<span class="TabValue" id="PatAge"></span><span class="TabValueD">岁</span>
+			</div>
+			<div class="TabList">
+				<span class="TabName">性别</span>
+				<span class="TabValue" id="PatSex"></span>
+			</div>
+			<div class="TabList">
+				<span class="TabName">病状</span>
+				<span class="TabValue" id="PatBingZhuang"></span>
+			</div>
+			<div class="TabList">
+				<span class="TabName">主治医师</span>
+				<span class="TabValue" style="margin-left: 21px !important;" id="PatDocotr"></span>
+			</div>
+			 	
+			 <div class="TabMaList" style="background-color:white;padding-bottom: 12px;padding-top: 10px;font-size: 14px;border-bottom: 1px solid #E7E8E8;">
+				<span class="TabName" style="margin-left: 20px;float: left;">药品信息</span>
+				<!--<span class="TabValue" id="PatSex">男</span>-->
+				<div class="PatMadListBox" id="PatMadBox" style="margin-left: 22px;float: left;color: #989898;font-size: 14px;width: 60%;">
+					<!--<div class="MadList" >
+						<ul class="MadUl">
+							<li class="MadUl"><span class="MadInfo">2016-01-09 08:30</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林</span><span class="MadNum">5片</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林肠溶片</span><span class="MadNum">5片</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林肠溶片</span><span class="MadNum">5片</span></li>
+
+						</ul>
+						
+					</div>
+					<div class="MadList">
+						<ul class="MadUl">
+							<li class="MadUl"><span class="MadInfo">2016-01-09 08:30</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林</span><span class="MadNum">5片</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林肠溶片</span><span class="MadNum">5片</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林肠溶片</span><span class="MadNum">5片</span></li>
+						</ul>
+					</div>
+					<div class="MadList">
+						<ul class="MadUl">
+							<li class="MadUl"><span class="MadInfo">2016-01-09 08:30</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林</span><span class="MadNum">5片</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林肠溶片</span><span class="MadNum">5片</span></li>
+							<li class="MadUl"><span class="MadInfo">阿司匹林肠溶片</span><span class="MadNum">5片</span></li>						
+						</ul>
+					</div>-->
+					
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+			<div class="TabMaList">
+				<span class="TabName">体征信息</span>
+				<div class="TabInfo" id="abNormal">
+					
+					
+					<!--<div class="TabInfoList">
+						<span class="BlockSpan">2015-02-02 12:23</span>
+						<span class="BlockSpan SpanFont">体温：40.5度</span>
+						<span class="BlockSpan SpanRFont">体温异常</span>
+					</div>
+					<div class="TabInfoList">
+						<span class="BlockSpan">2015-02-02 12:23</span>
+						<span class="BlockSpan SpanFont">体温：40.5度</span>
+						<span class="BlockSpan SpanRFont">体温异常</span>
+					</div>
+					<div class="TabInfoList">
+						<span class="BlockSpan">2015-02-02 12:23</span>
+						<span class="BlockSpan SpanFont">体温：40.5度</span>
+						<span class="BlockSpan SpanRFont">体温异常</span>
+					</div>
+					<div class="TabInfoList">
+						<span class="BlockSpan">2015-02-02 12:23</span>
+						<span class="BlockSpan SpanFont">体温：40.5度</span>
+						<span class="BlockSpan SpanRFont">体温异常</span>
+					</div>-->
+					
+					
+				</div>
+			
+			</div>
+			<div class="TabMaList">
+				<span class="TabName">生活习惯信息</span>
+				<div class="TabDraw" id="YunDongPic">
+
+				</div>
+				<div class="TabDraw" id="ShuiMianPic">
+
+				</div>
+				<div class="TabDraw" id="ChouYanPic">
+
+				</div>
+				<div class="TabDraw" id="HeJiuPic">
+
+				</div>
+				<div class="TabDraw" id="YinShiPic">
+
+				</div>
+			</div>
+			
+			<div class="TabMaList">
+				<span class="TabName">出院小结</span>
+				<div class="TabJie">
+					<ul class="MadUl" id="OutHosUl">
+						<!--<li class="MadUl"><span class="SpanBlackFont">姓 名：</span><span class="SpanFont">李铁蛋</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">性 别：</span><span class="SpanFont">男</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">年 龄：</span><span class="SpanFont">62岁</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">职 业：</span><span class="SpanFont">退休</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">入院日期：</span><span class="SpanFont">2013年01月10日</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">出院日期：</span><span class="SpanFont">2013年01月18日</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">住院天数：</span><span class="SpanFont">8天</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">入院诊断：</span><span class="SpanFont">1、慢性支气管炎 2、慢性胆囊炎 3、胆囊结石 4、慢性胃炎</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">出院诊断：</span><span class="SpanFont">1、慢性支气管炎 2、慢性胆囊炎 3、胆囊结石 4、慢性胃炎</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">治疗结果：</span><span class="SpanFont">好转</span></li>
+						<li class="MadUl"><span class="SpanBlackFont">各种特殊检查号：</span><span class="SpanFont">无</span></li>
+						<li class="MadUl BotmMag"><span class="SpanBlackFont">入院情况：</span><span class="SpanFont">
+							<br />反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽
+						</span></li>
+						<li class="MadUl BotmMag"><span class="SpanBlackFont">住院情况：</span><span class="SpanFont">
+							<br />1、完善相关检查；
+							<br />2、完善相关检查；
+							<br />3、完善相关检查；
+						</span></li>
+						<li class="MadUl BotmMag"><span class="SpanBlackFont">出院情况：</span><span class="SpanFont">
+							<br />反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽反复咳嗽
+
+						</span></li>
+						<li class="MadUl BotmMag"><span class="SpanBlackFont">出院医嘱：</span><span class="SpanFont">
+							<br />1、完善相关检查；
+							<br />2、完善相关检查；
+							<br />3、完善相关检查；
+						</span></li>-->
+					</ul>
+				</div>
+			</div>
+			<div class="TelBtn">
+				<a  class="TelCallBtn" value="" id="telPhone" onclick="tel()">一键拨号</a>
+			</div>
+
+		</div>
+				<script src="../../js/scrollBody.js" type="text/javascript" charset="utf-8"></script>
+
+	</body>
+</html>

@@ -16,7 +16,7 @@ import java.io.InputStream;
 public class DbManager {
     private static final String assets_name= "city.db";
     //数据库存放的文件夹 data/data/com.main.jh 下面
-    private static final String pathStr = "data/data/com.htlc.cyjk";
+    private static final String pathStr = "data/data/com.htlc.cykf";
     //数据库存储路径
     private static final String filePath = pathStr+"/"+assets_name;
 

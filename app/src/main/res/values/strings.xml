@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">出院康复</string>
+    <string name="app_name">医生-出院康复</string>
     <string name="common_modify">修改</string>
     <string name="common_finish">完成</string>
     <string name="common_username_hint">请输入手机号</string>
@@ -24,11 +24,18 @@
 
     <string name="activity_perfect_info">完善注册信息</string>
     <string name="activity_perfect_name_hint">姓名</string>
+    <string name="activity_perfect_hospital_hint">所属医院</string>
     <string name="activity_perfect_age_hint">年龄</string>
     <string name="activity_perfect_gender_hint">性别</string>
-    <string name="activity_perfect_job_hint">请选择职业</string>
-    <string name="activity_perfect_address_hint">请选择地区</string>
-    <string name="activity_perfect_discharge_summary_hint">请输入出院小结</string>
+    <string name="activity_perfect_speciality_hint">擅长领域</string>
+    <string name="activity_perfect_department_hint">科室</string>
+    <string name="activity_perfect_experience_hint">从事经验</string>
+    <string name="activity_perfect_credential_hint">证书</string>
+    <string name="activity_perfect_required_hint">(必填)</string>
+    <string name="activity_perfect_optional_hint">(选填)</string>
+    <string name="activity_perfect_career_hint">医师职业资格证书</string>
+    <string name="activity_perfect_level_hint">技术职称证书</string>
+    <string name="activity_perfect_honor_hint">荣誉证书</string>
     <string-array name="activity_perfect_info_jobs">
         <item>公务员</item>
         <item>工程师</item>
@@ -38,68 +45,35 @@
         <item>军人</item>
     </string-array>
 
-    <string name="activity_discharge_summary">出院小结</string>
-    <string name="activity_discharge_summary_name">姓名:</string>
-    <string name="activity_discharge_summary_age">年龄:</string>
-    <string name="activity_discharge_summary_gender">性别:</string>
-    <string name="activity_discharge_summary_job">职业:</string>
-    <string name="activity_discharge_summary_start_time">入院时间:</string>
-    <string name="activity_discharge_summary_end_time">出院时间:</string>
-    <string name="activity_discharge_summary_total_time">住院天数:</string>
-    <string name="activity_discharge_summary_in_diagnosis">入院诊断:</string>
-    <string name="activity_discharge_summary_out_diagnosis">出院诊断:</string>
-    <string name="activity_discharge_summary_effect">治疗结果:</string>
-    <string name="activity_discharge_summary_special_item">各种特殊检查号:</string>
-    <string name="activity_discharge_summary_in_status">入院情况:</string>
-    <string name="activity_discharge_summary_at_status">住院情况:</string>
-    <string name="activity_discharge_summary_out_status">出院情况:</string>
-    <string name="activity_discharge_summary_out_consideration">出院医嘱:</string>
 
     <string name="activity_drugs">添加药品</string>
     <string name="activity_conversation">沟通平台</string>
 
 
-    <string name="fragment_first">自我管理</string>
-    <string name="fragment_first_title">自我管理</string>
+    <string name="fragment_first">我的病人</string>
     <string-array name="fragment_first_children">
-        <item>病情体征</item>
-        <item>日常</item>
-        <item>用药情况</item>
+        <item>已付费</item>
+        <item>续费</item>
+        <item>未付费</item>
     </string-array>
-    <string-array name="fragment_first_child_adapter_name">
-        <item>体温</item>
-        <item>脉搏</item>
-        <item>呼吸</item>
-        <item>血压</item>
-        <item>血糖</item>
-        <item>血氧</item>
-        <item>体重</item>
-    </string-array>
-    <string-array name="fragment_second_child_adapter_name">
-        <item>运动</item>
-        <item>睡眠</item>
-        <item>饮酒</item>
-        <item>抽烟</item>
-        <item>饮食</item>
-    </string-array>
-    <string-array name="fragment_third_child_adapter_unit">
-        <item>片</item>
-        <item>瓶</item>
-        <item>袋</item>
-        <item>毫升</item>
-    </string-array>
-    <string name="fragment_second">我的医生</string>
-    <string name="fragment_second_contact">通讯录</string>
-    <string name="fragment_second_chat_list">聊天</string>
-    <string name="fragment_third">健康知识</string>
-    <string name="fragment_third_title">健康知识</string>
-    <string name="fragment_fourth">我的</string>
+    <string name="fragment_first_contact">通讯录</string>
+    <string name="fragment_first_chat_list">聊天</string>
+    <string name="fragment_second">新增患者</string>
+    <string name="fragment_second_illness">疾病:</string>
+    <string name="fragment_second_bind_number">推荐码:</string>
+    <string name="fragment_second_tel_hint">患者手机号</string>
+    <string name="fragment_second_send_sms">短信发送</string>
+    <string name="fragment_second_generate_bind_number">生成推荐码</string>
+    <string name="fragment_third">分析统计</string>
+    <string name="fragment_third_illness_and_drug">病情与药品统计</string>
+    <string name="fragment_third_drug_and_sign">药品与体征统计</string>
+    <string name="fragment_fourth">个人中心</string>
     <string-array name="fragment_fourth_children">
         <item>个人信息</item>
-        <item>缴费</item>
+        <item>我的账户</item>
         <item>设置</item>
         <item>消息</item>
-        <item>推荐码</item>
+        <item>我的病人</item>
     </string-array>
     <string name="fragment_fourth_title">个人中心</string>
 
@@ -108,10 +82,11 @@
     <string name="activity_person_name">姓名</string>
     <string name="activity_person_gender">性别</string>
     <string name="activity_person_age">年龄</string>
-    <string name="activity_person_department">科室</string>
-    <string name="activity_person_doctor">主治医师</string>
     <string name="activity_person_tel">电话</string>
-    <string name="activity_person_address">地区</string>
+    <string name="activity_person_department">科室</string>
+    <string name="activity_person_hospital">医院</string>
+    <string name="activity_person_speciality">擅长领域</string>
+    <string name="activity_person_experience">从事经验</string>
     <string name="activity_person_discharge_summary">出院小结</string>
 
     <string name="activity_change_username">绑定手机</string>
@@ -119,17 +94,27 @@
     <string name="activity_pay">缴费</string>
     <string name="activity_pay_length">请选择开通时长</string>
     <string name="activity_pay_way">请选择支付方式</string>
-    <string name="activity_pay_pay">支付</string>
 
     <string name="activity_setting">设置</string>
+    <string name="activity_authority">权限设置</string>
+    <string name="activity_authority_hint">选择权限设置</string>
     <string-array name="activity_setting_children">
         <item>清除缓存</item>
-        <item>查看版本</item>
+       <!-- <item>查看版本</item>-->
+        <item>价格设置</item>
+        <item>权限设置</item>
         <item>退出</item>
     </string-array>
+    <string name="activity_setting_price">价格设置</string>
+    <string name="activity_setting_price_tips">请设置对应价格</string>
+
+    <string name="activity_my_account">我的账户</string>
+    <string name="activity_my_account_withdraw">提现</string>
 
     <string name="activity_message_center">消息中心</string>
 
-    <string name="activity_recommendation">推荐码</string>
+    <string name="activity_group_manager">新建组</string>
+
+    <string name="activity_my_patient">我的病人</string>
     <string name="activity_recommendation_binding">绑定</string>
 </resources>

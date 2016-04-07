@@ -4,16 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_gray">
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
 
     <com.zhy.autolayout.AutoRelativeLayout
         style="@style/TitleBarRelative">
+
         <TextView
             android:id="@+id/textLeft"
-            android:visibility="gone"
             style="@style/TitleBarRelativeLeftText"
-            android:text="保存"/>
+            android:text="取消"
+            android:visibility="gone"/>
+
         <ImageView
             android:id="@+id/imageBack"
             style="@style/TitleBarRelativeLeftImage"/>
@@ -23,160 +25,319 @@
             android:text="@string/activity_person"/>
 
         <TextView
+            android:id="@+id/textRight"
             style="@style/TitleBarRelativeRightText"
             android:text="@string/common_modify"
             android:visibility="visible"/>
     </com.zhy.autolayout.AutoRelativeLayout>
 
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_height="150px"
-        style="@style/PersonActivityLinearLayout"
-      >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_head"
-           />
-        <com.htlc.cyjk.app.widget.CircleImageView
-            android:id="@+id/imageHead"
-            android:layout_width="100px"
-            android:layout_height="100px"
-            android:src="@drawable/simple_head"/>
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
+    <ScrollView
+        style="@style/ScrollView">
 
-    <!--name-->
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_marginTop="30px"
-        style="@style/PersonActivityLinearLayout"
-        >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_name"
-            />
-        <EditText
-            android:id="@+id/editName"
-            style="@style/PersonActivityLinearEditText"
-            android:editable="true"
-            android:enabled="false"
-            android:focusable="false"
-            android:text="昵称"
-            />
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
-    <!--gender-->
-    <com.zhy.autolayout.AutoLinearLayout
-        style="@style/PersonActivityLinearLayout"
-        >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_gender"
-            />
-        <EditText
-            android:id="@+id/editGender"
-            style="@style/PersonActivityLinearEditText"
-            android:text="男"
-            />
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
-    <!--age-->
-    <com.zhy.autolayout.AutoLinearLayout
-        style="@style/PersonActivityLinearLayout"
-        >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_age"
-            />
-        <EditText
-            android:id="@+id/editAge"
-            style="@style/PersonActivityLinearEditText"
-            android:editable="true"
-            android:enabled="false"
-            android:focusable="false"
-            android:inputType="number"
-            android:text="0"
-            />
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
+        <com.zhy.autolayout.AutoLinearLayout
+            style="@style/ScrollViewRoot">
 
-    <!--department-->
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_marginTop="30px"
-        style="@style/PersonActivityLinearLayout"
-        >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_department"
-            />
-        <EditText
-            android:id="@+id/editDepartment"
-            style="@style/PersonActivityLinearEditText"
-            android:text="妇科"
-            />
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
-    <!--doctor-->
-    <com.zhy.autolayout.AutoLinearLayout
-        style="@style/PersonActivityLinearLayout"
-        >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_doctor"
-            />
-        <EditText
-            android:id="@+id/editDoctor"
-            style="@style/PersonActivityLinearEditText"
-            android:text="李xx"
-            />
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                android:layout_height="150px"
+                >
 
-    <!--tel-->
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_marginTop="30px"
-        style="@style/PersonActivityLinearLayout"
-        >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_tel"
-            />
-        <EditText
-            android:id="@+id/editUsername"
-            style="@style/PersonActivityLinearEditText"
-            android:text="18828283434"
-            />
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
-    <!--address-->
-    <com.zhy.autolayout.AutoLinearLayout
-        style="@style/PersonActivityLinearLayout"
-        >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_address"
-            />
-        <EditText
-            android:id="@+id/editAddress"
-            style="@style/PersonActivityLinearEditText"
-            android:text="黄浦江路1号"
-            />
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_head"
+                    />
 
-    <!--discharge-->
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_marginTop="30px"
-        android:id="@+id/linearDischargeSummary"
-        style="@style/PersonActivityLinearLayout"
-        >
-        <TextView
-            style="@style/PersonActivityLinearLabelText"
-            android:text="@string/activity_person_discharge_summary"
-            />
-        <ImageView
-            android:layout_width="14px"
-            android:layout_height="25px"
-            android:src="@mipmap/arrow_right"/>
-    </com.zhy.autolayout.AutoLinearLayout>
-    <include layout="@layout/layout_divider_horizontal"/>
+                <com.htlc.cykf.app.widget.CircleImageView
+                    android:id="@+id/imageHead"
+                    android:layout_width="100px"
+                    android:layout_height="100px"
+                    android:src="@mipmap/ic_launcher"/>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--name-->
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                android:layout_marginTop="30px"
+                >
+
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_name"
+                    />
+
+                <EditText
+                    android:id="@+id/editName"
+                    style="@style/PersonActivityLinearEditText"
+                    android:editable="true"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:text=""
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--gender-->
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                >
+
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_gender"
+                    />
+
+                <EditText
+                    android:id="@+id/editGender"
+                    style="@style/PersonActivityLinearEditText"
+                    android:text="男"
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--age-->
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                >
+
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_age"
+                    />
+
+                <EditText
+                    android:id="@+id/editAge"
+                    style="@style/PersonActivityLinearEditText"
+                    android:editable="true"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:inputType="number"
+                    android:text="0"
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--tel-->
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                >
+
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_tel"
+                    />
+
+                <EditText
+                    android:id="@+id/editUsername"
+                    style="@style/PersonActivityLinearEditText"
+                    android:text="18828283434"
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--department-->
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                android:layout_marginTop="30px"
+                >
+
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_department"
+                    />
+
+                <EditText
+                    android:id="@+id/editDepartment"
+                    style="@style/PersonActivityLinearEditText"
+                    android:text=""
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--hospital-->
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                >
+
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_hospital"
+                    />
+
+                <EditText
+                    android:id="@+id/editHospital"
+                    style="@style/PersonActivityLinearEditText"
+                    android:text=""
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--speciality-->
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                android:layout_marginTop="30px"
+                >
+
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_speciality"
+                    />
+
+                <EditText
+                    android:editable="true"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:id="@+id/editSpeciality"
+                    style="@style/PersonActivityLinearEditText"
+                    android:text=""
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--experience-->
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/PersonActivityLinearLayout"
+                >
+
+                <TextView
+                    style="@style/PersonActivityLinearLabelText"
+                    android:text="@string/activity_person_experience"
+                    />
+
+                <EditText
+                    android:editable="true"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:id="@+id/editExperience"
+                    style="@style/PersonActivityLinearEditText"
+                    android:text=""
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--证书-->
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50px"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:paddingBottom="23px"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:paddingTop="23px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_perfect_credential_hint"
+                    android:textColor="@color/text_black"
+                    android:textSize="28px"/>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30px"
+                    android:orientation="horizontal">
+                    <!--资格-->
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageCertification"
+                            android:layout_width="150px"
+                            android:layout_height="145px"
+                            android:background="@mipmap/icon_credential"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10px"
+                            android:text="@string/activity_perfect_career_hint"
+                            android:textColor="@color/text_black"
+                            android:textSize="22px"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10px"
+                            android:text="@string/activity_perfect_required_hint"
+                            android:textColor="@color/text_gray"
+                            android:textSize="22px"/>
+                    </com.zhy.autolayout.AutoLinearLayout>
+                    <!--职称-->
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageLevel"
+                            android:layout_width="150px"
+                            android:layout_height="145px"
+                            android:background="@mipmap/icon_credential"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10px"
+                            android:text="@string/activity_perfect_level_hint"
+                            android:textColor="@color/text_black"
+                            android:textSize="22px"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10px"
+                            android:text="@string/activity_perfect_optional_hint"
+                            android:textColor="@color/text_gray"
+                            android:textSize="22px"/>
+                    </com.zhy.autolayout.AutoLinearLayout>
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageHonor"
+                            android:layout_width="150px"
+                            android:layout_height="145px"
+                            android:background="@mipmap/icon_credential"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10px"
+                            android:text="@string/activity_perfect_honor_hint"
+                            android:textColor="@color/text_black"
+                            android:textSize="22px"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10px"
+                            android:text="@string/activity_perfect_optional_hint"
+                            android:textColor="@color/text_gray"
+                            android:textSize="22px"/>
+                    </com.zhy.autolayout.AutoLinearLayout>
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+            <include layout="@layout/layout_divider_horizontal"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </ScrollView>
 
 </com.zhy.autolayout.AutoLinearLayout>

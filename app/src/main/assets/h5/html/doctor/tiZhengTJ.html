@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<title>药品与体征统计</title>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/temp.css" />
+		<script src="../../js/config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/highcharts.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/doctor/tiZhengTJ.js" type="text/javascript" charset="utf-8"></script>
+
+
+		
+	</head>
+	<script>
+		$(function(){
+			console.log("进入了HTML")
+		})
+
+		//调用安卓返回方法
+		function AndroidBack() {
+			console.log("AndroidBack")
+			bridge.back();
+		}
+
+	</script>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div class="backBtn" onclick="AndroidBack()">
+			    <a style="color: white;" class=" mui-icon mui-icon-left-nav mui-pull-left" ></a>
+			</div>
+			<h1 class="mui-title">药品与体征统计</h1> 
+		</header>
+		<div class="mui-content" style="padding-top:55px !important">
+
+					<div class="MidInput">
+                    	<div class="SelectSex">
+                    		
+			   				<div  onclick="getAndroidMecList()" val="" class="BQageInput" style="padding-left: 15px; height: 33px;line-height: 33px;"  id="TZmecList">请选择药品</div>
+
+				   			<span id="SelectIcon" class="HistBtnIcon mui-icon mui-icon-arrowright SelectIcon"></span> 
+
+                    	</div>
+                    </div>
+					
+					
+					<div class="MidInput">
+						<div class="SelectSex">
+							<span class="SpanFontWhite">请选择性别</span>
+						</div>
+
+						<ul class="flotCla">
+							<li class="mui-checkbox LiWid">
+								<input type="checkbox" checked="checked" name="man" id="man" value="0" />
+								<label for="nan">男</label>
+							</li>
+							<li class=" LiWid  mui-checkbox">
+								<input type="checkbox" checked="checked" class="SBtn" name="man" id="woman" value="1" />
+								<label for="nan">女</label>
+							</li>
+
+						</ul>
+					</div>
+                    <div class="MidInput">
+                    	<div class="SelectSex">
+			   				<input type="number" class="BQageInput" placeholder="请输入年龄" name="Hpre" id="age" value=""/>
+						</div>
+                    </div>
+                    <div class="MidInput">
+                    	<div class="SelectSex">
+			   				<div  onclick="getAndroidZhiYe()" val="" class="BQageInput" style="padding-left: 15px; height: 33px;line-height: 33px;"  id="TZzhiYe">请选择职业</div>
+						</div>
+                    </div>
+                    <div class="MidInput">
+                    	<div class="SelectSex">
+			   				<div  onclick="getAndroidDiQu()" val="" class="BQageInput" style="padding-left: 15px; height: 33px;line-height: 33px;"  id="TZdiQu">请选择地区</div>
+						</div>
+                    </div>
+                     <div class="MidDiv"><input type="button" id="MidBtn" onclick="getData()" value="确定" /></div>
+					
+					<div class="InfoDraw" id="XueYaDiv" style="display: none;">
+						<div class="TitleDiv">
+							血压测量
+						</div>
+						<div class="BQxueYa" id="XueYaPic">
+							
+						</div>
+					</div>
+					
+					<div class="InfoDraw" id="XueTangDiv" style="display: none;">
+						<div class="TitleDiv">
+							血糖测量
+						</div>
+						<div class="BQxueYa"  id="XueTangPic">
+							
+						</div>
+					</div>
+
+				
+
+		</div>
+		<script src="../../js/scrollBody.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

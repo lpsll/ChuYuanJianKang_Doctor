@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ScrollView
+        style="@style/ScrollView">
+        <com.zhy.autolayout.AutoLinearLayout
+            style="@style/ScrollViewRoot">
+            <com.htlc.cykf.app.widget.ScrollListView
+                android:id="@+id/groupListView"
+                style="@style/ListView"
+                />
+            <com.htlc.cykf.app.widget.ScrollListView
+                style="@style/ListView"
+                />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </ScrollView>
+    <TextView
+        android:id="@+id/textDialog"
+        android:layout_width="160px"
+        android:layout_height="160px"
+        android:layout_gravity="center"
+        android:background="@color/bg_blue"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="60px"
+        android:visibility="invisible"/>
+
+    <com.htlc.cykf.app.widget.SideBar
+        android:id="@+id/sideBar"
+        android:layout_width="30px"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center"
+        android:paddingBottom="5px"
+        android:paddingTop="5px"/>
+
+
+</com.zhy.autolayout.AutoFrameLayout>

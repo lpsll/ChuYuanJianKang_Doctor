@@ -10,20 +10,52 @@
         style="@style/TitleBarRelative">
         <TextView
             style="@style/TitleBarRelativeMiddleText"
-            android:text="@string/fragment_third_title"/>
+            android:text="@string/fragment_third"/>
     </com.zhy.autolayout.AutoRelativeLayout>
+    <!--病情与药品-->
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/relativeIllnessAndDrug"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
-        android:id="@+id/scrollView"
-        style="@style/ScrollView"
-        >
-        <com.zhy.autolayout.AutoLinearLayout
-            style="@style/ScrollViewRoot">
-            <!--********************************-->
-            <com.htlc.cyjk.app.widget.ScrollListView
-                android:id="@+id/listView"
-                style="@style/ListView"/>
-            <!--********************************-->
-        </com.zhy.autolayout.AutoLinearLayout>
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+        <TextView
+            android:id="@+id/textIllnessAndDrug"
+            style="@style/EditInput"
+            android:layout_marginTop="30px"
+            android:text="@string/fragment_third_illness_and_drug"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textIllnessAndDrug"
+            android:layout_alignRight="@+id/textIllnessAndDrug"
+            android:layout_alignTop="@+id/textIllnessAndDrug"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:src="@mipmap/arrow_right"/>
+    </com.zhy.autolayout.AutoRelativeLayout>
+    <!--药品与体征-->
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/relativeDrugAndSign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textDrugAndSign"
+            style="@style/EditInput"
+            android:layout_marginTop="30px"
+            android:text="@string/fragment_third_drug_and_sign"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textDrugAndSign"
+            android:layout_alignRight="@+id/textDrugAndSign"
+            android:layout_alignTop="@+id/textDrugAndSign"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:src="@mipmap/arrow_right"/>
+    </com.zhy.autolayout.AutoRelativeLayout>
 </com.zhy.autolayout.AutoLinearLayout>

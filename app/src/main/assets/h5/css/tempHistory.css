@@ -21,6 +21,15 @@
 	margin-bottom: 16px;
 	
 }
+.LoadBtnCls{
+	width: 100%;
+	height: 38px;
+	text-align: center;
+	line-height: 38px;
+	background-color: #E7E8E8;
+	color: #989898;
+	font-size: 14px;
+}
 
 .ImgTitle{
 	background-color: #CCCCCC;
