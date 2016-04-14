@@ -84,11 +84,25 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
 
         mEditName = (EditText) findViewById(R.id.editName);
         mEditAge = (EditText) findViewById(R.id.editAge);
+        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (isEditable && hasFocus) {
+                    ((EditText) v).setText("");
+                }
+            }
+        };
+        mEditName.setOnFocusChangeListener(onFocusChangeListener);
+        mEditAge.setOnFocusChangeListener(onFocusChangeListener);
 
         mEditDepartment = (EditText) findViewById(R.id.editDepartment);
         mEditHospital = (EditText) findViewById(R.id.editHospital);
+
         mEditSpeciality = (EditText) findViewById(R.id.editSpeciality);
         mEditExperience = (EditText) findViewById(R.id.editExperience);
+        mEditSpeciality.setOnFocusChangeListener(onFocusChangeListener);
+        mEditExperience.setOnFocusChangeListener(onFocusChangeListener);
+
         mImageCertification = (ImageView) findViewById(R.id.imageCertification);
         mImageLevel = (ImageView) findViewById(R.id.imageLevel);
         mImageHonor = (ImageView) findViewById(R.id.imageHonor);
@@ -224,22 +238,22 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
             mEditSpeciality.setEnabled(true);
             mEditSpeciality.setFocusable(true);
             mEditSpeciality.setFocusableInTouchMode(true);
-            mEditSpeciality.requestFocus();
+//            mEditSpeciality.requestFocus();
 
             mEditExperience.setEnabled(true);
             mEditExperience.setFocusable(true);
             mEditExperience.setFocusableInTouchMode(true);
-            mEditExperience.requestFocus();
+//            mEditExperience.requestFocus();
 
             mEditAge.setEnabled(true);
             mEditAge.setFocusable(true);
             mEditAge.setFocusableInTouchMode(true);
-            mEditAge.requestFocus();
+//            mEditAge.requestFocus();
 
             mEditName.setEnabled(true);
             mEditName.setFocusable(true);
             mEditName.setFocusableInTouchMode(true);
-            mEditName.requestFocus();
+//            mEditName.requestFocus();
 
             mTextRight.setText("保存");
             mTextLeft.setVisibility(View.VISIBLE);

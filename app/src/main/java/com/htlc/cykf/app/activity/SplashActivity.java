@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.htlc.cykf.R;
 import com.htlc.cykf.app.util.LogUtil;
+import com.htlc.cykf.app.util.SharedPreferenceUtil;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -15,7 +16,7 @@ import cn.jpush.android.api.JPushInterface;
  * Created by sks on 2016/2/15.
  */
 public class SplashActivity extends BaseActivity {
-
+    public static final String IsFirstStart = "IsFirstStart";
     private ImageView mImageView;
 
 
@@ -63,6 +64,7 @@ public class SplashActivity extends BaseActivity {
             }
         });
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -70,35 +72,42 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void goNextActivity() {
-        application.initLoginStatus();
-        if (application.isLogin()) {
-            String flag = application.getUserBean().flag;
-            LogUtil.e(this,"isLogin ;flag="+flag);
-            switch (flag){
-                case "1":
-                    LogUtil.e(this,"审核中");
-                    LoginActivity.start(this,null);
-                    finish();
-                    break;
-                case "2":
-                    LogUtil.e(this,"被驳回");
-                    LoginActivity.start(this, null);
-                    finish();
-                    break;
-                case "3":
-                    LogUtil.e(this, "信息未完善");
-                    LoginActivity.start(this, null);
-                    finish();
-                    break;
-                case "0":
-                default:
-                    MainActivity.start(this,null);
-                    finish();
-            }
-
-        }else {
-            LoginActivity.start(this,null);
+        int isFirst = SharedPreferenceUtil.getInt(this, IsFirstStart, -1);
+        if (isFirst == -1) {
+            Intent intent = new Intent(this, GuideActivity.class);
+            startActivity(intent);
             finish();
+        } else {
+            application.initLoginStatus();
+            if (application.isLogin()) {
+                String flag = application.getUserBean().flag;
+                LogUtil.e(this, "isLogin ;flag=" + flag);
+                switch (flag) {
+                    case "1":
+                        LogUtil.e(this, "审核中");
+                        LoginActivity.start(this, null);
+                        finish();
+                        break;
+                    case "2":
+                        LogUtil.e(this, "被驳回");
+                        LoginActivity.start(this, null);
+                        finish();
+                        break;
+                    case "3":
+                        LogUtil.e(this, "信息未完善");
+                        LoginActivity.start(this, null);
+                        finish();
+                        break;
+                    case "0":
+                    default:
+                        MainActivity.start(this, null);
+                        finish();
+                }
+
+            } else {
+                LoginActivity.start(this, null);
+                finish();
+            }
         }
     }
 }

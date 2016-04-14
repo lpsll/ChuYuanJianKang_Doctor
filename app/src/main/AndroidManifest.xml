@@ -17,6 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name="com.htlc.cykf.app.activity.GuideActivity"/>
         <activity android:name="com.htlc.cykf.app.activity.LoginActivity"/>
         <activity android:name="com.htlc.cykf.app.activity.RegisterActivity"/>
         <activity android:name="com.htlc.cykf.app.activity.PerfectInfoActivity"/>
