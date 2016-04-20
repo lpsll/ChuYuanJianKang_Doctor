@@ -101,7 +101,7 @@
             android:layout_marginLeft="10px"
             android:text="@string/activity_register_protocol_hint"
             android:textColor="@color/text_gray_dark"
-            android:textSize="24px"/>
+            android:textSize="26px"/>
 
         <TextView
             android:id="@+id/textButtonProtocol"
@@ -109,6 +109,6 @@
             android:layout_height="wrap_content"
             android:text="@string/activity_register_protocol"
             android:textColor="@color/text_red"
-            android:textSize="24px"/>
+            android:textSize="26px"/>
     </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoLinearLayout>

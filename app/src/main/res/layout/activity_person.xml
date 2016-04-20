@@ -49,8 +49,8 @@
 
                 <com.htlc.cykf.app.widget.CircleImageView
                     android:id="@+id/imageHead"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
+                    android:layout_width="110px"
+                    android:layout_height="110px"
                     android:src="@mipmap/ic_launcher"/>
             </com.zhy.autolayout.AutoLinearLayout>
 
@@ -236,7 +236,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/activity_perfect_credential_hint"
                     android:textColor="@color/text_black"
-                    android:textSize="28px"/>
+                    android:textSize="30px"/>
 
                 <com.zhy.autolayout.AutoLinearLayout
                     android:layout_width="match_parent"
@@ -264,7 +264,7 @@
                             android:layout_marginTop="10px"
                             android:text="@string/activity_perfect_career_hint"
                             android:textColor="@color/text_black"
-                            android:textSize="22px"/>
+                            android:textSize="24px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -272,7 +272,7 @@
                             android:layout_marginTop="10px"
                             android:text="@string/activity_perfect_required_hint"
                             android:textColor="@color/text_gray"
-                            android:textSize="22px"/>
+                            android:textSize="24px"/>
                     </com.zhy.autolayout.AutoLinearLayout>
                     <!--职称-->
                     <com.zhy.autolayout.AutoLinearLayout
@@ -294,7 +294,7 @@
                             android:layout_marginTop="10px"
                             android:text="@string/activity_perfect_level_hint"
                             android:textColor="@color/text_black"
-                            android:textSize="22px"/>
+                            android:textSize="24px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -302,7 +302,7 @@
                             android:layout_marginTop="10px"
                             android:text="@string/activity_perfect_optional_hint"
                             android:textColor="@color/text_gray"
-                            android:textSize="22px"/>
+                            android:textSize="24px"/>
                     </com.zhy.autolayout.AutoLinearLayout>
 
                     <com.zhy.autolayout.AutoLinearLayout
@@ -324,7 +324,7 @@
                             android:layout_marginTop="10px"
                             android:text="@string/activity_perfect_honor_hint"
                             android:textColor="@color/text_black"
-                            android:textSize="22px"/>
+                            android:textSize="24px"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -332,7 +332,7 @@
                             android:layout_marginTop="10px"
                             android:text="@string/activity_perfect_optional_hint"
                             android:textColor="@color/text_gray"
-                            android:textSize="22px"/>
+                            android:textSize="24px"/>
                     </com.zhy.autolayout.AutoLinearLayout>
                 </com.zhy.autolayout.AutoLinearLayout>
             </com.zhy.autolayout.AutoLinearLayout>

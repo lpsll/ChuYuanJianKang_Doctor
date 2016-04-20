@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_second_illness"
             android:textColor="@color/text_black"
-            android:textSize="26px"
+            android:textSize="28px"
             />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
             android:textColor="@color/text_black"
-            android:textSize="26px"
+            android:textSize="28px"
             />
     </com.zhy.autolayout.AutoLinearLayout>
     <!--推荐码-->
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="@string/fragment_second_bind_number"
             android:textColor="@color/text_black"
-            android:textSize="26px"
+            android:textSize="28px"
             />
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
             android:textColor="@color/text_black"
-            android:textSize="26px"
+            android:textSize="28px"
             />
     </com.zhy.autolayout.AutoLinearLayout>
     <!--<com.zhy.autolayout.AutoLinearLayout
@@ -123,6 +123,7 @@
             android:paddingLeft="20px"
             android:paddingRight="20px"
             android:text="@string/fragment_second_send_sms"
+            android:textSize="28px"
             android:textColor="@android:color/white"/>
     </com.zhy.autolayout.AutoRelativeLayout>
     <TextView
@@ -139,7 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="推荐码已生成"
-        android:textSize="26px"
+        android:textSize="28px"
         android:visibility="gone"
         android:textColor="@android:color/white"
         android:background="@drawable/black_rectangle_shape"/>

@@ -30,7 +30,7 @@
             android:paddingTop="15px"
             android:text="@string/activity_setting_price_tips"
             android:textColor="@color/text_black"
-            android:textSize="26px"/>
+            android:textSize="28px"/>
 
         <ListView
             android:id="@+id/lengthListView"

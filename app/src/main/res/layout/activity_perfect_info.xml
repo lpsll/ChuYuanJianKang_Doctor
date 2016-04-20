@@ -90,7 +90,7 @@
                         android:paddingRight="20px"
                         android:text="@string/common_male"
                         android:textColor="@color/text_gray_dark"
-                        android:textSize="26px"/>
+                        android:textSize="28px"/>
 
                     <RadioButton
                         android:id="@+id/radioButton1"
@@ -103,7 +103,7 @@
                         android:paddingRight="20px"
                         android:text="@string/common_female"
                         android:textColor="@color/text_gray_dark"
-                        android:textSize="26px"/>
+                        android:textSize="28px"/>
                 </RadioGroup>
             </com.zhy.autolayout.AutoRelativeLayout>
             <!--科室-->
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/activity_perfect_credential_hint"
                     android:textColor="@color/text_gray"
-                    android:textSize="26px"/>
+                    android:textSize="28px"/>
 
                 <com.zhy.autolayout.AutoLinearLayout
                     android:layout_width="match_parent"
@@ -180,14 +180,14 @@
                             android:layout_marginTop="10px"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="22px"
+                            android:textSize="24px"
                             android:textColor="@color/text_black"
                             android:text="@string/activity_perfect_career_hint"/>
                         <TextView
                             android:layout_marginTop="10px"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="22px"
+                            android:textSize="24px"
                             android:textColor="@color/text_gray"
                             android:text="@string/activity_perfect_required_hint"/>
                     </com.zhy.autolayout.AutoLinearLayout>
@@ -209,14 +209,14 @@
                             android:layout_marginTop="10px"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="22px"
+                            android:textSize="24px"
                             android:textColor="@color/text_black"
                             android:text="@string/activity_perfect_level_hint"/>
                         <TextView
                             android:layout_marginTop="10px"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="22px"
+                            android:textSize="24px"
                             android:textColor="@color/text_gray"
                             android:text="@string/activity_perfect_optional_hint"/>
                     </com.zhy.autolayout.AutoLinearLayout>
@@ -237,14 +237,14 @@
                             android:layout_marginTop="10px"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="22px"
+                            android:textSize="24px"
                             android:textColor="@color/text_black"
                             android:text="@string/activity_perfect_honor_hint"/>
                         <TextView
                             android:layout_marginTop="10px"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="22px"
+                            android:textSize="24px"
                             android:textColor="@color/text_gray"
                             android:text="@string/activity_perfect_optional_hint"/>
                     </com.zhy.autolayout.AutoLinearLayout>
