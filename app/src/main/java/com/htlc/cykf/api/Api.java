@@ -18,6 +18,7 @@ import com.htlc.cykf.model.MessageBean;
 import com.htlc.cykf.model.PatientBean;
 import com.htlc.cykf.model.PriceBean;
 import com.htlc.cykf.model.TotalMoneyBean;
+import com.htlc.cykf.model.UpdateCityBean;
 import com.htlc.cykf.model.UserBean;
 
 import java.io.File;
@@ -57,7 +58,7 @@ public interface Api {
     String ConversationDetail = Host + "doctor_getdetails";
     String GetContactById = Host + "user_getpni";
 
-
+    String GetAllCity = Host + "city_getall";
 
 
 
@@ -271,5 +272,7 @@ public interface Api {
      */
     void getContactById(String contactId, ResultCallback<ApiResponse<ContactBean>> callback);
 
+
+    void getAllCity(String lastModifyData, ResultCallback<ApiResponse<UpdateCityBean>> callback);
 
 }

@@ -20,4 +20,7 @@ public class BaseFragment extends Fragment{
     public boolean handleNetworkOnFailure(String errorEvent, String message){
         return baseActivity.handleNetworkOnFailure(errorEvent, message);
     }
+    public void getContactList(){
+
+    }
 }

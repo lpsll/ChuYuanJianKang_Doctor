@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.htlc.cykf.R;
+import com.htlc.cykf.app.App;
 import com.htlc.cykf.app.util.LogUtil;
 import com.htlc.cykf.app.util.SharedPreferenceUtil;
 
@@ -26,7 +27,7 @@ public class SplashActivity extends BaseActivity {
         mImageView = new ImageView(this);
         mImageView.setImageResource(R.mipmap.ic_launcher);
         setContentView(mImageView);
-
+        App.app.initDatabase();
     }
 
     @Override

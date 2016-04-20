@@ -13,6 +13,7 @@ import com.htlc.cykf.model.IllnessBean;
 import com.htlc.cykf.model.InformationBean;
 import com.htlc.cykf.model.MedicalHistoryItemBean;
 import com.htlc.cykf.model.MessageBean;
+import com.htlc.cykf.model.NetworkCityBean;
 import com.htlc.cykf.model.PatientBean;
 import com.htlc.cykf.model.PriceBean;
 import com.htlc.cykf.model.TotalMoneyBean;
@@ -233,4 +234,6 @@ public interface AppAction {
     void conversationDetail(String patientId, ActionCallbackListener<DischargeSummaryBean> listener);
 
     void getUserById(String userId, ActionCallbackListener<ContactBean> listener);
+
+    void getAllCity(ActionCallbackListener<ArrayList<NetworkCityBean>> listener);
 }

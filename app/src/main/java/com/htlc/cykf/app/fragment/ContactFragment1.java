@@ -51,22 +51,22 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
 
     private View mView;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);//反注册EventBus
-    }
-
-    public void onEventMainThread(ContactBean event) {
-        String msg = "onEventMainThread收到了消息：";
-        getContactList();
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        EventBus.getDefault().register(this);
+//    }
+//
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        EventBus.getDefault().unregister(this);//反注册EventBus
+//    }
+//
+//    public void onEventMainThread(ContactBean event) {
+//        String msg = "onEventMainThread收到了消息：";
+//        getContactList();
+//    }
 
     @Nullable
     @Override
@@ -76,6 +76,17 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
             setupView(mView);
         }
         return mView;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        LogUtil.e(this, "onStart refresh contact List  0");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtil.e(this, "onResume refresh contact List  0");
     }
 
     private void setupView(View view) {
@@ -108,7 +119,8 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
         getContactList();
     }
 
-    private void getContactList() {
+    @Override
+    public void getContactList() {
         baseActivity.appAction.contactListByType("0", new ActionCallbackListener<ArrayList<ContactBean>>() {
             @Override
             public void onSuccess(ArrayList<ContactBean> data) {

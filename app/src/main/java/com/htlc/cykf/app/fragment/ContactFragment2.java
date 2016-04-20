@@ -35,30 +35,43 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
     private TextView mTextDialog;
     private SideBar mSideBar;
     private View mView;
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);//反注册EventBus
-    }
-    public void onEventMainThread(ContactBean event) {
-        String msg = "onEventMainThread收到了消息：";
-        getContactList();
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        EventBus.getDefault().register(this);
+//    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        EventBus.getDefault().unregister(this);//反注册EventBus
+//    }
+//    public void onEventMainThread(ContactBean event) {
+//        String msg = "onEventMainThread收到了消息：";
+//        getContactList();
+//    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(mView==null){
+        if (mView == null) {
             mView = inflater.inflate(R.layout.fragment_contact, null);
             setupView(mView);
         }
         return mView;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LogUtil.e(this, "onStart refresh contact List  1");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtil.e(this, "onResume refresh contact List  1");
+    }
+
 
     private void setupView(View view) {
         mListView = (ListView) view.findViewById(R.id.listView);
@@ -77,14 +90,15 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
                 int position = ((SecondAdapter) mAdapter).getFirstPositionOfType(s);
                 LogUtil.e(ContactFragment2.this, "onTouchingLetterChanged---position=?" + position + ";---type=?" + s);
                 if (position != -1) {
-                    mListView.setSelection(position+1);
+                    mListView.setSelection(position + 1);
                 }
             }
         });
         getContactList();
     }
 
-    private void getContactList() {
+    @Override
+    public void getContactList() {
         baseActivity.appAction.contactListByType("1", new ActionCallbackListener<ArrayList<ContactBean>>() {
             @Override
             public void onSuccess(ArrayList<ContactBean> data) {
@@ -95,7 +109,7 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                if(handleNetworkOnFailure(errorEvent, message)) return;
+                if (handleNetworkOnFailure(errorEvent, message)) return;
             }
         });
     }
@@ -111,15 +125,15 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
              * @param targetUserId 要与之聊天的用户 Id。
              * @param title        聊天的标题，如果传入空值，则默认显示与之聊天的用户名称。
              */
-            RongIM.getInstance().startPrivateChat(getActivity(),bean.userid,bean.name);
+            RongIM.getInstance().startPrivateChat(getActivity(), bean.userid, bean.name);
         }
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         final ContactBean bean = (ContactBean) mList.get(position);
-        LogUtil.e(this,"被长按的位置:"+position+";id:"+bean.userid);
-        View dialogOptions =  View.inflate(getActivity(),R.layout.dialog_options_0,null);
+        LogUtil.e(this, "被长按的位置:" + position + ";id:" + bean.userid);
+        View dialogOptions = View.inflate(getActivity(), R.layout.dialog_options_0, null);
         TextView textOption1 = (TextView) dialogOptions.findViewById(R.id.textOption1);
         textOption1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +142,7 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
                 baseActivity.dismissTipsDialog();
             }
         });
-        baseActivity.showTipsDialog(dialogOptions,400,180,true);
+        baseActivity.showTipsDialog(dialogOptions, 400, 180, true);
         return true;
     }
 
@@ -141,7 +155,7 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                if(handleNetworkOnFailure(errorEvent, message)) return;
+                if (handleNetworkOnFailure(errorEvent, message)) return;
                 ToastUtil.showToast(App.app, message);
             }
         });

@@ -16,8 +16,11 @@ import com.htlc.cykf.R;
 import com.htlc.cykf.app.adapter.FirstPagerAdaptor;
 import com.htlc.cykf.app.util.CommonUtil;
 import com.htlc.cykf.app.util.LogUtil;
+import com.htlc.cykf.model.ContactBean;
 
 import java.util.ArrayList;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by sks on 2016/1/27.
@@ -29,17 +32,31 @@ public class ContactTypeFragment extends BaseFragment {
     private FirstPagerAdaptor mAdapter;
     private ArrayList<BaseFragment> mList = new ArrayList();
     private View mView;
+    public boolean[] childNeedRefresh = new boolean[]{true,true,true};
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtil.e(this, "onCreate");
+        EventBus.getDefault().register(this);
         if(mList.size()<1){
             mList.clear();
             mList.add(new ContactFragment1());
             mList.add(new ContactFragment2());
             mList.add(new ContactFragment0());
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);//反注册EventBus
+    }
+    public void onEventMainThread(ContactBean event) {
+        LogUtil.e("OrdersFragment","onEventMainThread");
+        for(int i=0; i<childNeedRefresh.length; i++){
+            childNeedRefresh[i] = true;
         }
     }
 
@@ -76,6 +93,11 @@ public class ContactTypeFragment extends BaseFragment {
                     if (i == position) {
                         LogUtil.i("OrdersFragment", "i == position    " + position);
                         textView.setTextColor(getResources().getColor(R.color.text_blue));
+                        if(childNeedRefresh[position]){
+                            childNeedRefresh[position] = false;
+                            LogUtil.e("OrdersFragment","position:"+position+childNeedRefresh);
+                            mList.get(position).getContactList();
+                        }
                     } else {
                         textView.setEnabled(true);
                         textView.setTextColor(getResources().getColor(R.color.text_black));

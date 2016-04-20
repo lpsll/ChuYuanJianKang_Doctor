@@ -24,6 +24,7 @@ import com.htlc.cykf.model.MessageBean;
 import com.htlc.cykf.model.PatientBean;
 import com.htlc.cykf.model.PriceBean;
 import com.htlc.cykf.model.TotalMoneyBean;
+import com.htlc.cykf.model.UpdateCityBean;
 import com.htlc.cykf.model.UserBean;
 
 import java.io.File;
@@ -306,7 +307,7 @@ public class ApiImpl implements Api {
         String userId = App.app.getUserBean().userid;
         params.put("userid", TextUtils.isEmpty(token) ? "" : userId);
 
-        LogUtil.e(this,"authority:"+authority);
+        LogUtil.e(this, "authority:" + authority);
         params.put("flag", authority);
         String url = Api.SetAuthorityStatus;
         LogUtil.e(this, url);
@@ -511,4 +512,12 @@ public class ApiImpl implements Api {
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
 
+    @Override
+    public void getAllCity(String lastModifyData, ResultCallback<ApiResponse<UpdateCityBean>> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("date", lastModifyData);
+        String url = Api.GetAllCity;
+        LogUtil.e(this, url);
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
 }

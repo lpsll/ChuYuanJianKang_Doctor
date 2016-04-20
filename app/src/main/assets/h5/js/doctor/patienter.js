@@ -50,8 +50,17 @@ function DrawYinShi(){
 			var dataArr = result.dataArray.reverse();
 			dataArr.forEach(function(e) {
 					date.push(e.date);
-					mvalue.push(parseInt(e.numericOne));
-					nvalue.push(parseInt(e.numericTwo));
+					if(e.numericOne == null){
+						mvalue.push(null);
+					}else{
+						mvalue.push(parseInt(e.numericOne));
+					}
+					if(e.numericTwo == null){
+						nvalue.push(null);
+					}else{
+						nvalue.push(parseInt(e.numericTwo));
+					}
+					
 			});
 //			data.name = "饮食";
 			console.log(mvalue);
@@ -128,7 +137,8 @@ function DrawYinShi(){
 					        legendItemClick: function(e) {
 					            return false; // 直接 return false 即可禁用图例点击事件
 					        }
-					    }
+					    },
+					    connectNulls: true
 					},
 //				  	columnrange: {
 //		                dataLabels: {
@@ -180,7 +190,12 @@ function DrawHeJiu(){
 			var dataArr = result.dataArray.reverse();
 			dataArr.forEach(function(e) {
 					date.push(e.date);
-					mvalue.push(parseInt(e.valueone));				
+					if(e.valueone == null){
+						mvalue.push(null);	
+					}else{
+						mvalue.push(parseInt(e.valueone));	
+					}
+								
 			}); 
 			data.name = "饮酒";
 			data.data = mvalue;
@@ -243,7 +258,8 @@ function DrawHeJiu(){
 					        legendItemClick: function(e) {
 					            return false; // 直接 return false 即可禁用图例点击事件
 					        }
-					    }
+					    },
+					    connectNulls: true
 					  }
 				},
 				series: [data]
@@ -283,7 +299,12 @@ function DrawChouYan(){
 			var dataArr = result.dataArray.reverse();
 			dataArr.forEach(function(e) {
 					date.push(e.date);
-					mvalue.push(parseInt(e.valueone));				
+					if(e.valueone == null){
+						mvalue.push(null);	
+					}else{
+						mvalue.push(parseInt(e.valueone));	
+					}
+								
 			});
 			data.name = "抽烟";
 			data.data = mvalue;
@@ -346,7 +367,8 @@ function DrawChouYan(){
 					        legendItemClick: function(e) {
 					            return false; // 直接 return false 即可禁用图例点击事件
 					        }
-					    }
+					    },
+					    connectNulls: true
 					  }
 				},
 				series: [data]
@@ -385,7 +407,12 @@ function DrawYunDong(){
 			var dataArr = result.dataArray.reverse();
 			dataArr.forEach(function(e) {
 					date.push(e.date);
-					mvalue.push(parseInt(e.valueone));				
+					if(e.valueone == null){
+						mvalue.push(null);
+					}else{
+						mvalue.push(parseInt(e.valueone));
+					}
+									
 			});
 			data.name = "运动";
 			data.data = mvalue;
@@ -448,7 +475,8 @@ function DrawYunDong(){
 					        legendItemClick: function(e) {
 					            return false; // 直接 return false 即可禁用图例点击事件
 					        }
-					    }
+					    },
+					    connectNulls: true
 					  }
 				},
 				series: [data]
@@ -486,7 +514,12 @@ function DrawShuiMian(){
 			var dataArr = result.dataArray.reverse();
 			dataArr.forEach(function(e) {
 					date.push(e.date);
-					mvalue.push(parseInt(e.valueone));				
+					if(e.valueone == null){
+						mvalue.push(null);	
+					}else{
+						mvalue.push(parseInt(e.valueone));	
+					}
+								
 			});
 			data.name = "睡眠";
 			data.data = mvalue;
@@ -549,7 +582,8 @@ function DrawShuiMian(){
 					        legendItemClick: function(e) {
 					            return false; // 直接 return false 即可禁用图例点击事件
 					        }
-					    }
+					    },
+					    connectNulls: true
 					  }
 				},
 				series: [data]

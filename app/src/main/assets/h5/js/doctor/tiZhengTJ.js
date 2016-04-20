@@ -307,7 +307,8 @@ function DrawXueTang(){
 							legendItemClick: function(e) {
 								return false; // 直接 return false 即可禁用图例点击事件
 							}
-						}
+						},
+						connectNulls: true
 					}
 				},
 				series: [{
@@ -387,7 +388,8 @@ function DrawXueYa() {
 							legendItemClick: function(e) {
 								return false; // 直接 return false 即可禁用图例点击事件
 							}
-						}
+						},
+						connectNulls: true
 					}
 				},
 				series: [{

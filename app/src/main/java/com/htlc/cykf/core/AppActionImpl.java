@@ -11,10 +11,12 @@ import com.htlc.cykf.api.ApiImpl;
 import com.htlc.cykf.api.ApiResponse;
 import com.htlc.cykf.api.net.okhttp.callback.ResultCallback;
 import com.htlc.cykf.app.App;
+import com.htlc.cykf.app.db.DbManager;
 import com.htlc.cykf.app.util.CommonUtil;
 import com.htlc.cykf.app.util.Constant;
 import com.htlc.cykf.app.util.JsonUtil;
 import com.htlc.cykf.app.util.LogUtil;
+import com.htlc.cykf.app.util.SharedPreferenceUtil;
 import com.htlc.cykf.model.AuthorityBean;
 import com.htlc.cykf.model.BindNumberBean;
 import com.htlc.cykf.model.ContactBean;
@@ -25,9 +27,11 @@ import com.htlc.cykf.model.DoctorBean;
 import com.htlc.cykf.model.DrugBean;
 import com.htlc.cykf.model.IllnessBean;
 import com.htlc.cykf.model.MessageBean;
+import com.htlc.cykf.model.NetworkCityBean;
 import com.htlc.cykf.model.PatientBean;
 import com.htlc.cykf.model.PriceBean;
 import com.htlc.cykf.model.TotalMoneyBean;
+import com.htlc.cykf.model.UpdateCityBean;
 import com.htlc.cykf.model.UserBean;
 import com.squareup.okhttp.Request;
 
@@ -45,7 +49,7 @@ import java.util.regex.Pattern;
 
 public class AppActionImpl implements AppAction {
 
-
+    private static final String df = "vnv";
     private final static int PAGE_SIZE = 20; // 默认每页20条
 
     private Context context;
@@ -65,6 +69,7 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
+//        Pattern pattern = Pattern.compile("1[3|4|5|7|8]\\d{9}");
         Pattern pattern = Pattern.compile("1\\d{10}");
         Matcher matcher = pattern.matcher(username);
         if (!matcher.matches()) {
@@ -262,22 +267,22 @@ public class AppActionImpl implements AppAction {
         api.postPersonInfo(userId, phone, name, sex, age,
                 department, hospital, special, experience,
                 photo, certification, level, honor, new ResultCallback<ApiResponse<Void>>() {
-            @Override
-            public void onError(Request request, Exception e) {
-                e.printStackTrace();
-                
-                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
-            }
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
 
-            @Override
-            public void onResponse(ApiResponse<Void> response) {
-                if ("1".equals(response.code)) {
-                    listener.onSuccess(null);
-                } else {
-                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
-                }
-            }
-        });
+                        listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+                    }
+
+                    @Override
+                    public void onResponse(ApiResponse<Void> response) {
+                        if ("1".equals(response.code)) {
+                            listener.onSuccess(null);
+                        } else {
+                            listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -382,12 +387,12 @@ public class AppActionImpl implements AppAction {
                 }
 
             }
-    });
+        });
     }
 
     @Override
     public void messageList(String userId, int page, final ActionCallbackListener<ArrayList<MessageBean>> listener) {
-        api.messageList(userId, page+"", new ResultCallback<ApiResponse<MessageBean>>() {
+        api.messageList(userId, page + "", new ResultCallback<ApiResponse<MessageBean>>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
@@ -547,7 +552,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void myPatients(int page, final ActionCallbackListener<ArrayList<PatientBean>> listener) {
-        api.myPatients(page+"", new ResultCallback<ApiResponse<PatientBean>>() {
+        api.myPatients(page + "", new ResultCallback<ApiResponse<PatientBean>>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
@@ -571,7 +576,7 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
-                
+
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -592,7 +597,7 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
-                
+
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -710,7 +715,7 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
-                LogUtil.e(this,request.body().toString());
+                LogUtil.e(this, request.body().toString());
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -727,7 +732,7 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
-                
+
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -774,7 +779,7 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
-                
+
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -795,7 +800,7 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
-                
+
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -863,6 +868,29 @@ public class AppActionImpl implements AppAction {
             public void onResponse(ApiResponse<ContactBean> response) {
                 if ("1".equals(response.code)) {
                     listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getAllCity(final ActionCallbackListener<ArrayList<NetworkCityBean>> listener) {
+        String lastModifyDate = SharedPreferenceUtil.getString(App.app, DbManager.DATABASE_LAST_MODIFY, "0");
+        LogUtil.e(this,lastModifyDate);
+        api.getAllCity(lastModifyDate, new ResultCallback<ApiResponse<UpdateCityBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<UpdateCityBean> response) {
+                if ("1".equals(response.code)) {
+                    SharedPreferenceUtil.putString(App.app, DbManager.DATABASE_LAST_MODIFY, response.data.update);
+                    listener.onSuccess(response.data.city);
                 } else {
                     listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
                 }

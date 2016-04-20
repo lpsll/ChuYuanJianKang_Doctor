@@ -6,6 +6,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.htlc.cykf.app.db.ProvinceDao;
 import com.htlc.cykf.app.util.CommonUtil;
 import com.htlc.cykf.app.util.Constant;
 import com.htlc.cykf.app.util.LogUtil;
@@ -15,6 +16,7 @@ import com.htlc.cykf.core.ActionCallbackListener;
 import com.htlc.cykf.core.AppAction;
 import com.htlc.cykf.core.AppActionImpl;
 import com.htlc.cykf.model.ContactBean;
+import com.htlc.cykf.model.NetworkCityBean;
 import com.htlc.cykf.model.UserBean;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -52,6 +54,23 @@ public class App extends Application {
         initJPush();
 
     }
+    /**
+     * 初始化数据库
+     */
+    public void initDatabase() {
+        appAction.getAllCity(new ActionCallbackListener<ArrayList<NetworkCityBean>>() {
+            @Override
+            public void onSuccess(final ArrayList<NetworkCityBean> data) {
+                new ProvinceDao().updateCityListTable(data);
+                LogUtil.e("initDatabase", "入库成攻？" + data);
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                LogUtil.e("initDatabase", message);
+            }
+        });
+    }
     private void initJPush() {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
@@ -82,7 +101,7 @@ public class App extends Application {
      * @param userId
      * @return
      */
-    private UserInfo findUserById(String userId) {
+    private UserInfo findUserById(final String userId) {
         if(userId.equals(getUserBean().userid)){
             UserBean userBean = getUserBean();
             return new UserInfo(userBean.userid,userBean.name,Uri.parse(userBean.photo));
@@ -100,7 +119,7 @@ public class App extends Application {
                 public void onSuccess(ContactBean data) {
                     LogUtil.e(App.this,"findUserById : add new contact"+data.name);
                     mContactList.add(data);
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(data.userid, data.name, Uri.parse(data.photo)));
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(userId, data.name, Uri.parse(data.photo)));
                     EventBus.getDefault().post(new ContactBean());
                 }
                 @Override
@@ -180,6 +199,10 @@ public class App extends Application {
                     new CameraInputProvider(RongContext.getInstance()),//相机
             };
             RongIM.getInstance().resetInputExtensionProvider(Conversation.ConversationType.PRIVATE, provider);
+            /**
+             * 设置会话界面操作的监听器。
+             */
+            RongIM.setConversationBehaviorListener(new RongIMUtil.MyConversationBehaviorListener());
         }
     }
 

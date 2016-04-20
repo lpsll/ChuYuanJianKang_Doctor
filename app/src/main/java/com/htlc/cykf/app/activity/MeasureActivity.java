@@ -257,8 +257,13 @@ public class MeasureActivity extends BaseActivity {
         citys.clear();
         countys.clear();
         provinces.addAll(new ProvinceDao().getProvinces());
-        citys.addAll(new ProvinceDao().getCities(provinces.get(0).area_code));
-        countys.addAll(new ProvinceDao().getCounties(citys.get(0).area_code));
+        if(provinces.size()>0){
+            citys.addAll(new ProvinceDao().getCities(provinces.get(0).area_code));
+        }
+        if (citys.size()>0){
+            countys.addAll(new ProvinceDao().getCounties(citys.get(0).area_code));
+        }
+
 
         //三级不联动效果  false
         mPickViePwOptions.setPicker(provinces, citys, countys, false);
@@ -305,8 +310,18 @@ public class MeasureActivity extends BaseActivity {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 //返回的分别是三个级别的选中位置
-                String address = provinces.get(options1).area_name + citys.get(option2).area_name + countys.get(options3).area_name;
-                String addressId = countys.get(options3).area_code + "";
+                String address = "";
+                String addressId = "";
+                if(citys.size()<1){
+                    address = provinces.get(options1).area_name;
+                    addressId = provinces.get(options1).area_code+"";
+                }else if(countys.size()<1){
+                    address = provinces.get(options1).area_name + citys.get(option2).area_name ;
+                    addressId = citys.get(option2).area_code+"";
+                }else {
+                    address = provinces.get(options1).area_name + citys.get(option2).area_name + countys.get(options3).area_name;
+                    addressId = countys.get(options3).area_code+"";
+                }
                 javascriptObject.setDiQuToHTML(address, addressId);
             }
         });
