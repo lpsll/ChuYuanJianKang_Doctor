@@ -302,6 +302,7 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
             @Override
             public void onSuccess(Void data) {
                 EventBus.getDefault().post(new ContactBean());
+                getContactList();
             }
 
             @Override
@@ -317,6 +318,7 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
             @Override
             public void onSuccess(Void data) {
                 EventBus.getDefault().post(new ContactBean());
+                getContactList();
             }
 
             @Override
@@ -347,6 +349,7 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
             @Override
             public void onSuccess(Void data) {
                 EventBus.getDefault().post(new ContactBean());
+                getContactList();
             }
 
             @Override
