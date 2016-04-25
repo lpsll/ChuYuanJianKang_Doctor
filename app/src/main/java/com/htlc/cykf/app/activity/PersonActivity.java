@@ -152,6 +152,8 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.textRight:
                 if(isEditable){
+                    v.setFocusable(true);
+                    v.requestFocus();
                     postPersonInfo();
                 }else {
                     changeEditStatus();

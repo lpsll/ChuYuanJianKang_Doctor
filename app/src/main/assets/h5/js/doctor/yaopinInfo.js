@@ -1,9 +1,12 @@
 
 
 window.onload = function() {
-	id = bridge.getUserId();
-	token = bridge.getToken();
-	patient = bridge.getPatientId();
+//	id = bridge.getUserId();
+//	token = bridge.getToken();
+//	patient = bridge.getPatientId();
+	id = '48';
+	patient = 41;
+	token = "";
 	console.log('id='+id+";token="+token+";patient="+patient);
 	getyaopinInfo(id);
 	act() ;
@@ -42,7 +45,7 @@ function getyaopinInfo(id) {
 			result.dataArray.forEach(function(e) {
 				html += '<div class="mui-card yaopinContent">';
 				html += '<ul class="mui-table-view">';
-				html += '<li class="mui-table-view-cell mui-collapse">';
+				html += '<li class="mui-table-view-cell mui-collapse  mui-active">';
 				html += '<a class="mui-navigate-right ypTitle" href="#">';
 				html += e.date;
 				html += '</a>';
@@ -108,7 +111,7 @@ function getyaopinInfoAppend(id) {
 				result.dataArray.forEach(function(e) {
 					html += '<div class="mui-card yaopinContent">';
 					html += '<ul class="mui-table-view">';
-					html += '<li class="mui-table-view-cell mui-collapse">';
+					html += '<li class="mui-table-view-cell mui-collapse mui-active">';
 					html += '<a class="mui-navigate-right ypTitle" href="#">';
 					html += e.date;
 					html += '</a>';

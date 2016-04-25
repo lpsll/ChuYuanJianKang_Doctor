@@ -51,22 +51,6 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
 
     private View mView;
 
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        EventBus.getDefault().register(this);
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        EventBus.getDefault().unregister(this);//反注册EventBus
-//    }
-//
-//    public void onEventMainThread(ContactBean event) {
-//        String msg = "onEventMainThread收到了消息：";
-//        getContactList();
-//    }
 
     @Nullable
     @Override
@@ -80,6 +64,7 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
     @Override
     public void onStart() {
         super.onStart();
+        getContactList();
         LogUtil.e(this, "onStart refresh contact List  0");
     }
 
@@ -116,7 +101,7 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
                 }
             }
         });
-        getContactList();
+
     }
 
     @Override
@@ -259,22 +244,6 @@ public class ContactFragment1 extends BaseFragment implements AdapterView.OnItem
     }
 
     private void selectGroup(final ContactBean bean) {
-//        if (mGroups.size() < 1) {
-//            baseActivity.appAction.queryGroup(new ActionCallbackListener<ArrayList<ContactGroupBean>>() {
-//                @Override
-//                public void onSuccess(ArrayList<ContactGroupBean> data) {
-//                    mGroups.clear();
-//                    mGroups.addAll(data);
-//                    selectGroup(bean);
-//                }
-//
-//                @Override
-//                public void onFailure(String errorEvent, String message) {
-//                    LogUtil.e(ContactFragment1.this, message);
-//                    ToastUtil.showToast(App.app, message);
-//                }
-//            });
-//        }
         if(mGroups.size()<1){
             ToastUtil.showToast(App.app,"当前无分组！");
             return;

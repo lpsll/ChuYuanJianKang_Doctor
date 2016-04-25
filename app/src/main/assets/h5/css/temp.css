@@ -237,17 +237,20 @@ input[type=checkbox]:checked:before {
 }
 
 .tzInfoDate {
-	font-size: 10px;
+	font-size: 13px;
+		padding-bottom: 3px;
 	color: #3E3A39;
 }
 
 .tzInfoTemp {
-	font-size: 10px;
+	font-size: 14px;
+		padding-bottom: 3px;
 	color: #989898;
 }
 
 .tzInfoState {
-	font-size: 10px;
+	font-size: 14px;
+	padding-bottom: 3px;
 	color: #D10A0A;
 }
 
@@ -352,16 +355,17 @@ li {
 }
 
 .BlockSpan {
+	font-size: 14px;
 	display: block;
 }
 
 .SpanFont {
-	font-size: 12px;
+	font-size: 14px;
 	color: #989898;
 }
 
 .SpanRFont {
-	font-size: 12px;
+	font-size: 14px;
 	color: #D10A0A;
 }
 
@@ -378,7 +382,7 @@ li {
 }
 
 .SpanBlackFont {
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .BotmMag {

@@ -16,6 +16,7 @@ import com.htlc.cykf.app.util.CommonUtil;
 import com.htlc.cykf.app.util.Constant;
 import com.htlc.cykf.app.util.JsonUtil;
 import com.htlc.cykf.app.util.LogUtil;
+import com.htlc.cykf.app.util.RegExUtil;
 import com.htlc.cykf.app.util.SharedPreferenceUtil;
 import com.htlc.cykf.model.AuthorityBean;
 import com.htlc.cykf.model.BindNumberBean;
@@ -69,10 +70,7 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
-//        Pattern pattern = Pattern.compile("1[3|4|5|7|8]\\d{9}");
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(username);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(username)) {
             if (listener != null) {
                 listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             }
@@ -119,9 +117,7 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(username);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(username)) {
             if (listener != null) {
                 listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             }
@@ -204,9 +200,7 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(username);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(username)) {
             if (listener != null) {
                 listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             }
@@ -315,9 +309,7 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(phone);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(phone)) {
             if (listener != null) {
                 listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             }
@@ -504,9 +496,7 @@ public class AppActionImpl implements AppAction {
             }
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(phone);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(phone)) {
             if (listener != null) {
                 listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             }

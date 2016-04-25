@@ -28,6 +28,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private EditText mEditUsername,mEditPassword;
 
     public static void start(Context context, Intent extras) {
+        LogUtil.e("LoginActivity", "begin: "+System.currentTimeMillis());
         Intent intent = new Intent();
         intent.setClass(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -39,7 +40,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LogUtil.e("LoginActivity", "middle: "+System.currentTimeMillis());
         AppManager.getAppManager().finishAllActivity();
+        LogUtil.e("LoginActivity", "end: " + System.currentTimeMillis());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupView();

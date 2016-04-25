@@ -153,7 +153,7 @@ public class OkHttpClientManager
                     try
                     {
                         sendFailResultCallback(request, new RuntimeException(response.body().string()), resCallBack);
-                    } catch (IOException e)
+                    } catch (Exception e)
                     {
                         e.printStackTrace();
                     }
@@ -177,6 +177,9 @@ public class OkHttpClientManager
                 {
                     sendFailResultCallback(response.request(), e, resCallBack);
                 } catch (com.google.gson.JsonParseException e)//Json解析的错误
+                {
+                    sendFailResultCallback(response.request(), e, resCallBack);
+                }catch (Exception e)
                 {
                     sendFailResultCallback(response.request(), e, resCallBack);
                 }

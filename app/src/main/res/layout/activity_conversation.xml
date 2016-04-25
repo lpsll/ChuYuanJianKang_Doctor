@@ -56,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:text="姓名:"
                         android:textColor="@color/text_black"
-                        android:textSize="28px"/>
+                        android:textSize="30px"/>
 
                     <TextView
                         android:id="@+id/textName"
@@ -65,7 +65,7 @@
                         android:layout_marginLeft="15px"
                         android:text=""
                         android:textColor="@color/text_gray_dark"
-                        android:textSize="28px"/>
+                        android:textSize="30px"/>
                 </com.zhy.autolayout.AutoLinearLayout>
                 <!--病症-->
                 <com.zhy.autolayout.AutoLinearLayout
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:text="病症:"
                         android:textColor="@color/text_black"
-                        android:textSize="28px"/>
+                        android:textSize="30px"/>
 
                     <TextView
                         android:id="@+id/textIllness"
@@ -88,7 +88,7 @@
                         android:layout_marginLeft="15px"
                         android:text=""
                         android:textColor="@color/text_gray_dark"
-                        android:textSize="28px"/>
+                        android:textSize="30px"/>
                 </com.zhy.autolayout.AutoLinearLayout>
             </com.zhy.autolayout.AutoLinearLayout>
             <!--按钮-->
@@ -100,24 +100,24 @@
 
                 <TextView
                     android:id="@+id/textButtonDrugInfo"
-                    android:layout_width="120px"
-                    android:layout_height="48px"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
                     android:background="@mipmap/button_bg"
-                    android:padding="10px"
                     android:text="药品信息"
+                    android:gravity="center"
                     android:textColor="@android:color/white"
-                    android:textSize="24px"/>
+                    android:textSize="26px"/>
 
                 <TextView
                     android:id="@+id/textButtonBodyInfo"
-                    android:layout_width="120px"
-                    android:layout_height="48px"
+                    android:layout_width="130px"
+                    android:layout_height="50px"
                     android:layout_marginTop="30px"
                     android:background="@mipmap/button_bg"
-                    android:padding="10px"
+                    android:gravity="center"
                     android:text="体征信息"
                     android:textColor="@android:color/white"
-                    android:textSize="24px"/>
+                    android:textSize="26px"/>
             </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>
         <!--小结-->
@@ -135,7 +135,7 @@
                 android:gravity="center"
                 android:text="出院小结:"
                 android:textColor="@color/text_black"
-                android:textSize="28px"/>
+                android:textSize="30px"/>
 
             <TextView
                 android:id="@+id/textDischargeIntroduce"
@@ -145,7 +145,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:textColor="@color/text_gray_dark"
-                android:textSize="28px"/>
+                android:textSize="30px"/>
 
             <TextView
                 android:id="@+id/textDischargeShow"
@@ -157,7 +157,7 @@
                 android:paddingTop="15px"
                 android:text="详情"
                 android:textColor="@color/text_blue"
-                android:textSize="28px"/>
+                android:textSize="30px"/>
 
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoLinearLayout>
@@ -188,13 +188,15 @@
 
                 <TextView
                     android:id="@+id/textDischarge"
+                    android:textSize="30px"
+                    android:lineSpacingMultiplier="1.2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <ImageView
                     android:id="@+id/imageDischargeGone"
-                    android:layout_width="85px"
-                    android:layout_height="74px"
+                    android:layout_width="90px"
+                    android:layout_height="79px"
                     android:layout_gravity="center_horizontal"
                     android:padding="30px"
                     android:src="@mipmap/arrow_up"/>

@@ -8,9 +8,13 @@ function AndroidBack() {
 }
 
 window.onload = function() {
-		id = bridge.getUserId();
-		token = bridge.getToken();
-		patient = bridge.getPatientId();
+//		id = bridge.getUserId();
+//		token = bridge.getToken();
+//		patient = bridge.getPatientId();
+
+		id =48;
+		token = "";
+		patient = 41;
 
 //	getOutInfo();
 	getPatInfo();
@@ -88,7 +92,7 @@ function DrawYinShi(){
 					labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:11
 		                }
 		            }
 
@@ -104,7 +108,7 @@ function DrawYinShi(){
         			labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:12
 		                }
 		            },
 		            tickInterval: 1,
@@ -223,7 +227,7 @@ function DrawHeJiu(){
 					labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:11
 		                }
 		            }
 
@@ -239,7 +243,7 @@ function DrawHeJiu(){
         			labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:12
 		                }
 		            },
 		            tickInterval: 8,
@@ -332,7 +336,7 @@ function DrawChouYan(){
 					labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:11
 		                }
 		            }
 
@@ -348,7 +352,7 @@ function DrawChouYan(){
         			labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:12
 		                }
 		            },
 		            tickInterval: 3,
@@ -440,7 +444,7 @@ function DrawYunDong(){
 					labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:11
 		                }
 		            }
 
@@ -456,7 +460,7 @@ function DrawYunDong(){
         			labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:12
 		                }
 		            },
 		            tickInterval: 20,
@@ -547,7 +551,7 @@ function DrawShuiMian(){
 					labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:11
 		                }
 		            }
 
@@ -563,7 +567,7 @@ function DrawShuiMian(){
         			labels: {
 		                style: {
 		                    color: 'black',
-		                    fontSize:8
+		                    fontSize:12
 		                }
 		            },
 		            tickInterval: 2,

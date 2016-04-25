@@ -2,6 +2,11 @@ window.onload = function() {
 	id = bridge.getUserId();
 	token = bridge.getToken();
 	patient = bridge.getPatientId();
+
+//	id=48;
+//	patient=41;
+//	token = "";
+
 	getTemp()
 	getMaiBo();
 	getHuXi();
@@ -46,6 +51,24 @@ var xueYaYC = document.getElementById("xueYaYC");
 var xueTangYC = document.getElementById("xueTangYC");
 var xueYangYC = document.getElementById("xueYangYC");
 var tiZhongYC = document.getElementById("tiZhongYC");
+
+
+var drawId = "";
+var drawDate = "";
+var drawValue = "";
+var dData = {};
+var dInnId = '';
+var dHtml = '';
+var mvalue = [];
+var nvalue = [];
+
+var avalue = [];
+var bvalue = [];
+var cvalue = [];
+var dvalue = [];
+var evalue = [];
+var fvalue = [];
+var gvalue = [];
 
 //调用安卓弹出提示信息方法
 function getPopInfo(msg) {
@@ -96,12 +119,42 @@ function getTemp() {
 			var result = eval("(" + m + ")");
 			if (result.code == 1) {
 
-
-				result.data.line.forEach(function(e) {
-					tempDate.push(e.date);
-					tempLineArr.push(Number(e.valueone));
-				})
+				var date = ["","","","","","","",""];
+				var data = {};
+				var mvalue = [];
+				var val1 = [];
+				var val2 = [];
+				var dataArr = result.data.line;
+				var c = 0;
+				var d = 0;			 
 				
+				var Ndate = "";
+				$.each(dataArr, function(i,k) {
+					if(c == 0){
+						date[5] = i;
+						c++;
+					}else{
+						date[1] = i;
+					}
+					$.each(k, function(j,l) { 
+						if(d == 0){
+							if(l == null){
+								val2.push(null)
+							}else{
+								val2.push(Number(l))
+							}
+						}else{
+							if(l == null){
+								val1.push(null)
+							}else{
+								val1.push(Number(l))
+							}
+						}
+					});
+					d++;
+				}); 
+				tempLineArr = val1.concat(val2);
+				tempDate = date;
 				var j = 1;
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
@@ -155,11 +208,43 @@ function getHuXi() {
 			if (result.code == 1) {
 
 
-				result.data.line.forEach(function(e) {
-					huXiDate.push(e.date);
-					huXiLineArr.push(Number(e.valueone));
-				})
-
+				var date = ["","","","","","","",""];
+				var data = {};
+				var mvalue = [];
+				var val1 = [];
+				var val2 = [];
+				var dataArr = result.data.line;
+				var c = 0;
+				var d = 0;			 
+	
+				var Ndate = "";
+				$.each(dataArr, function(i,k) {
+					if(c == 0){
+						date[5] = i;
+						c++;
+					}else{
+						date[1] = i;
+					}
+					$.each(k, function(j,l) { 
+						if(d == 0){
+							if(l == null){
+								val2.push(null)
+							}else{
+								val2.push(Number(l))
+							}
+						}else{
+							if(l == null){
+								val1.push(null)
+							}else{
+								val1.push(Number(l))
+							}
+						}
+					});
+					d++;
+				}); 
+				
+				huXiLineArr = val1.concat(val2);
+				huXiDate = date;
 				var j = 1;
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
@@ -211,12 +296,42 @@ function getMaiBo() {
 			var result = eval("(" + m + ")");
 			if (result.code == 1) {
 
-
-				result.data.line.forEach(function(e) {
-					maiBoDate.push(e.date);
-					maiBoLineArr.push(Number(e.valueone));
-				})
-					
+				var date = ["","","","","","","",""];
+				var data = {};
+				var mvalue = [];
+				var val1 = [];
+				var val2 = [];
+				var dataArr = result.data.line;
+				var c = 0;
+				var d = 0;			 
+	
+				var Ndate = "";
+				$.each(dataArr, function(i,k) {
+					if(c == 0){
+						date[5] = i;
+						c++;
+					}else{
+						date[1] = i;
+					}
+					$.each(k, function(j,l) { 
+						if(d == 0){
+							if(l == null){
+								val2.push(null)
+							}else{
+								val2.push(Number(l))
+							}
+						}else{
+							if(l == null){
+								val1.push(null)
+							}else{
+								val1.push(Number(l))
+							}
+						}
+					});
+					d++;
+				}); 
+				maiBoLineArr = val1.concat(val2);
+				maiBoDate = date;
 				var j = 1;
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
@@ -267,12 +382,42 @@ function getXueYang() {
 		console.log("血氧="+m)
 			var result = eval("(" + m + ")");
 			if (result.code == 1) {
-				result.data.line.forEach(function(e) {
-					xueYangDate.push(e.date);
-					xueYangLineArr.push(Number(e.valueone));
-				})
-
-				
+				var date = ["","","","","","","",""];
+				var data = {};
+				var mvalue = [];
+				var val1 = [];
+				var val2 = [];
+				var dataArr = result.data.line;
+				var c = 0;
+				var d = 0;			 
+	
+				var Ndate = "";
+				$.each(dataArr, function(i,k) {
+					if(c == 0){
+						date[5] = i;
+						c++;
+					}else{
+						date[1] = i;
+					}
+					$.each(k, function(j,l) { 
+						if(d == 0){
+							if(l == null){
+								val2.push(null)
+							}else{
+								val2.push(Number(l))
+							}
+						}else{
+							if(l == null){
+								val1.push(null)
+							}else{
+								val1.push(Number(l))
+							}
+						}
+					});
+					d++;
+				}); 
+				xueYangLineArr = val1.concat(val2);
+				xueYangDate = date; //血氧日期
 				var j = 1;
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
@@ -327,7 +472,11 @@ function getTiZhong() {
 			if (result.code == 1) {
 				result.data.line.forEach(function(e) {
 					tiZhongDate.push(e.date);
-					tiZhongLineArr.push(Number(e.valueone));
+					if(e.valueone == null){
+						tiZhongLineArr.push(null);	
+					}else{
+						tiZhongLineArr.push(Number(e.valueone));	
+					}
 				})
 
 				var j = 1;
@@ -381,17 +530,79 @@ function getXueYa() {
 		console.log("血压="+m)
 			var result = eval("(" + m + ")");
 			if (result.code == 1) {
-				result.data.line.forEach(function(e) {
-					xueYaDate.push(e.date);
-					mvalue.push(Number(e.valueone));
-					nvalue.push(Number(e.valuetwo));
-				})
+				
+				
+				var date = ["","","","","","","",""];
+				var data = {};
+				var mval1 = [];
+				var mval2 = [];
+				var nval1 = [];
+				var nval2 = [];
+				var dataArr = result.data.line;
+				var c = 0;
+				var d = 0;
+				 
+	
+				var Ndate = "";
+				$.each(dataArr, function(i,k) {
+					if(c == 0){
+						date[5] = i;
+						c++;
+					}else{
+						date[1] = i;
+					}
+					$.each(k, function(j,l) { 
+						var o = 0;
+						
+						$.each(l, function(f,h) {
+							if(o == 0){
+								if(d == 0){
+									if(h == null){
+										mval2.push(null);
+									}else{
+										mval2.push(Number(h));
+									}
+								}else{
+									if(h == null){
+										mval1.push(null);
+									}else{
+										mval1.push(Number(h));
+									}
+								}
+								o++;
+							}else{
+								if(d == 0){
+									if(h == null){
+										nval2.push(null);
+									}else{
+										nval2.push(Number(h));
+									}
+								}else{
+									if(h == null){
+										nval1.push(null);
+									}else{
+										nval1.push(Number(h));
+									}
+								}
+								
+							}
+						});					
+					});
+					d++;
+	
+				}); 
+				
+				mvalue = mval1.concat(mval2);
+				nvalue = nval1.concat(nval2);
+				
 
+				xueYaDate = date;
+				
 				var j = 1;
 				
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
-						xueYaHtml += '<div>'
+						xueYaHtml += '<div>' 
 						xueYaHtml += '<div class="tizhengInfoText tzLeft">'
 						xueYaHtml += '<div  class="tzInfoDate"><span>' + e.date + '</span></div>'
 						xueYaHtml += '<div class="tzInfoTemp"><span>血压：' + e.value + 'mmhg</span></div>'
@@ -439,13 +650,47 @@ function getXueTang() {
 			if (result.code == '1') {
 				result.data.line.forEach(function(e) {
 					xueTangDate.push(e.date);
-					avalue.push(Number(e.value1));
-					bvalue.push(Number(e.value2));
-					cvalue.push(Number(e.value3));
-					dvalue.push(Number(e.value4));
-					evalue.push(Number(e.value5));
-					fvalue.push(Number(e.value6));
-					gvalue.push(Number(e.value7));
+					if(e.value1 == null){
+						avalue.push(null);
+					}else{
+						avalue.push(Number(e.value1));
+					}
+					if(e.value2 == null){
+						bvalue.push(null);
+					}else{
+						bvalue.push(Number(e.value2));
+					}
+					
+					if(e.value3 == null){
+						cvalue.push(null);
+					}else{
+						cvalue.push(Number(e.value3));
+					}
+					if(e.value4 == null){
+						dvalue.push(null);
+					}else{
+						dvalue.push(Number(e.value4));
+					}
+					if(e.value5 == null){
+						evalue.push(null);
+					}else{
+						evalue.push(Number(e.value5));
+					}
+					if(e.value6 == null){
+						fvalue.push(null);
+					}else{
+						fvalue.push(Number(e.value6));
+					}
+					if(e.value7 == null){
+						gvalue.push(null);
+					}else{
+						gvalue.push(Number(e.value7));
+					}
+					
+					
+					
+					
+					
 				})
 
 				
@@ -483,29 +728,14 @@ function getXueTang() {
 }
 
 
-var drawId = "";
-var drawDate = "";
-var drawValue = "";
-var dData = {};
-var dInnId = '';
-var dHtml = '';
-var mvalue = [];
-var nvalue = [];
 
-var avalue = [];
-var bvalue = [];
-var cvalue = [];
-var dvalue = [];
-var evalue = [];
-var fvalue = [];
-var gvalue = [];
 
 function drawData(a) {
 	if (a == 1) {
 		drawId = 'tempDraw';
 		drawDate = tempDate;
 		dData.name = '体温';
-		dData.data = tempLineArr.reverse();
+		dData.data = tempLineArr;
 		dData.color = "#c36f2e";
 		dInnId = 'tempYC';
 		dHtml = tempHtml;
@@ -514,7 +744,7 @@ function drawData(a) {
 		drawId = 'maiBoDraw';
 		drawDate = maiBoDate;
 		dData.name = '脉搏';
-		dData.data = maiBoLineArr.reverse();
+		dData.data = maiBoLineArr;
 		dData.color = "#c36f2e";
 		dInnId = 'maiBoYC';
 		dHtml = maiBoHtml;
@@ -523,7 +753,7 @@ function drawData(a) {
 		drawId = 'huXiDraw';
 		drawDate = huXiDate;
 		dData.name = '呼吸';
-		dData.data = huXiLineArr.reverse();
+		dData.data = huXiLineArr;
 		dData.color = "#c36f2e";
 		dInnId = 'huXiYC';
 		dHtml = huXiHtml;
@@ -532,7 +762,7 @@ function drawData(a) {
 		drawId = 'xueYangDraw';
 		drawDate = xueYangDate;
 		dData.name = '血氧';
-		dData.data = xueYangLineArr.reverse();
+		dData.data = xueYangLineArr;
 		dData.color = "#c36f2e";
 		dInnId = 'xueYangYC';
 		dHtml = xueYangHtml;
@@ -541,11 +771,11 @@ function drawData(a) {
 		drawId = 'tiZhongDraw';
 		drawDate = tiZhongDate;
 		dData.name = '体重';
-		dData.data = tiZhongLineArr.reverse();
+		dData.data = tiZhongLineArr;
 		dData.color = "#c36f2e";
 		dInnId = 'tiZhongYC';
 		dHtml = tiZhongHtml;
-		DrawOneVData();
+		DrawTiZhong();
 	} else if (a == 6) {
 	console.log('flag=6')
 		drawId = 'xueYaDraw';
@@ -583,15 +813,23 @@ function DrawOneVData(){
 			text: ''
 		},
 		xAxis: {
-			categories: drawDate.reverse(),
+			categories: drawDate,
 			lineColor: '#000000',
 			lineWidth: 2,
+			tickColor: "#000000",
 			labels: {
 				style: {
 					color: 'black',
-					fontSize: 8
+					fontSize: 11
 				}
-			}
+			},
+			plotLines:[{
+				        color:'black',            //线的颜色，定义为红色
+				        dashStyle:'longdashdot',//标示线的样式，默认是solid（实线），这里定义为长虚线
+				        value:3.5,                //定义在哪个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+				        width:1                 //标示线的宽度，2px
+				    }]
+
 
 		},
 		yAxis: {
@@ -602,10 +840,11 @@ function DrawOneVData(){
 			gridLineWidth: 2,
 			lineColor: '#000000',
 			lineWidth: 2,
+			
 			labels: {
 				style: {
 					color: 'black',
-					fontSize: 8
+					fontSize: 12
 				}
 			},
 			tickInterval: 8,
@@ -626,7 +865,84 @@ function DrawOneVData(){
 					legendItemClick: function(e) {
 						return false; // 直接 return false 即可禁用图例点击事件
 					}
+				},
+				connectNulls: true
+			}
+		},
+		series: [dData]
+	});
+
+
+	var InnId = document.getElementById(''+dInnId+'');
+	InnId.innerHTML = dHtml;
+
+
+}
+
+
+function DrawTiZhong(){
+	
+	$('#' + drawId + '').highcharts({
+		chart: {
+			type: 'line',
+//			margin: [6, 2, 22, 30],
+			fontSize: 10,
+			fontColor: '#000000',
+			backgroundColor: 'white',
+		},
+		legend: {
+			enabled: true
+		},
+		title: {
+			text: ''
+		},
+		xAxis: {
+			categories: drawDate,
+			lineColor: '#000000',
+			lineWidth: 2,
+			tickColor: "#000000",
+			labels: {
+				style: {
+					color: 'black',
+					fontSize: 11
 				}
+			}
+
+		},
+		yAxis: {
+			title: {
+				text: ''
+			},
+			gridLineColor: '#000000',
+			gridLineWidth: 2,
+			lineColor: '#000000',
+			lineWidth: 2,
+			labels: {
+				style: {
+					color: 'black',
+					fontSize: 12
+				}
+			},
+			tickInterval: 8,
+			endOnTick: false,
+			maxPadding: 0.5
+		},
+		plotOptions: {
+			line: {
+				
+				dataLabels: {
+					color:'blue',
+					enabled: true
+				},
+				enableMouseTracking: false
+			},
+			series: {
+				events: {
+					legendItemClick: function(e) {
+						return false; // 直接 return false 即可禁用图例点击事件
+					}
+				},
+				connectNulls: true
 			}
 		},
 		series: [dData]
@@ -656,16 +972,23 @@ function DrawXueYaVData(){
 			text: ''
 		},
 		xAxis: {
-			categories: drawDate.reverse(),
+			categories: drawDate,
 			lineColor: '#000000',
 			lineWidth: 2,
 			tickColor: "#000000",
 			labels: {
 				style: {
 					color: '#000000',
-					fontSize: 8
+					fontSize: 11
 				}
-			}
+			},
+			plotLines:[{
+				        color:'black',            //线的颜色，定义为红色
+				        dashStyle:'longdashdot',//标示线的样式，默认是solid（实线），这里定义为长虚线
+				        value:3.5,                //定义在哪个值上显示标示线，这里是在x轴上刻度为3的值处垂直化一条线
+				        width:1                 //标示线的宽度，2px
+				    }]
+
 
 		},
 		yAxis: {
@@ -676,10 +999,11 @@ function DrawXueYaVData(){
 			gridLineWidth: 2,
 			lineColor: '#000000',
 			lineWidth: 2,
+			tickColor: "#000000",
 			labels: {
 				style: {
 					color: '#000000',
-					fontSize: 8
+					fontSize: 12
 				}
 			},
 			tickInterval: 50,
@@ -699,10 +1023,11 @@ function DrawXueYaVData(){
 					legendItemClick: function(e) {
 						return false; // 直接 return false 即可禁用图例点击事件
 					}
-				}
+				},
+				connectNulls: true
 			}
 		},
-		series: [{name:"高血压",data:mvalue.reverse(),color:'#c36f2e'},{name:"低血压",data:nvalue.reverse(),color:'#f23c13'}]
+		series: [{name:"高血压",data:mvalue,color:'#c36f2e'},{name:"低血压",data:nvalue,color:'#f23c13'}]
 	});
 	
 	var InnId = document.getElementById(''+dInnId+'');
@@ -735,7 +1060,7 @@ $('#' + drawId + '').highcharts({
 			labels: {
 				style: {
 					color: '#000000',
-					fontSize: 8
+					fontSize: 11
 				}
 			}
 
@@ -751,7 +1076,7 @@ $('#' + drawId + '').highcharts({
 			labels: {
 				style: {
 					color: '#000000',
-					fontSize: 8
+					fontSize: 12
 				}
 			},
 			tickInterval: 40,
@@ -770,7 +1095,8 @@ $('#' + drawId + '').highcharts({
 					legendItemClick: function(e) {
 						return false; // 直接 return false 即可禁用图例点击事件
 					}
-				}
+				},
+				connectNulls: true
 			}
 		},
 		series: [

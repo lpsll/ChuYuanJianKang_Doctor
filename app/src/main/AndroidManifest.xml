@@ -12,14 +12,16 @@
         android:name="com.htlc.cykf.app.App"
         android:theme="@style/AppTheme">
         <activity android:name="com.htlc.cykf.app.activity.SplashActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name="com.htlc.cykf.app.activity.GuideActivity"
-                  android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"
+                  android:theme="@style/FullScreen"/>
         <activity android:name="com.htlc.cykf.app.activity.LoginActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.htlc.cykf.app.activity.RegisterActivity"

@@ -35,20 +35,6 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
     private TextView mTextDialog;
     private SideBar mSideBar;
     private View mView;
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        EventBus.getDefault().register(this);
-//    }
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        EventBus.getDefault().unregister(this);//反注册EventBus
-//    }
-//    public void onEventMainThread(ContactBean event) {
-//        String msg = "onEventMainThread收到了消息：";
-//        getContactList();
-//    }
 
     @Nullable
     @Override
@@ -63,6 +49,7 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
     @Override
     public void onStart() {
         super.onStart();
+        getContactList();
         LogUtil.e(this, "onStart refresh contact List  1");
     }
 
@@ -94,7 +81,7 @@ public class ContactFragment2 extends BaseFragment implements AdapterView.OnItem
                 }
             }
         });
-        getContactList();
+
     }
 
     @Override
