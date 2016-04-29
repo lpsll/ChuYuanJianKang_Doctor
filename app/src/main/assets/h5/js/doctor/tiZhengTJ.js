@@ -278,6 +278,7 @@ function DrawXueTang(){
 
 				},
 				yAxis: {
+					allowDecimals: false,
 					title: {
 						text: ''
 					},
@@ -359,6 +360,7 @@ function DrawXueYa() {
 
 				},
 				yAxis: {
+					allowDecimals: false,
 					title: {
 						text: ''
 					},

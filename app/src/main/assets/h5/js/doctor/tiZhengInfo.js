@@ -833,6 +833,7 @@ function DrawOneVData(){
 
 		},
 		yAxis: {
+			allowDecimals: false,
 			title: {
 				text: ''
 			},

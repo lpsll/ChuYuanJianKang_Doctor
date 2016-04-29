@@ -1,12 +1,12 @@
 
 
 window.onload = function() {
-//	id = bridge.getUserId();
-//	token = bridge.getToken();
-//	patient = bridge.getPatientId();
-	id = '48';
-	patient = 41;
-	token = "";
+	id = bridge.getUserId();
+	token = bridge.getToken();
+	patient = bridge.getPatientId();
+//	id = '48';
+//	patient = 41;
+//	token = "";
 	console.log('id='+id+";token="+token+";patient="+patient);
 	getyaopinInfo(id);
 	act() ;

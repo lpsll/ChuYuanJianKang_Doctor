@@ -8,13 +8,13 @@ function AndroidBack() {
 }
 
 window.onload = function() {
-//		id = bridge.getUserId();
-//		token = bridge.getToken();
-//		patient = bridge.getPatientId();
+		id = bridge.getUserId();
+		token = bridge.getToken();
+		patient = bridge.getPatientId();
 
-		id =48;
-		token = "";
-		patient = 41;
+//		id =48;
+//		token = "";
+//		patient = 41;
 
 //	getOutInfo();
 	getPatInfo();
@@ -57,12 +57,12 @@ function DrawYinShi(){
 					if(e.numericOne == null){
 						mvalue.push(null);
 					}else{
-						mvalue.push(parseInt(e.numericOne));
+						mvalue.push(Number(e.numericOne));
 					}
 					if(e.numericTwo == null){
 						nvalue.push(null);
 					}else{
-						nvalue.push(parseInt(e.numericTwo));
+						nvalue.push(Number(e.numericTwo));
 					}
 					
 			});
@@ -98,6 +98,7 @@ function DrawYinShi(){
 
 				},
 				yAxis: {
+					allowDecimals: false,
 					title: {
 						text: ''
 					},
@@ -197,7 +198,7 @@ function DrawHeJiu(){
 					if(e.valueone == null){
 						mvalue.push(null);	
 					}else{
-						mvalue.push(parseInt(e.valueone));	
+						mvalue.push(Number(e.valueone));	
 					}
 								
 			}); 
@@ -233,6 +234,7 @@ function DrawHeJiu(){
 
 				},
 				yAxis: {
+					allowDecimals: false,
 					title: {
 						text: ''
 					},
@@ -306,7 +308,7 @@ function DrawChouYan(){
 					if(e.valueone == null){
 						mvalue.push(null);	
 					}else{
-						mvalue.push(parseInt(e.valueone));	
+						mvalue.push(Number(e.valueone));	
 					}
 								
 			});
@@ -342,6 +344,7 @@ function DrawChouYan(){
 
 				},
 				yAxis: {
+					allowDecimals: false,
 					title: {
 						text: ''
 					},
@@ -414,7 +417,7 @@ function DrawYunDong(){
 					if(e.valueone == null){
 						mvalue.push(null);
 					}else{
-						mvalue.push(parseInt(e.valueone));
+						mvalue.push(Number(e.valueone));
 					}
 									
 			});
@@ -450,6 +453,7 @@ function DrawYunDong(){
 
 				},
 				yAxis: {
+					allowDecimals: false,
 					title: {
 						text: ''
 					},
@@ -521,7 +525,7 @@ function DrawShuiMian(){
 					if(e.valueone == null){
 						mvalue.push(null);	
 					}else{
-						mvalue.push(parseInt(e.valueone));	
+						mvalue.push(Number(e.valueone));	
 					}
 								
 			});
@@ -557,6 +561,7 @@ function DrawShuiMian(){
 
 				},
 				yAxis: {
+					allowDecimals: false,
 					title: {
 						text: ''
 					},

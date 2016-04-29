@@ -252,6 +252,7 @@ function DrawData() {
 					}
         },
         yAxis: {
+        	allowDecimals: false,
             min: 0,
             title: {
                 text: ''
