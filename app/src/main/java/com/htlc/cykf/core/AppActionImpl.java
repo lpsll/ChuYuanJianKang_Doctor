@@ -30,6 +30,7 @@ import com.htlc.cykf.model.IllnessBean;
 import com.htlc.cykf.model.MessageBean;
 import com.htlc.cykf.model.NetworkCityBean;
 import com.htlc.cykf.model.PatientBean;
+import com.htlc.cykf.model.PayStatusBean;
 import com.htlc.cykf.model.PriceBean;
 import com.htlc.cykf.model.TotalMoneyBean;
 import com.htlc.cykf.model.UpdateCityBean;
@@ -856,6 +857,26 @@ public class AppActionImpl implements AppAction {
 
             @Override
             public void onResponse(ApiResponse<ContactBean> response) {
+                if ("1".equals(response.code)) {
+                    listener.onSuccess(response.data);
+                } else {
+                    listener.onFailure(ErrorEvent.RESULT_ILLEGAL, response.msg);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getContactPayStatus(String contactId, final ActionCallbackListener<PayStatusBean> listener) {
+        api.getContactPayStatus(contactId, new ResultCallback<ApiResponse<PayStatusBean>>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(ApiResponse<PayStatusBean> response) {
                 if ("1".equals(response.code)) {
                     listener.onSuccess(response.data);
                 } else {

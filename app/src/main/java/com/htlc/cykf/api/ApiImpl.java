@@ -22,6 +22,7 @@ import com.htlc.cykf.model.InformationBean;
 import com.htlc.cykf.model.MedicalHistoryItemBean;
 import com.htlc.cykf.model.MessageBean;
 import com.htlc.cykf.model.PatientBean;
+import com.htlc.cykf.model.PayStatusBean;
 import com.htlc.cykf.model.PriceBean;
 import com.htlc.cykf.model.TotalMoneyBean;
 import com.htlc.cykf.model.UpdateCityBean;
@@ -508,6 +509,21 @@ public class ApiImpl implements Api {
 
         params.put("id", contactId);
         String url = Api.GetContactById;
+        LogUtil.e(this, url);
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void getContactPayStatus(String contactId, ResultCallback<ApiResponse<PayStatusBean>> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+
+        String token = App.app.getUserBean().token;
+        params.put("token", TextUtils.isEmpty(token)?"":token);
+        String userId = App.app.getUserBean().userid;
+        params.put("userid", TextUtils.isEmpty(token) ? "" : userId);
+
+        params.put("patient", contactId);
+        String url = Api.GetContactPayStatus;
         LogUtil.e(this, url);
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }

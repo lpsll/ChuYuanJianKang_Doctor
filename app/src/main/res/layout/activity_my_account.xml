@@ -32,6 +32,7 @@
                 app:civ_border_color="@android:color/white"
                 app:civ_border_width="4px"
                 app:civ_border_overlay="true"
+                app:civ_fill_color="@android:color/white"
                 android:src="@mipmap/default_head"/>
             <TextView
                 android:id="@+id/textAccount"
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="34px"
-                android:text="账户余额: 300￥"/>
+                android:text="账户余额: 0￥"/>
 
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoRelativeLayout>

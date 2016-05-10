@@ -16,6 +16,7 @@ import com.htlc.cykf.model.InformationBean;
 import com.htlc.cykf.model.MedicalHistoryItemBean;
 import com.htlc.cykf.model.MessageBean;
 import com.htlc.cykf.model.PatientBean;
+import com.htlc.cykf.model.PayStatusBean;
 import com.htlc.cykf.model.PriceBean;
 import com.htlc.cykf.model.TotalMoneyBean;
 import com.htlc.cykf.model.UpdateCityBean;
@@ -57,6 +58,7 @@ public interface Api {
     String DeleteGroup = Host + "doctor_delgroup";
     String ConversationDetail = Host + "doctor_getdetails";
     String GetContactById = Host + "user_getpni";
+    String GetContactPayStatus = Host + "doctor_getpayflag";
 
     String GetAllCity = Host + "city_getall";
 
@@ -271,6 +273,13 @@ public interface Api {
      * @param callback
      */
     void getContactById(String contactId, ResultCallback<ApiResponse<ContactBean>> callback);
+
+    /**
+     *
+     * @param contactId
+     * @param callback
+     */
+    void getContactPayStatus(String contactId, ResultCallback<ApiResponse<PayStatusBean>> callback);
 
 
     void getAllCity(String lastModifyData, ResultCallback<ApiResponse<UpdateCityBean>> callback);

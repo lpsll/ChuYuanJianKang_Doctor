@@ -13,9 +13,9 @@ public class ImageLoaderCfg {
 
 
 	public static DisplayImageOptions options = new DisplayImageOptions.Builder()
-			.showImageOnLoading(R.mipmap.ic_launcher)
-			.showImageForEmptyUri(R.mipmap.ic_launcher)
-			.showImageOnFail(R.mipmap.ic_launcher)
+			.showImageOnLoading(R.mipmap.default_head)
+			.showImageForEmptyUri(R.mipmap.default_head)
+			.showImageOnFail(R.mipmap.default_head)
 //			.cacheInMemory(true)
 //			.cacheOnDisk(true).considerExifParams(false)
 //			.displayer(new SimpleBitmapDisplayer())

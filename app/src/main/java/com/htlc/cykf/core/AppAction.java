@@ -15,6 +15,7 @@ import com.htlc.cykf.model.MedicalHistoryItemBean;
 import com.htlc.cykf.model.MessageBean;
 import com.htlc.cykf.model.NetworkCityBean;
 import com.htlc.cykf.model.PatientBean;
+import com.htlc.cykf.model.PayStatusBean;
 import com.htlc.cykf.model.PriceBean;
 import com.htlc.cykf.model.TotalMoneyBean;
 import com.htlc.cykf.model.UserBean;
@@ -234,6 +235,6 @@ public interface AppAction {
     void conversationDetail(String patientId, ActionCallbackListener<DischargeSummaryBean> listener);
 
     void getUserById(String userId, ActionCallbackListener<ContactBean> listener);
-
+    void getContactPayStatus(String contactId, ActionCallbackListener<PayStatusBean> listener);
     void getAllCity(ActionCallbackListener<ArrayList<NetworkCityBean>> listener);
 }
