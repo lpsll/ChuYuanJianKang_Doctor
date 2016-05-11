@@ -14,6 +14,7 @@ import com.htlc.cykf.app.fragment.HomeFragment;
 import com.htlc.cykf.app.fragment.FirstFragment;
 import com.htlc.cykf.app.fragment.ThirdFragment;
 import com.htlc.cykf.app.util.AppManager;
+import com.htlc.cykf.app.util.UpdateUtil;
 import com.htlc.cykf.core.ActionCallbackListener;
 import com.htlc.cykf.model.ContactBean;
 
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         getContactList();
         setupView();
+        new UpdateUtil(this).canUpdate(false);
     }
 
     private void setupView() {

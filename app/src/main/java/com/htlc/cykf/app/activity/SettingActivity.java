@@ -17,6 +17,7 @@ import com.htlc.cykf.app.util.AppManager;
 import com.htlc.cykf.app.util.CommonUtil;
 import com.htlc.cykf.app.util.LogUtil;
 import com.htlc.cykf.app.util.ToastUtil;
+import com.htlc.cykf.app.util.UpdateUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -54,9 +55,9 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
     }
 
     private void initData() {
-        itemImageIds = new int[]{R.mipmap.activity_setting_1, R.mipmap.activity_setting_5,R.mipmap.activity_setting_4, R.mipmap.activity_setting_3};
+        itemImageIds = new int[]{R.mipmap.activity_setting_1,R.mipmap.activity_setting_2, R.mipmap.activity_setting_5,R.mipmap.activity_setting_4, R.mipmap.activity_setting_3};
         itemNames = CommonUtil.getResourceStringArray(R.array.activity_setting_children);
-        itemHaveEmptys = new boolean[]{true,false,false,true};
+        itemHaveEmptys = new boolean[]{true,false,false,false,true};
         for(int i=0; i<itemImageIds.length;i++){
             FourthAdapterBean bean = new FourthAdapterBean();
             bean.imageId = itemImageIds[i];
@@ -77,12 +78,15 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
                 clearCache();
                 break;
             case 1:
-                goSettingPrice();
+                new UpdateUtil(this).canUpdate(true);
                 break;
             case 2:
-                goAuthority();
+                goSettingPrice();
                 break;
             case 3:
+                goAuthority();
+                break;
+            case 4:
                 exist();
                 break;
         }

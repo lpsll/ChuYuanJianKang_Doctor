@@ -100,6 +100,7 @@
     <string name="activity_authority_hint">选择权限设置</string>
     <string-array name="activity_setting_children">
         <item>清除缓存</item>
+        <item>检查更新</item>
        <!-- <item>查看版本</item>-->
         <item>价格设置</item>
         <item>权限设置</item>

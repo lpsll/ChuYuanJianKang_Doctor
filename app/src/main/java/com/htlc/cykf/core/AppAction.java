@@ -1,6 +1,8 @@
 
 package com.htlc.cykf.core;
 
+import com.htlc.cykf.api.net.okhttp.callback.ResultCallback;
+import com.htlc.cykf.model.AppVersionBean;
 import com.htlc.cykf.model.AuthorityBean;
 import com.htlc.cykf.model.BindNumberBean;
 import com.htlc.cykf.model.ContactBean;
@@ -237,4 +239,7 @@ public interface AppAction {
     void getUserById(String userId, ActionCallbackListener<ContactBean> listener);
     void getContactPayStatus(String contactId, ActionCallbackListener<PayStatusBean> listener);
     void getAllCity(ActionCallbackListener<ArrayList<NetworkCityBean>> listener);
+
+    void checkUpdate(ActionCallbackListener<AppVersionBean> listener);
+    void downloadApk(String url, String fileName, ResultCallback<String> callback);
 }

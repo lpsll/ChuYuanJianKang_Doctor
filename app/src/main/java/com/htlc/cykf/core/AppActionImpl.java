@@ -2,6 +2,7 @@
 package com.htlc.cykf.core;
 
 import android.content.Context;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +19,7 @@ import com.htlc.cykf.app.util.JsonUtil;
 import com.htlc.cykf.app.util.LogUtil;
 import com.htlc.cykf.app.util.RegExUtil;
 import com.htlc.cykf.app.util.SharedPreferenceUtil;
+import com.htlc.cykf.model.AppVersionBean;
 import com.htlc.cykf.model.AuthorityBean;
 import com.htlc.cykf.model.BindNumberBean;
 import com.htlc.cykf.model.ContactBean;
@@ -45,8 +47,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class AppActionImpl implements AppAction {
@@ -286,7 +286,7 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
-                
+
                 listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
             }
 
@@ -907,5 +907,38 @@ public class AppActionImpl implements AppAction {
                 }
             }
         });
+    }
+
+    @Override
+    public void checkUpdate(final ActionCallbackListener<AppVersionBean> listener) {
+        api.checkUpdate(new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("0".equals(code)) {
+                        String data = jsonObject.getString("data");
+                        AppVersionBean appVersionBean = JsonUtil.parseJsonToBean(data, AppVersionBean.class);
+                        listener.onSuccess(appVersionBean);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, CommonUtil.getResourceString(R.string.common_network_error));
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void downloadApk(String url, String fileName, ResultCallback<String> callback) {
+        api.downloadApk(url, Environment.getExternalStorageDirectory().getAbsolutePath(), fileName, callback);
     }
 }

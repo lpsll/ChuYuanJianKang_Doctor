@@ -9,6 +9,7 @@ import com.htlc.cykf.api.net.okhttp.callback.ResultCallback;
 import com.htlc.cykf.api.net.okhttp.request.OkHttpRequest;
 import com.htlc.cykf.api.utils.EncryptUtil;
 import com.htlc.cykf.app.App;
+import com.htlc.cykf.app.util.Constant;
 import com.htlc.cykf.app.util.LogUtil;
 import com.htlc.cykf.model.AuthorityBean;
 import com.htlc.cykf.model.BindNumberBean;
@@ -535,5 +536,19 @@ public class ApiImpl implements Api {
         String url = Api.GetAllCity;
         LogUtil.e(this, url);
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void checkUpdate(ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("shortcut", Constant.PGY_SHORT_URL);
+        params.put("_api_key", Constant.PGY_API_KEY);
+        String url = Api.CheckUpdate;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void downloadApk(String url, String dir, String fileName, ResultCallback<String> callback) {
+        new OkHttpRequest.Builder().url(url).destFileDir(dir).destFileName(fileName).download(callback);
     }
 }

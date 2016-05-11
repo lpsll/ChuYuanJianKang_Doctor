@@ -2,6 +2,11 @@ window.onload = function() {
 	id = bridge.getUserId();
 	token = bridge.getToken();
 	patient = bridge.getPatientId();
+	
+//	id=48;
+//	patient=41;
+//	token = "";
+	
 	getUrl();
 }
 var id = "";
@@ -93,28 +98,28 @@ function getOneVData() {
 							html += '<div class="XQblock">'
 							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
 //							html += '<span class="XQtitle">测量次数：</span><span class="XQvalue">' + 3 + '次</span><br />'
-							html += '<span class="XQtitle marleft">温度：</span><span class="XQvalue">' + e.valueone + '度</span>'
+							html += '<span class="XQtitle marleft">温度：</span><span class="XQvalue">' + e.numericOne + '度</span>'
 							html += '</div>'
 						} else if (gType == 2) {
 							html += '<div class="XQblock">'
 							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">脉搏频率：</span><span class="XQvalue">' + e.valueone + '次/分</span><br />'
+							html += '<span class="XQtitle">脉搏频率：</span><span class="XQvalue">' + e.numericOne + '次/分</span><br />'
 							html += '</div>'
 						} else if (gType == 3) {
 							html += '<div class="XQblock">'
 							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">呼吸次数：</span><span class="XQvalue">' + e.valueone + '次/分</span><br />'
+							html += '<span class="XQtitle">呼吸次数：</span><span class="XQvalue">' + e.numericOne + '次/分</span><br />'
 //							html += '<span class="XQtitle">吸入/呼出气体量：</span><span class="XQvalue">' + '-------' + '</span><br />'
 							html += '</div>'
 						} else if (gType == 4) {
 							html += '<div class="XQblock">'
 							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">气氧含量：</span><span class="XQvalue">' + e.valueone + '%</span><br />'
+							html += '<span class="XQtitle">气氧含量：</span><span class="XQvalue">' + e.numericOne + '%</span><br />'
 							html += '</div>'
 						} else if (gType == 5) {
 							html += '<div class="XQblock">'
 							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle marleft">体重：</span><span class="XQvalue">' + e.valueone + 'Kg</span><br />'
+							html += '<span class="XQtitle marleft">体重：</span><span class="XQvalue">' + e.numericOne + 'Kg</span><br />'
 							html += '</div>'
 						} else if (gType == 6) {
 							html += '<div class="XQblock">'
@@ -122,51 +127,54 @@ function getOneVData() {
 //							html += '<span class="XQtitle">身体部位：</span><span class="XQvalue">' + '胳膊' + '</span><br />'
 //							html += '<span class="XQtitle marleft">心率：</span><span class="XQvalue">' + '-------' + '</span><br />'
 							html += '<span class="XQtitle">高压值/低压值：</span><span class="XQvalue">'
-							html += e.valueone+"/"+e.valuetwo
+							html += e.numericOne+"/"+e.numericTwo
 							html += '</span><br />'
 							html += '</div>'
 						} else if (gType == 7) {
-							html += '<div class="XQblock">'
-							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">早餐前</span><br />'
-							html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.value1 + '</span><br />'
-							html += '</div>'
-
-							html += '<div class="XQblock">'
-							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">早餐后</span><br />'
-							html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.value2 + '</span><br />'
-							html += '</div>'
-
-							html += '<div class="XQblock">'
-							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">午餐前</span><br />'
-							html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.value3 + '</span><br />'
-							html += '</div>'
-
-							html += '<div class="XQblock">'
-							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">午餐后</span><br />'
-							html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.value4 + '</span><br />'
-							html += '</div>'
-
-							html += '<div class="XQblock">'
-							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">晚餐前</span><br />'
-							html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.value5 + '</span><br />'
-							html += '</div>'
-
-							html += '<div class="XQblock">'
-							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">晚餐后</span><br />'
-							html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.value6 + '</span><br />'
-							html += '</div>'
-
-							html += '<div class="XQblock">'
-							html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
-							html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">晚上三点</span><br />'
-							html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.value7 + '</span><br />'
-							html += '</div>'
+							if(e.type == 1){
+								html += '<div class="XQblock">'
+								html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
+								html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">早餐前</span><br />'
+								html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.numericOne + '</span><br />'
+								html += '</div>'
+							}else if(e.type == 2){
+								html += '<div class="XQblock">'
+								html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
+								html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">早餐后</span><br />'
+								html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.numericOne + '</span><br />'
+								html += '</div>'
+							}else if(e.type == 3){
+								html += '<div class="XQblock">'
+								html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
+								html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">午餐前</span><br />'
+								html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.numericOne + '</span><br />'
+								html += '</div>'
+							}else if(e.type == 4){
+								
+								html += '<div class="XQblock">'
+								html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
+								html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">午餐后</span><br />'
+								html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.numericOne + '</span><br />'
+								html += '</div>'
+							}else if(e.type == 5){
+								html += '<div class="XQblock">'
+								html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
+								html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">晚餐前</span><br />'
+								html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.numericOne + '</span><br />'
+								html += '</div>'
+							}else if(e.type == 6){
+								html += '<div class="XQblock">'
+								html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
+								html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">晚餐后</span><br />'
+								html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.numericOne + '</span><br />'
+								html += '</div>'
+							}else if(e.type == 7){
+								html += '<div class="XQblock">'
+								html += '<span class="XQtitle">测量时间：</span><span class="XQvalue">' + e.date + '</span><br />'
+								html += '<span class="XQtitle">测量时段：</span><span class="XQvalue">晚上三点</span><br />'
+								html += '<span class="XQtitle marleftxt">血糖值：</span><span class="XQvalue">' + e.numericOne + '</span><br />'
+								html += '</div>'
+							}
 						}
 					})
 					$("#contInner").append(html);
