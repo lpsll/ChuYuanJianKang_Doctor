@@ -21,6 +21,24 @@
 			.DivBgc{
 				background-color: pink;
 			}
+			.Page{
+				position: absolute;
+				top: 130px;
+				z-index: 99;
+				width: 20px;
+				height: 40px;
+				opacity: 0.3;
+			}
+			.left{
+				left: 6px;
+
+			}
+			.right{
+				right: 6px;
+			}
+			.jiantouImg{
+				height: 100%;
+			}
 		</style>
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -64,9 +82,17 @@
 								
 								
 								<div class="DrawBox" id="tiWenDiv">
-									<div class="tiZhengDraw"  onclick="getHisPage(1)" id="tempDraw">
-
+									<div onclick="tiwenPage(1)" class="Page left">
+										<img class="jiantouImg" src="../../images/left.png"/>
 									</div>
+									
+									<div onclick="tiwenPage(2)" class="Page right">
+										<img class="jiantouImg" src="../../images/right.png"/>
+									</div>
+									<div class="tiZhengDraw" style="position: relative !important;"   onclick="getHisPage(1)" id="tempDraw">
+				
+									</div>
+									
 									<div class="tiZhengInfo" id="tempYC">
 										
 										
@@ -80,6 +106,13 @@
 							<div class="mui-scroll">
 								
 								<div class="DrawBox" id="maiBoDiv">
+									<div onclick="maiboPage(1)" class="Page left">
+										<img class="jiantouImg" src="../../images/left.png"/>
+									</div>
+									
+									<div onclick="maiboPage(2)" class="Page right">
+										<img class="jiantouImg" src="../../images/right.png"/>
+									</div>
 									<div class="tiZhengDraw"  onclick="getHisPage(2)" id="maiBoDraw">
 
 									</div>
@@ -97,6 +130,13 @@
 							<div class="mui-scroll">
 								
 								<div class="DrawBox" id="huXiDiv" >
+									<div onclick="huxiPage(1)" class="Page left">
+										<img class="jiantouImg" src="../../images/left.png"/>
+									</div>
+									
+									<div onclick="huxiPage(2)" class="Page right">
+										<img class="jiantouImg" src="../../images/right.png"/>
+									</div>
 									<div class="tiZhengDraw"  onclick="getHisPage(3)" id="huXiDraw">
 
 									</div>
@@ -114,6 +154,13 @@
 							<div class="mui-scroll">
 								
 								<div class="DrawBox" id="xueYaDiv">
+									<div onclick="xueyaPage(1)" class="Page left">
+										<img class="jiantouImg" src="../../images/left.png"/>
+									</div>
+									
+									<div onclick="xueyaPage(2)" class="Page right">
+										<img class="jiantouImg" src="../../images/right.png"/>
+									</div>
 									<div class="tiZhengDraw" onclick="getHisPage(4)" id="xueYaDraw">
 
 									</div>
@@ -131,6 +178,13 @@
 							<div class="mui-scroll">
 								
 								<div class="DrawBox" id="xueTangDiv">
+									<div onclick="xuetangPage(1)" class="Page left">
+										<img class="jiantouImg" src="../../images/left.png"/>
+									</div>
+									
+									<div onclick="xuetangPage(2)" class="Page right">
+										<img class="jiantouImg" src="../../images/right.png"/>
+									</div>
 									<div class="tiZhengDraw"  onclick="getHisPage(5)" id="xueTangDraw">
 
 									</div>
@@ -147,7 +201,14 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								
-								<div class="DrawBox" id="xueTangDiv">
+								<div class="DrawBox" id="xueYangDiv">
+									<div onclick="xueyangPage(1)" class="Page left">
+										<img class="jiantouImg" src="../../images/left.png"/>
+									</div>
+									
+									<div onclick="xueyangPage(2)" class="Page right">
+										<img class="jiantouImg" src="../../images/right.png"/>
+									</div>
 									<div class="tiZhengDraw"  onclick="getHisPage(6)" id="xueYangDraw">
 
 									</div>
@@ -164,7 +225,14 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								
-								<div class="DrawBox" id="xueTangDiv">
+								<div class="DrawBox" id="tiZhongDiv">
+									<div onclick="tizhongPage(1)" class="Page left">
+										<img class="jiantouImg" src="../../images/left.png"/>
+									</div>
+									
+									<div onclick="tizhongPage(2)" class="Page right">
+										<img class="jiantouImg" src="../../images/right.png"/>
+									</div>
 									<div class="tiZhengDraw"  onclick="getHisPage(7)" id="tiZhongDraw">
 
 									</div>

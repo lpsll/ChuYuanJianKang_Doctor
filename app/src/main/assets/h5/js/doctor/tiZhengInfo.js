@@ -70,6 +70,148 @@ var evalue = [];
 var fvalue = [];
 var gvalue = [];
 
+
+
+var currentPageTW = 1;	//提问页码
+var currentPageMB = 1;	//脉搏页码
+var currentPageHX = 1;	//呼吸页码
+var currentPageXYa = 1;	//血压页码
+var currentPageXT = 1;	//血糖页码
+var currentPageXYn = 1;	//血氧页码
+var currentPageTZ = 1;	//体重页码
+
+var tiwenFlag = 0;		//0:加   1：减
+var maiboFlag = 0;		//0:加   1：减
+var huxiFlag = 0;		//0:加   1：减
+var xueyaFlag = 0;		//0:加   1：减
+var xuetangFlag = 0;		//0:加   1：减
+var xueyangFlag = 0;		//0:加   1：减
+var tizhongFlag = 0;		//0:加   1：减
+
+
+//体温分页
+function tiwenPage(a){
+	if(a == 1){
+		tiwenFlag = 0;
+		currentPageTW++;
+		getTemp()
+	}else{
+		tiwenFlag = 1;
+		if(currentPageTW == 1){
+			
+		}else{
+			currentPageTW--;
+			getTemp()
+		}
+		
+	}
+}
+
+//脉搏分页
+function maiboPage(a){
+	if(a == 1){
+		maiboFlag = 0;
+		currentPageMB++;
+		getMaiBo();
+	}else{
+		maiboFlag = 1;
+		if(currentPageMB == 1){
+			
+		}else{
+			currentPageMB--;
+			getMaiBo()
+		}
+		
+	}
+}
+
+//呼吸分页
+function huxiPage(a){
+	if(a == 1){
+		huxiFlag = 0;
+		currentPageHX++;
+		getHuXi();
+	}else{
+		huxiFlag = 1;
+		if(currentPageHX == 1){
+			
+		}else{
+			currentPageHX--;
+			getHuXi();
+		}
+		
+	}
+}
+//血压分页
+function xueyaPage(a){
+	if(a == 1){
+		xueyaFlag = 0;
+		currentPageXYa++;
+		getXueYa();
+	}else{
+		xueyaFlag = 1;
+		if(currentPageXYa == 1){
+			
+		}else{
+			currentPageXYa--;
+			getXueYa();
+		}
+		
+	}
+}
+//血糖分页
+function xuetangPage(a){
+	if(a == 1){
+		xuetangFlag = 0;
+		currentPageXT++;
+		getXueTang();
+	}else{
+		xuetangFlag = 1;
+		if(currentPageXT == 1){
+			
+		}else{
+			currentPageXT--;
+			getXueTang();
+		}
+	}
+}
+//血氧分页
+function xueyangPage(a){
+	if(a == 1){
+		xueyangFlag = 0;
+		currentPageXYn++;
+		getXueYang();
+	}else{
+		xueyangFlag = 1;
+		if(currentPageXYn == 1){
+			
+		}else{
+			currentPageXYn--;
+			getXueYang();
+		}
+		
+	}
+}
+//体重分页
+function tizhongPage(a){
+	if(a == 1){
+		tizhongFlag = 0;
+		currentPageTZ++;
+		getTiZhong();
+	}else{
+		tizhongFlag = 1;
+		if(currentPageTZ == 1){
+			
+		}else{
+			currentPageTZ--;
+			getTiZhong();
+		}
+		
+	}
+}
+
+
+
 //调用安卓弹出提示信息方法
 function getPopInfo(msg) {
 	bridge.alert(msg);
@@ -111,7 +253,7 @@ function getTemp() {
 			'patient': patient,
 			'type': 1,
 			'history': 0,
-			'num': 0,
+			'num': currentPageTW,
 			'userid':id
 		},
 		success: function(m) {
@@ -156,9 +298,10 @@ function getTemp() {
 				tempLineArr = val1.concat(val2);
 				tempDate = date;
 				var j = 1;
+				tempHtml = "";
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
-						tempHtml += '<div>'
+						tempHtml += '<div class="histLists_tiwen">'
 						tempHtml += '<div class="tizhengInfoText tzLeft">'
 						tempHtml += '<div  class="tzInfoDate"><span>' + e.date + '</span></div>'
 						tempHtml += '<div class="tzInfoTemp"><span>体温：' + e.value + '度</span></div>'
@@ -181,6 +324,11 @@ function getTemp() {
 
 				drawData(1)
 			} else {
+				if(tiwenFlag == 0){
+					currentPageTW --;
+				}else{
+					currentPageTW ++;
+				}
 				getPopInfo(result.msg)
 			}
 		},
@@ -198,7 +346,7 @@ function getHuXi() {
 			'token':token,
 			'patient': patient,
 			'type': 3,
-			'num': 0,
+			'num': currentPageHX,
 			'history': 0,
 			'userid':id
 		},
@@ -246,19 +394,20 @@ function getHuXi() {
 				huXiLineArr = val1.concat(val2);
 				huXiDate = date;
 				var j = 1;
+				huXiHtml = "";
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
 						huXiHtml += '<div>'
 						huXiHtml += '<div class="tizhengInfoText tzLeft">'
 						huXiHtml += '<div  class="tzInfoDate"><span>' + e.date + '</span></div>'
-						huXiHtml += '<div class="tzInfoTemp"><span>呼吸一次：' + e.value + '秒</span></div>'
+						huXiHtml += '<div class="tzInfoTemp"><span>每分呼吸：' + e.value + '次</span></div>'
 						huXiHtml += '<div class="tzInfoState"><span>' + e.abnormal + '</span></div>'
 						huXiHtml += '</div>'
 						j = 2;
 					}else{
 						huXiHtml += '<div class="tizhengInfoText tzRight">'
 						huXiHtml += '<div  class="tzInfoDate"><span>' + e.date + '</span></div>'
-						huXiHtml += '<div class="tzInfoTemp"><span>呼吸一次：' + e.value + '秒</span></div>'
+						huXiHtml += '<div class="tzInfoTemp"><span>每分呼吸：' + e.value + '次</span></div>'
 						huXiHtml += '<div class="tzInfoState"><span>' + e.abnormal + '</span></div>'
 						huXiHtml += '</div>'
 						huXiHtml += '<div style="clear: both;"></div></div>'
@@ -268,6 +417,11 @@ function getHuXi() {
 
 				drawData(3)
 			} else {
+				if(huxiFlag == 0){
+					currentPageHX --;
+				}else{
+					currentPageHX ++;
+				}
 				getPopInfo(result.msg)
 			}
 		},
@@ -286,7 +440,7 @@ function getMaiBo() {
 			'token':token,
 			'patient': patient,
 			'type': 2,
-			'num': 0,
+			'num': currentPageMB,
 			'history': 0,
 			'userid':id
 
@@ -333,6 +487,7 @@ function getMaiBo() {
 				maiBoLineArr = val1.concat(val2);
 				maiBoDate = date;
 				var j = 1;
+				maiBoHtml = "";
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
 						maiBoHtml += '<div>'
@@ -355,6 +510,11 @@ function getMaiBo() {
 
 				drawData(2)
 			} else {
+				if(maiboFlag == 0){
+					currentPageMB --;
+				}else{
+					currentPageMB ++;
+				}
 				getPopInfo(result.msg)
 			}
 		},
@@ -375,7 +535,7 @@ function getXueYang() {
 			'patient': patient,
 			'type': 4,
 			'history': 0,
-			'num': 0,
+			'num': currentPageXYn,
 			'userid':id
 		},
 		success: function(m) {
@@ -419,6 +579,7 @@ function getXueYang() {
 				xueYangLineArr = val1.concat(val2);
 				xueYangDate = date; //血氧日期
 				var j = 1;
+				xueYangHtml = "";
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
 						xueYangHtml += '<div>'
@@ -441,6 +602,11 @@ function getXueYang() {
 
 				drawData(4)
 			} else {
+				if(xueyangFlag == 0){
+					currentPageXYn --;
+				}else{
+					currentPageXYn ++;
+				}
 				getPopInfo(result.msg)
 			}
 		},
@@ -462,15 +628,17 @@ function getTiZhong() {
 			'patient':patient,
 			'type': 5,
 			'history': 0,
-			'num': 0,
+			'num': currentPageTZ, 
 			'userid':id
 
 		},
 		success: function(m) {
 		console.log("体重="+m)
 			var result = eval("(" + m + ")");
+			tiZhongLineArr = [];
+			tiZhongDate = [];
 			if (result.code == 1) {
-				result.data.line.forEach(function(e) {
+				result.data.line.reverse().forEach(function(e) {
 					tiZhongDate.push(e.date);
 					if(e.valueone == null){
 						tiZhongLineArr.push(null);	
@@ -480,7 +648,7 @@ function getTiZhong() {
 				})
 
 				var j = 1;
-				
+				tiZhongHtml = "";
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
 						tiZhongHtml += '<div>'
@@ -503,6 +671,11 @@ function getTiZhong() {
 
 				drawData(5)
 			} else {
+				if(tizhongFlag == 0){
+					currentPageTZ --;
+				}else{
+					currentPageTZ ++;
+				}
 				getPopInfo(result.msg)
 			}
 		},
@@ -523,7 +696,7 @@ function getXueYa() {
 			'patient':patient,
 			'type': 6,
 			'history': 0,
-			'num': 0,
+			'num': currentPageXYa,
 			'userid':id
 		},
 		success: function(m) {
@@ -542,7 +715,8 @@ function getXueYa() {
 				var c = 0;
 				var d = 0;
 				 
-	
+				mvalue = [];
+				nvalue = [];
 				var Ndate = "";
 				$.each(dataArr, function(i,k) {
 					if(c == 0){
@@ -599,7 +773,7 @@ function getXueYa() {
 				xueYaDate = date;
 				
 				var j = 1;
-				
+				xueYaHtml = "";
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
 						xueYaHtml += '<div>' 
@@ -622,6 +796,11 @@ function getXueYa() {
 
 				drawData(6)
 			} else {
+				if(xueyaFlag == 0){
+					currentPageXYa --;
+				}else{
+					currentPageXYa ++;
+				}
 				getPopInfo(result.msg)
 			}
 		},
@@ -641,12 +820,21 @@ function getXueTang() {
 			'patient':patient,
 			'type': 7,
 			'history': 0,
-			'num': 0,
+			'num': currentPageXT,
 			'userid':id
 		},
 		success: function(m) {
+			
 		console.log("血糖="+m)
 			var result = eval("(" + m + ")");
+			
+			avalue = [];
+			bvalue = [];
+			cvalue = [];
+			dvalue = [];
+			evalue = [];
+			fvalue = [];
+			gvalue = [];
 			if (result.code == '1') {
 				result.data.line.forEach(function(e) {
 					xueTangDate.push(e.date);
@@ -686,16 +874,11 @@ function getXueTang() {
 					}else{
 						gvalue.push(Number(e.value7));
 					}
-					
-					
-					
-					
-					
 				})
 
 				
 				var j = 1;
-				
+				xueTangHtml = "";
 				result.data.abnormal.forEach(function(e) {
 					if(j == 1){
 						xueTangHtml += '<div>'
@@ -718,6 +901,11 @@ function getXueTang() {
 
 				drawData(7)
 			} else {
+				if(xuetangFlag == 0){
+					currentPageXT --;
+				}else{
+					currentPageXT ++;
+				}
 				getPopInfo(result.msg)
 			}
 		},
@@ -731,6 +919,7 @@ function getXueTang() {
 
 
 function drawData(a) {
+	alert("dd")
 	if (a == 1) {
 		drawId = 'tempDraw';
 		drawDate = tempDate;
@@ -768,6 +957,7 @@ function drawData(a) {
 		dHtml = xueYangHtml;
 		DrawOneVData();
 	} else if (a == 5) {
+		alert("ff")
 		drawId = 'tiZhongDraw';
 		drawDate = tiZhongDate;
 		dData.name = '体重';
@@ -797,7 +987,6 @@ function drawData(a) {
 
 
 function DrawOneVData(){
-	
 	$('#' + drawId + '').highcharts({
 		chart: {
 			type: 'line',
@@ -878,11 +1067,11 @@ function DrawOneVData(){
 	InnId.innerHTML = dHtml;
 
 
+
 }
 
-
 function DrawTiZhong(){
-	
+	alert("dd")
 	$('#' + drawId + '').highcharts({
 		chart: {
 			type: 'line',
