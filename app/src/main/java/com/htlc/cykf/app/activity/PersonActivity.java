@@ -280,6 +280,7 @@ public class PersonActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onFailure(String errorEvent, String message) {
                 if(handleNetworkOnFailure(errorEvent, message)) return;
+                ToastUtil.showToast(App.app,message);
             }
         });
     }

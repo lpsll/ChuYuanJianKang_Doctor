@@ -1,6 +1,7 @@
 package com.htlc.cykf.app.util;
 
 public interface Constant {
+    String APP_ID = "1468944000000";
     boolean isDebug = false;
     /*config*/
     String PGY_SHORT_URL = "N22S";

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.htlc.cykf.R;
+import com.htlc.cykf.api.Api;
 import com.htlc.cykf.app.util.Constant;
 import com.htlc.cykf.app.util.LogUtil;
 import com.htlc.cykf.app.util.ToastUtil;
@@ -128,6 +129,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void protocol() {
         LogUtil.e(this, "protocol");
+        Intent intent = new Intent(this,WebActivity.class);
+        intent.putExtra(WebActivity.Title,"用户协议");
+        intent.putExtra(WebActivity.Url, Api.Protocol);
+        startActivity(intent);
     }
 
     private void register() {

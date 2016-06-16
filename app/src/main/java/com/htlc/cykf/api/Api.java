@@ -26,9 +26,10 @@ import java.io.File;
 
 public interface Api {
 //    String Host = "http://192.168.0.109:8100/mysite/outhospital/index.php/home/";
-    String Host = "http://z3.damaimob.com/index.php/Home/";
+    String Host = "http://123.56.243.53/index.php/Home/";
     String SendSmsCode = Host + "user_verifycode";
     String Register = Host + "user_enroll";
+    String Protocol = Host + "user_getprotocol";
     String Login = Host + "user_login";
     String Forget = Host + "user_resetpwd";
 
